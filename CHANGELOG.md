@@ -6,14 +6,23 @@
 
 |           Version            |  Tag   | Importance | Runnable |
 | ---------------------------- | ------ | ---------- | -------- |
-| [1.0.0](#latest-102---major) | Latest |  `major`   |    ✅    |
+| [1.0.3](#latest-102---major) | Latest |  `minor`   |    ✅    |
+| [1.0.2](#102---major)        |        |  `major`   |    ✅    |
 | [1.0.0](#first-100---major)  | First  |  `major`   |    ✅    |
   
 </div>
 
 <br>
 
-## Latest: 1.0.2 - `major`
+## Latest: 1.0.3 - `minor`
+
+<br>
+
+- Fix changelog file
+
+<br><br>
+
+## 1.0.2 - `major`
 
 <br>
 
@@ -25,7 +34,7 @@
 - File organisation
 - Changelog file
 
-  <br><br>
+<br><br>
 
 ## First: 1.0.0 - `major`
 
@@ -44,6 +53,6 @@
 
   ---
 
- See yall ! 😉
+  See yall ! 😉
   > — &nbsp;&nbsp; _[Luzog78](github.com/Luzog78)_ &nbsp; | &nbsp; _[ysabik](profile.intra.42.fr/users/ysabik)_
 </div>
