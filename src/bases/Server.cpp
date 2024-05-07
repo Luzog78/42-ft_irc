@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/06 20:22:38 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/07 09:46:45 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ Server::Server() {
 	maxClients = 0;
 	sckt = -1;
 	addr = (struct sockaddr_in){};
+	acceptPoll = (pollfd){};
 }
 
 
@@ -38,7 +39,9 @@ Server &Server::operator=(const Server &server) {
 		sckt = server.sckt;
 		addr = server.addr;
 		clients = server.clients;
-		pollfds = server.pollfds;
+		channels = server.channels;
+		cmdBuffer = server.cmdBuffer;
+		acceptPoll = server.acceptPoll;
 	}
 	return *this;
 }
@@ -68,29 +71,40 @@ void	Server::start(int port, int maxClients) {
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = INADDR_ANY;
 	if (bind(sckt, (struct sockaddr*) &addr, sizeof(addr)) < 0)
-		throw ServerException("Bind failed");
+		throw ServerException("Bind failed (port: " + itoa(port) + ")");
 
 	if (listen(sckt, maxClients) < 0)
 		throw ServerException("Listen failed");
 
 	log(INFO, "##############################");
 	log(INFO, "## >>> Server started ! <<< ##");
-	log(INFO, "##############################\n");
+	log(INFO, "##############################\n\n");
+}
+
+
+void	Server::poll() {
+	acceptPoll.fd = sckt;
+	acceptPoll.events = POLLIN;
+	acceptPoll.revents = 0;
+	_pollfds.push_back(acceptPoll);
+
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+		_pollfds.push_back(it->getPollFd());
+
+	int	pollResult = ::poll(_pollfds.data(), _pollfds.size(), 0);
+	if (pollResult < 0)
+		throw ServerException("Poll failed");
+	
+	acceptPoll = _pollfds[0];
+	for (size_t i = 1; i < _pollfds.size(); i++) {
+		clients[i - 1].setPollFd(_pollfds[i]);
+	}
+	_pollfds.clear();
 }
 
 
 void	Server::accept() {
-	pollfd	pollResult;
-
-	pollResult.fd = sckt;
-	pollResult.events = POLLIN;
-	pollResult.revents = 0;
-
-	int ret = ::poll(&pollResult, 1, 0);
-	if (ret < 0)
-		throw ServerException("Accepting poll failed");
-		
-	if (ret > 0 &&pollResult.revents & POLLIN) {
+	if (acceptPoll.revents & POLLIN) {
 		struct sockaddr_in	clientAddr;
 		socklen_t			clientAddrLen = sizeof(clientAddr);
 
@@ -103,58 +117,53 @@ void	Server::accept() {
 				+ ", ip: " + inet_ntoa(clientAddr.sin_addr) + ")");
 		
 		Client	newClient(clientSocket, clientAddr);
-		clients[clientSocket] = newClient;
 
-		log(INFO, "<" + newClient.getFullAddress() + "> : Connected");
+		log(INFO, "<" + newClient.getFullAddress() + ">: Connected");
 
 		pollfd	newPollfd;
 		newPollfd.fd = clientSocket;
 		newPollfd.events = POLLIN | POLLOUT;
-		pollfds.push_back(newPollfd);
+		newPollfd.revents = 0;
+		newClient.setPollFd(newPollfd);
+		clients.push_back(newClient);
 	}
 }
 
 
-void	Server::poll() {
-	int pollResult = ::poll(pollfds.data(), pollfds.size(), 0);
-	if (pollResult < 0)
-		throw ServerException("Poll failed");
-
-	if (pollResult == 0)
-		return;
-
-	for (size_t i = 0; i < pollfds.size(); i++) {
-		Client	client = clients[pollfds[i].fd];
-		pollfd	pollfd = pollfds[i];
+void	Server::receive() {
+	for (size_t i = 0; i < clients.size(); i++) {
+		Client	client = clients[i];
 		
-		if (pollfd.revents & POLLIN) {
+		if (client.getPollFd().revents & POLLIN) {
 			char	buffer[1025];
-			int		ret = recv(pollfd.fd, buffer, 1024, 0);
+			int		ret = recv(client.getSocket(), buffer, 1024, 0);
 
 			if (ret < 0)
 				throw ServerException("Receive failed from " + client.getFullAddress());
 
 			if (ret == 0) {
-				log(INFO, "<" + client.getFullAddress() + "> : Disconnected");
+				log(INFO, "<" + client.getFullAddress() + ">: Disconnected");
 				client.close();
-				clients.erase(pollfd.fd);
-				pollfds.erase(pollfds.begin() + i);
+				clients.erase(clients.begin() + i);
 				continue;
 			}
 
 			buffer[ret] = 0;
-			log(INFO, "<" + client.getFullAddress() + "> : Received: ");
-			log(DATA, std::string(buffer));
-		}
+			cmdBuffer += std::string(buffer);
+			if (cmdBuffer.find("\n") == std::string::npos)
+				continue;
 
-		// if (pollfd.revents & POLLOUT) {
-		// 	// Send data
-		// 	std::string message = "Hello from server!";
-		// 	int ret = send(pollfd.fd, message.c_str(), message.size(), 0);
-		// 	if (ret < 0)
-		// 		throw ServerException("Send failed to " + client.getFullAddress());
-		// 	log(INFO, "Sent: " + message + " to " + client.getFullAddress());
-		// }
+			std::istringstream	ss(cmdBuffer);
+			cmdBuffer = "";
+			for (std::string line; std::getline(ss, line, '\n');) {
+				if (line.find("\n") != std::string::npos) {
+					cmdBuffer = line;
+					break;
+				}
+				log(INFO, "(R) <" + client.getFullAddress() + ">: " + line, C_CYAN);
+				commandManager.exec(*this, client, line);
+			}
+		}
 	}
 }
 
@@ -165,8 +174,8 @@ void	Server::close() {
 		::close(sckt);
 	}
 	sckt = -1;
-	for (std::map<int, Client>::iterator it = clients.begin(); it != clients.end(); it++)
-		it->second.close();
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+		it->close();
 }
 
 
@@ -215,21 +224,46 @@ struct sockaddr_in	*Server::getAddrPtr() {
 }
 
 
-std::map<int, Client>	Server::getClients() {
+std::vector<Client>	Server::getClients() {
 	return clients;
 }
 
 
-void	Server::setClients(std::map<int, Client> clients) {
+void	Server::setClients(std::vector<Client> clients) {
 	this->clients = clients;
 }
 
 
-std::vector<pollfd>	Server::getPollfds() {
-	return pollfds;
+std::vector<Channel>	Server::getChannels() {
+	return channels;
 }
 
 
-void	Server::setPollfds(std::vector<pollfd> pollfds) {
-	this->pollfds = pollfds;
+void	Server::setChannels(std::vector<Channel> channels) {
+	this->channels = channels;
+}
+
+
+pollfd	Server::getAcceptPoll() {
+	return acceptPoll;
+}
+
+
+pollfd	*Server::getAcceptPollPtr() {
+	return &acceptPoll;
+}
+
+
+void	Server::setAcceptPoll(pollfd acceptPoll) {
+	this->acceptPoll = acceptPoll;
+}
+
+
+std::string	Server::getCmdBuffer() {
+	return cmdBuffer;
+}
+
+
+void	Server::setCmdBuffer(std::string cmdBuffer) {
+	this->cmdBuffer = cmdBuffer;
 }

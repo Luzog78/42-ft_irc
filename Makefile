@@ -6,17 +6,22 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/06 20:11:33 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/07 12:44:33 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CCXX				= c++
 CXXFLAGS			= -Werror -Wall -Wextra -std=c++98 -g
 NAME				= ircserv
-INCLUDES			= inc
+INCLUDES			= inc -I inc/bases -I inc/commands
 SRC_FILES			= \
-						src/Client.cpp \
-						src/Server.cpp \
+						src/bases/Client.cpp \
+						src/bases/Server.cpp \
+						src/bases/Channel.cpp \
+						src/bases/Command.cpp \
+						src/bases/CommandManager.cpp \
+						src/commands/UserCommand.cpp \
+						src/commands/NickCommand.cpp \
 						src/main.cpp
 
 BUILD_FOLDER		= build

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:44 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/06 19:55:51 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/07 07:16:20 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,14 @@ class Server {
 		int						sckt;
 		struct sockaddr_in		addr;
 
-		std::map<int, Client>	clients;
-		std::vector<pollfd>		pollfds;
+		std::vector<Client>		clients;
+		std::vector<Channel>	channels;
+
+		pollfd					acceptPoll;
+		std::string				cmdBuffer;
+
+
+		std::vector<pollfd>		_pollfds;
 
 	public:
 		Server();
@@ -33,8 +39,9 @@ class Server {
 		~Server();
 
 		void					start(int port, int maxClients);
-		void					accept();
 		void					poll();
+		void					accept();
+		void					receive();
 		void					close();
 
 		std::string				getFullAddress();
@@ -46,23 +53,20 @@ class Server {
 		struct sockaddr_in		getAddr();
 		void					setAddr(struct sockaddr_in addr);
 		struct sockaddr_in		*getAddrPtr();
-		std::map<int, Client>	getClients();
-		void					setClients(std::map<int, Client> clients);
-		std::vector<pollfd>		getPollfds();
-		void					setPollfds(std::vector<pollfd> pollfds);
+		std::vector<Client>		getClients();
+		void					setClients(std::vector<Client> clients);
+		std::vector<Channel>	getChannels();
+		void					setChannels(std::vector<Channel> channels);
+		pollfd					getAcceptPoll();
+		pollfd					*getAcceptPollPtr();
+		void					setAcceptPoll(pollfd acceptPoll);
+		std::string				getCmdBuffer();
+		void					setCmdBuffer(std::string cmdBuffer);
 
 		class ServerException : public IRCException {
-			private:
-				const char	*message;
-
 			public:
-				ServerException(std::string message) {
-					this->message = message.c_str();
-				}
-
-				const char	*what() const throw() {
-					return message;
-				}
+				ServerException(std::string message) :
+					IRCException("ServerException", message) {}
 		};
 };
 
