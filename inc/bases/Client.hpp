@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:46 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 06:53:00 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 16:29:52 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ class Client {
 		int							port;
 		pollfd						pollFd;
 
+		bool						registered;
 		std::string					nickname;
 		std::string					username;
 		std::string					realname;
@@ -38,8 +39,10 @@ class Client {
 
 		void				close();
 		std::string			getFullAddress();
+		std::string			getPrefix();
 
 		void				sendCommand(std::string command);
+		void				sendCommand(std::string command, std::string prefix);
 
 		std::string			getIp();
 		int					getPort();
@@ -52,6 +55,8 @@ class Client {
 		pollfd				*getPollFdPtr();
 		void				setPollFd(pollfd pollFd);
 
+		bool				isRegistered();
+		void				setRegistered(bool registered);
 		std::string			getNickname();
 		void				setNickname(std::string nickname);
 		std::string			getUsername();

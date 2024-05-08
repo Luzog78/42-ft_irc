@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 11:15:25 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 16:54:29 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,22 @@ UserCommand::~UserCommand() {
 
 bool	UserCommand::exec(Server &server, Client &client, std::string label,
 			std::string prefix, std::string args[], int argsCount) {
-	(void) server;
 	(void) label;
 	(void) prefix;
-	(void) args;
-	(void) argsCount;
 
+	if (client.isRegistered()) {
+		client.sendCommand(ERR_ALREADYREGISTRED);
+		return false;
+	}
 	if (argsCount < 4) {
-		log(WARNING, "UserCommand: not enough arguments");
+		client.sendCommand(ERR_NEEDMOREPARAMS(name));
 		return false;
 	}
 
 	client.setUsername(args[0]);
 	client.setRealname(args[3]);
-	if (client.getNickname().empty())
-		client.setNickname("user" + itoa(client.getPort()));
 
-	client.sendCommand("CAP * LS :");
-	client.sendCommand("001 " + client.getNickname() + " :Weeelcoooooooooome to ft_irc !");
-	client.sendCommand("003 " + client.getNickname() + " :This server was created sometime");
-
+	if (!client.getNickname().empty())
+		server.welcome(client);
 	return true;
 }

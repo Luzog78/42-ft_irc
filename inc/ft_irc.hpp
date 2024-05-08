@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:01 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 09:07:33 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 15:24:12 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 
 // Standard
+# include <algorithm>
 # include <unistd.h>
 # include <iostream>
 # include <iomanip>
@@ -87,6 +88,8 @@ class CommandManager;
 # include "Channel.hpp"
 # include "Command.hpp"
 # include "CommandManager.hpp"
+
+# include "NumResponses.hpp"
 
 
 extern Server			server;

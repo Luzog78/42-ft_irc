@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NickCommand.cpp                                    :+:      :+:    :+:   */
+/*   QuitCommand.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:05:38 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:25:59 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,28 @@
 /* ************************************************************************** */
 
 
-NickCommand::NickCommand() : Command() {
+QuitCommand::QuitCommand() : Command() {
 }
 
 
-NickCommand::NickCommand(std::string name, std::vector<std::string> aliases)
+QuitCommand::QuitCommand(std::string name, std::vector<std::string> aliases)
 	: Command(name, aliases) {
 }
 
 
-NickCommand::NickCommand(const NickCommand &command) : Command() {
+QuitCommand::QuitCommand(const QuitCommand &command) : Command() {
 	*this = command;
 }
 
 
-NickCommand &NickCommand::operator=(const NickCommand &command) {
+QuitCommand &QuitCommand::operator=(const QuitCommand &command) {
 	if (this != &command)
 		Command::operator=(command);
 	return *this;
 }
 
 
-NickCommand::~NickCommand() {
+QuitCommand::~QuitCommand() {
 }
 
 
@@ -48,26 +48,19 @@ NickCommand::~NickCommand() {
 /* ************************************************************************** */
 
 
-bool	NickCommand::exec(Server &server, Client &client, std::string label,
+bool	QuitCommand::exec(Server &server, Client &client, std::string label,
 			std::string prefix, std::string args[], int argsCount) {
 	(void) label;
 	(void) prefix;
 
-	if (argsCount == 0) {
-		client.sendCommand(ERR_NONICKNAMEGIVEN);
-		return false;
+	std::string	quitMessage = argsCount > 0 ? args[0] : "Got bored... -_-";
+
+	for (std::vector<Client>::iterator it = server.getClients().begin(); it != server.getClients().end(); it++) {
+		if (it->getNickname() == client.getNickname())
+			continue;
+		it->sendCommand("QUIT :" + quitMessage, client.getPrefix());
 	}
 
-	std::vector<std::string>	nicknames = server.getNicknames();
-	if (find(nicknames.begin(), nicknames.end(), args[0]) != nicknames.end()) {
-		client.sendCommand(ERR_NICKNAMEINUSE(args[0]));
-		return false;
-	}
-
-	client.setNickname(args[0]);
-
-	if (!client.getUsername().empty() && !client.getRealname().empty()
-		&& !client.isRegistered())
-		server.welcome(client);
+	server.removeClient(client);
 	return true;
 }

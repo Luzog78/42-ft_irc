@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:36:27 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 10:38:30 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 16:14:09 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Command::Command() {
 
 Command::Command(std::string name, std::vector<std::string> aliases) {
 	this->name = name;
-	this->aliases = aliases;
+	setAliases(aliases);
 }
 
 
@@ -36,7 +36,7 @@ Command::Command(const Command &command) {
 Command &Command::operator=(const Command &command) {
 	if (this != &command) {
 		name = command.name;
-		aliases = command.aliases;
+		setAliases(command.aliases);
 	}
 	return *this;
 }
@@ -73,4 +73,10 @@ std::vector<std::string>	Command::getAliases() {
 
 void	Command::setAliases(std::vector<std::string> aliases) {
 	this->aliases = aliases;
+	for (size_t i = 0; i < this->aliases.size(); i++) {
+		if (this->aliases[i].empty()) {
+			this->aliases.erase(this->aliases.begin() + i);
+			i--;
+		}
+	}
 }

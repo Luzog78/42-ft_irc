@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 09:46:45 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:27:02 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	Server::accept() {
 
 void	Server::receive() {
 	for (size_t i = 0; i < clients.size(); i++) {
-		Client	client = clients[i];
+		Client	&client = clients[i];
 		
 		if (client.getPollFd().revents & POLLIN) {
 			char	buffer[1025];
@@ -168,6 +168,25 @@ void	Server::receive() {
 }
 
 
+void	Server::welcome(Client &client) {
+	client.setRegistered(true);
+	client.sendCommand("CAP * LS :");
+	client.sendCommand(RPL_WELCOME(client.getNickname()));
+	client.sendCommand(RPL_YOURHOST(client.getNickname(), std::string("localhost"), "1.0"));
+	client.sendCommand(RPL_CREATED(client.getNickname(), std::string("once upon a time...")));
+}
+
+
+void	Server::removeClient(Client &client) {
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++) {
+		if (it->getSocket() == client.getSocket()) {
+			clients.erase(it);
+			break;
+		}
+	}
+}
+
+
 void	Server::close() {
 	if (sckt >= 0) {
 		log(INFO, "Closing <" + getFullAddress() + ">...");
@@ -181,6 +200,15 @@ void	Server::close() {
 
 std::string	Server::getFullAddress() {
 	return std::string(inet_ntoa(addr.sin_addr)) + ":" + itoa(ntohs(addr.sin_port)) + "/" + itoa(sckt);
+}
+
+
+std::vector<std::string>	Server::getNicknames() {
+	std::vector<std::string>	nicknames;
+
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+		nicknames.push_back(it->getNickname());
+	return nicknames;
 }
 
 

@@ -6,7 +6,8 @@
 
 |           Version            |  Tag   | Importance | Runnable |
 | ---------------------------- | ------ | ---------- | -------- |
-| [1.0.3](#latest-102---major) | Latest |  `minor`   |    ✅    |
+| [1.1.0](#latest-110---major) | Latest |  `major`   |    ✅    |
+| [1.0.3](#103---minor)        |        |  `minor`   |    ✅    |
 | [1.0.2](#102---major)        |        |  `major`   |    ✅    |
 | [1.0.0](#first-100---major)  | First  |  `major`   |    ✅    |
   
@@ -14,7 +15,28 @@
 
 <br>
 
-## Latest: 1.0.3 - `minor`
+## Latest: 1.1.0 - `major`
+
+<br>
+
+- NumResponses.hpp (**[RFC 2812](https://datatracker.ietf.org/doc/html/rfc2812#section-5)**
+  *[old: [RFC 1459](https://datatracker.ietf.org/doc/html/rfc1459#section-6)]*)
+- Better parsing ([Message format in 'pseudo' BNF](https://datatracker.ietf.org/doc/html/rfc1459#section-2.3.1)
+  and [Message format in Augmented BNF](https://datatracker.ietf.org/doc/html/rfc2812#section-2.3.1))
+- Commands:
+  - [x] NICK
+  - [x] USER
+  - [x] PING
+  - [x] PONG
+  - [x] QUIT
+- Registration (welcome message, etc.)
+- Prefixes are now fixed (syntax: `:prefix COMMAND params`)
+- Now, I understand the IRC protocol better... _(kinda) 😅_
+- And the last but not the least: **I understood how to read the RFC man pages.. (It was a hard time but, it seems to be okay now. I guess it was worth it.)**
+
+<br><br>
+
+## 1.0.3 - `minor`
 
 <br>
 
@@ -32,6 +54,7 @@
 - Utils client functions (ex: sendCommand)
 - Class Channel (useless for now)
 - File organisation
+- New Display (Server debug)
 - Changelog file
 
 <br><br>

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   NickCommand.cpp                                    :+:      :+:    :+:   */
+/*   PongCommand.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:05:38 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:16:55 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,28 @@
 /* ************************************************************************** */
 
 
-NickCommand::NickCommand() : Command() {
+PongCommand::PongCommand() : Command() {
 }
 
 
-NickCommand::NickCommand(std::string name, std::vector<std::string> aliases)
+PongCommand::PongCommand(std::string name, std::vector<std::string> aliases)
 	: Command(name, aliases) {
 }
 
 
-NickCommand::NickCommand(const NickCommand &command) : Command() {
+PongCommand::PongCommand(const PongCommand &command) : Command() {
 	*this = command;
 }
 
 
-NickCommand &NickCommand::operator=(const NickCommand &command) {
+PongCommand &PongCommand::operator=(const PongCommand &command) {
 	if (this != &command)
 		Command::operator=(command);
 	return *this;
 }
 
 
-NickCommand::~NickCommand() {
+PongCommand::~PongCommand() {
 }
 
 
@@ -48,26 +48,17 @@ NickCommand::~NickCommand() {
 /* ************************************************************************** */
 
 
-bool	NickCommand::exec(Server &server, Client &client, std::string label,
+bool	PongCommand::exec(Server &server, Client &client, std::string label,
 			std::string prefix, std::string args[], int argsCount) {
+	(void) server;
 	(void) label;
 	(void) prefix;
 
 	if (argsCount == 0) {
-		client.sendCommand(ERR_NONICKNAMEGIVEN);
+		client.sendCommand(ERR_NOORIGIN);
 		return false;
 	}
 
-	std::vector<std::string>	nicknames = server.getNicknames();
-	if (find(nicknames.begin(), nicknames.end(), args[0]) != nicknames.end()) {
-		client.sendCommand(ERR_NICKNAMEINUSE(args[0]));
-		return false;
-	}
-
-	client.setNickname(args[0]);
-
-	if (!client.getUsername().empty() && !client.getRealname().empty()
-		&& !client.isRegistered())
-		server.welcome(client);
+	client.sendCommand("PING " + client.getNickname() + " :" + args[0]);
 	return true;
 }

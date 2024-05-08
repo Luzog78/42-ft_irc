@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 11:16:06 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:27:32 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,18 @@ class List {
 		std::vector<T>	list;
 	
 	public:
+		List() {
+		}
+
+		List(T item) {
+			add(item);
+		}
+
+		List	operator()(T item) {
+			add(item);
+			return *this;
+		}
+
 		List	add(T item) {
 			list.push_back(item);
 			return *this;
@@ -103,7 +115,7 @@ class List {
 			return *this;
 		}
 
-		std::vector<T>	toVec() {
+		std::vector<T>	vec() {
 			return list;
 		}
 };
@@ -113,7 +125,11 @@ int main() {
 
 	commandManager
 		.addCommand(new UserCommand("USER", std::vector<std::string>()))
-		.addCommand(new NickCommand("NICK", std::vector<std::string>()));
+		.addCommand(new NickCommand("NICK", std::vector<std::string>()))
+		.addCommand(new PingCommand("PING", std::vector<std::string>()))
+		.addCommand(new PongCommand("PONG", std::vector<std::string>()))
+		.addCommand(new QuitCommand("QUIT", std::vector<std::string>()))
+		;
 
 	try {
 		server.start(8080, 20);

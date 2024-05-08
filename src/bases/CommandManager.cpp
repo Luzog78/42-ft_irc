@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:52:50 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 10:59:08 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:00:24 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,12 @@ CommandManager::~CommandManager() {
 
 
 int	CommandManager::getCommandIndex(std::string label) {
-	int	i = 0;
+	for (size_t i = 0; i < commands.size(); i++) {
+		Command	*cmd = commands[i];
 
-	for (std::vector<Command *>::iterator it = commands.begin(); it != commands.end(); it++) {
-		if ((*it)->getName() == label)
+		if (cmd->getName() == label || std::find(cmd->getAliases().begin(),
+				cmd->getAliases().end(), label) != cmd->getAliases().end())
 			return i;
-		for (std::vector<std::string>::iterator alias = (*it)->getAliases().begin();
-				alias != (*it)->getAliases().end(); alias++) {
-			if (*alias == label)
-				return i;
-		}
 	}
 	return -1;
 }
@@ -82,6 +78,8 @@ bool	CommandManager::exec(Server &server, Client &client, std::string raw) {
 			} else {
 				tmp += raw[i];
 			}
+		} else if (raw[i] == ':' && quote == 0 && tmp.length() == 0) {
+			quote = ':';
 		} else {
 			tmp += raw[i];
 		}
@@ -90,25 +88,27 @@ bool	CommandManager::exec(Server &server, Client &client, std::string raw) {
 		args.push_back(tmp);
 
 	if (args.size() > 0 && args[0][0] == ':') {
-		prefix = args[0];
+		prefix = args[0].substr(1);
 		args.erase(args.begin());
 	}
 	if (args.size() > 0) {
 		label = args[0];
+		std::transform(label.begin(), label.end(), label.begin(), ::toupper);
 		args.erase(args.begin());
 	}
 	return exec(server, client, label, prefix, args.data(), args.size());
 }
 
-
 bool	CommandManager::exec(Server &server, Client &client, std::string label,
 			std::string prefix, std::string args[], int argsCount) {
+	if (label.empty())
+		return false;
 	int	idx = getCommandIndex(label);
 	if (idx == -1) {
-		// client.sendNumeric(ERR_UNKNOWNCOMMAND, label);
-		log(WARNING, "(?) <" + client.getFullAddress() + ">: Unknown command: " + label);
+		client.sendCommand(ERR_UNKNOWNCOMMAND(label));
 		return false;
 	}
+	log(INFO, "Executing command: " + label + " with executor: " + commands[idx]->getName(), C_MAGENTA);
 	return commands[idx]->exec(server, client, label, prefix, args, argsCount);
 }
 

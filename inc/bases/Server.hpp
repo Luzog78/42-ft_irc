@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:44 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 07:16:20 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:26:29 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ class Server {
 		void					receive();
 		void					close();
 
-		std::string				getFullAddress();
+		void					welcome(Client &client);
+		void					removeClient(Client &client);
+
+		std::string					getFullAddress();
+		std::vector<std::string>	getNicknames();
 		
 		int						getPort();
 		int						getMaxClients();

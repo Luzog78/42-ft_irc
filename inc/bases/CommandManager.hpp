@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 11:08:54 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/08 17:18:29 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "ft_irc.hpp"
 # include "UserCommand.hpp"
 # include "NickCommand.hpp"
+# include "PingCommand.hpp"
+# include "PongCommand.hpp"
+# include "QuitCommand.hpp"
 
 class CommandManager {
 	private:
