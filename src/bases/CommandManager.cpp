@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:52:50 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:00:24 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/13 13:52:35 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,10 @@ bool	CommandManager::exec(Server &server, Client &client, std::string label,
 		return false;
 	int	idx = getCommandIndex(label);
 	if (idx == -1) {
-		client.sendCommand(ERR_UNKNOWNCOMMAND(label));
+		if (client.isRegistered())
+			client.sendCommand(ERR_UNKNOWNCOMMAND(label));
 		return false;
 	}
-	log(INFO, "Executing command: " + label + " with executor: " + commands[idx]->getName(), C_MAGENTA);
 	return commands[idx]->exec(server, client, label, prefix, args, argsCount);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:16:55 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:49:11 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ bool	PongCommand::exec(Server &server, Client &client, std::string label,
 	(void) label;
 	(void) prefix;
 
+	if (!client.isRegistered())
+		return false;
 	if (argsCount == 0) {
 		client.sendCommand(ERR_NOORIGIN);
 		return false;

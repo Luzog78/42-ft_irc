@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:25:59 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:02:44 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,16 @@ bool	QuitCommand::exec(Server &server, Client &client, std::string label,
 	(void) label;
 	(void) prefix;
 
+	if (!client.isRegistered())
+		return false;
+
 	std::string	quitMessage = argsCount > 0 ? args[0] : "Got bored... -_-";
 
-	for (std::vector<Client>::iterator it = server.getClients().begin(); it != server.getClients().end(); it++) {
-		if (it->getNickname() == client.getNickname())
+	std::vector<Client> clients = server.getClients();
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++) {
+		if (it->getSocket() == client.getSocket())
 			continue;
-		it->sendCommand("QUIT :" + quitMessage, client.getPrefix());
+		it->sendCommand(name + " :" + quitMessage, client.getPrefix());
 	}
 
 	server.removeClient(client);

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:05:38 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:02:16 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ bool	NickCommand::exec(Server &server, Client &client, std::string label,
 	if (find(nicknames.begin(), nicknames.end(), args[0]) != nicknames.end()) {
 		client.sendCommand(ERR_NICKNAMEINUSE(args[0]));
 		return false;
+	}
+
+	if (client.isRegistered()) {
+		std::vector<Client> clients = server.getClients();
+		for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+			it->sendCommand(name + " " + args[0], client.getPrefix());
 	}
 
 	client.setNickname(args[0]);

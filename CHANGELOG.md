@@ -6,7 +6,8 @@
 
 |           Version            |  Tag   | Importance | Runnable |
 | ---------------------------- | ------ | ---------- | -------- |
-| [1.1.0](#latest-110---major) | Latest |  `major`   |    ✅    |
+| [1.1.1](#latest-111---minor) | Latest |  `minor`   |    ✅    |
+| [1.1.0](#110---major)        |  v1.1  |  `major`   |    ❌    |
 | [1.0.3](#103---minor)        |        |  `minor`   |    ✅    |
 | [1.0.2](#102---major)        |        |  `major`   |    ✅    |
 | [1.0.0](#first-100---major)  | First  |  `major`   |    ✅    |
@@ -14,6 +15,17 @@
 </div>
 
 <br>
+
+## Latest: 1.1.1 - `minor`
+
+<br>
+
+- Fixed commands:
+  - [x] NICK
+  - [X] QUIT
+- Makefile update (now runnable)
+
+<br><br>
 
 ## Latest: 1.1.0 - `major`
 
@@ -28,7 +40,7 @@
   - [x] USER
   - [x] PING
   - [x] PONG
-  - [x] QUIT
+  - [ ] ~~QUIT~~
 - Registration (welcome message, etc.)
 - Prefixes are now fixed (syntax: `:prefix COMMAND params`)
 - Now, I understand the IRC protocol better... _(kinda) 😅_

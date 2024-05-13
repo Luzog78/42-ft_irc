@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:27:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:43:18 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,9 +142,7 @@ void	Server::receive() {
 				throw ServerException("Receive failed from " + client.getFullAddress());
 
 			if (ret == 0) {
-				log(INFO, "<" + client.getFullAddress() + ">: Disconnected");
-				client.close();
-				clients.erase(clients.begin() + i);
+				removeClient(client);
 				continue;
 			}
 
@@ -178,6 +176,8 @@ void	Server::welcome(Client &client) {
 
 
 void	Server::removeClient(Client &client) {
+	log(INFO, "<" + client.getFullAddress() + ">: Disconnected");
+	client.close();
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++) {
 		if (it->getSocket() == client.getSocket()) {
 			clients.erase(it);
