@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/13 14:43:18 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 21:25:49 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ Server::~Server() {
 void	Server::start(int port, int maxClients) {
 	this->port = port;
 	this->maxClients = maxClients;
-	
+
 	sckt = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (sckt < 0)
 		throw ServerException("Socket creation failed");
@@ -94,7 +94,7 @@ void	Server::poll() {
 	int	pollResult = ::poll(_pollfds.data(), _pollfds.size(), 0);
 	if (pollResult < 0)
 		throw ServerException("Poll failed");
-	
+
 	acceptPoll = _pollfds[0];
 	for (size_t i = 1; i < _pollfds.size(); i++) {
 		clients[i - 1].setPollFd(_pollfds[i]);
@@ -115,10 +115,10 @@ void	Server::accept() {
 		if (fcntl(clientSocket, F_SETFL, O_NONBLOCK) < 0)
 			throw ServerException("fcntl failed (new client, fd: " + itoa(clientSocket)
 				+ ", ip: " + inet_ntoa(clientAddr.sin_addr) + ")");
-		
+
 		Client	newClient(clientSocket, clientAddr);
 
-		log(INFO, "<" + newClient.getFullAddress() + ">: Connected");
+		log(INFO, "<" + newClient.getLogPrefix() + ">: Connected");
 
 		pollfd	newPollfd;
 		newPollfd.fd = clientSocket;
@@ -133,7 +133,7 @@ void	Server::accept() {
 void	Server::receive() {
 	for (size_t i = 0; i < clients.size(); i++) {
 		Client	&client = clients[i];
-		
+
 		if (client.getPollFd().revents & POLLIN) {
 			char	buffer[1025];
 			int		ret = recv(client.getSocket(), buffer, 1024, 0);
@@ -158,7 +158,7 @@ void	Server::receive() {
 					cmdBuffer = line;
 					break;
 				}
-				log(INFO, "(R) <" + client.getFullAddress() + ">: " + line, C_CYAN);
+				log(INFO, "(R) <" + client.getLogPrefix() + ">: " + line, C_CYAN);
 				commandManager.exec(*this, client, line);
 			}
 		}
@@ -168,15 +168,15 @@ void	Server::receive() {
 
 void	Server::welcome(Client &client) {
 	client.setRegistered(true);
-	client.sendCommand("CAP * LS :");
-	client.sendCommand(RPL_WELCOME(client.getNickname()));
-	client.sendCommand(RPL_YOURHOST(client.getNickname(), std::string("localhost"), "1.0"));
-	client.sendCommand(RPL_CREATED(client.getNickname(), std::string("once upon a time...")));
+	client.send("CAP * LS :");
+	client.send(RPL_WELCOME(client.getNick()));
+	client.send(RPL_YOURHOST(client.getNick(), std::string("localhost"), "1.0"));
+	client.send(RPL_CREATED(client.getNick(), std::string("once upon a time...")));
 }
 
 
 void	Server::removeClient(Client &client) {
-	log(INFO, "<" + client.getFullAddress() + ">: Disconnected");
+	log(INFO, "<" + client.getLogPrefix() + ">: Disconnected");
 	client.close();
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++) {
 		if (it->getSocket() == client.getSocket()) {
@@ -207,7 +207,7 @@ std::vector<std::string>	Server::getNicknames() {
 	std::vector<std::string>	nicknames;
 
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
-		nicknames.push_back(it->getNickname());
+		nicknames.push_back(it->getNick());
 	return nicknames;
 }
 
@@ -257,6 +257,33 @@ std::vector<Client>	Server::getClients() {
 }
 
 
+Client	&Server::getClientBySocket(int sckt) {
+	for (size_t i = 0; i < clients.size(); i++) {
+		if (clients[i].getSocket() == sckt)
+			return clients[i];
+	}
+	throw ServerException("Client not found (socket: " + itoa(sckt) + ")");
+}
+
+
+Client	&Server::getClientByAddress(std::string addr) {
+	for (size_t i = 0; i < clients.size(); i++) {
+		if (clients[i].getFullAddress() == addr)
+			return clients[i];
+	}
+	throw ServerException("Client not found (address: " + addr + ")");
+}
+
+
+Client	&Server::getClientByNickname(std::string nickname) {
+	for (size_t i = 0; i < clients.size(); i++) {
+		if (clients[i].getNick() == nickname)
+			return clients[i];
+	}
+	throw ServerException("Client not found (nickname: " + nickname + ")");
+}
+
+
 void	Server::setClients(std::vector<Client> clients) {
 	this->clients = clients;
 }
@@ -264,6 +291,30 @@ void	Server::setClients(std::vector<Client> clients) {
 
 std::vector<Channel>	Server::getChannels() {
 	return channels;
+}
+
+
+Channel	&Server::getChannelByName(std::string name) {
+	for (size_t i = 0; i < channels.size(); i++) {
+		if (channels[i].getName() == name)
+			return channels[i];
+	}
+	throw ServerException("Channel not found (name: " + name + ")");
+}
+
+
+void	Server::addChannel(Channel channel) {
+	channels.push_back(channel);
+}
+
+
+void	Server::removeChannel(std::string name) {
+	for (std::vector<Channel>::iterator it = channels.begin(); it != channels.end(); it++) {
+		if (it->getName() == name) {
+			channels.erase(it);
+			return;
+		}
+	}
 }
 
 

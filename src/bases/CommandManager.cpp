@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:52:50 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/13 13:52:35 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 20:10:38 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ CommandManager::~CommandManager() {
 
 int	CommandManager::getCommandIndex(std::string label) {
 	for (size_t i = 0; i < commands.size(); i++) {
-		Command	*cmd = commands[i];
+		Command						*cmd = commands[i];
+		std::vector<std::string>	aliases = cmd->getAliases();
 
-		if (cmd->getName() == label || std::find(cmd->getAliases().begin(),
-				cmd->getAliases().end(), label) != cmd->getAliases().end())
+		if (cmd->getName() == label || std::find(aliases.begin(),
+				aliases.end(), label) != aliases.end())
 			return i;
 	}
 	return -1;
@@ -106,7 +107,7 @@ bool	CommandManager::exec(Server &server, Client &client, std::string label,
 	int	idx = getCommandIndex(label);
 	if (idx == -1) {
 		if (client.isRegistered())
-			client.sendCommand(ERR_UNKNOWNCOMMAND(label));
+			client.send(ERR_UNKNOWNCOMMAND(client.getNick(), label));
 		return false;
 	}
 	return commands[idx]->exec(server, client, label, prefix, args, argsCount);

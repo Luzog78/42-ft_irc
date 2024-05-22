@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:41:06 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/07 09:12:58 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 20:07:51 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,66 @@
 
 class Channel {
 	private:
-		std::string			name;
-		std::vector<int>	clients;
+		std::string					name;
+
+		std::string					owner;
+		std::vector<std::string>	operators;
+
+		std::vector<int>			members;
+
+		bool						inviteOnly;
+		std::vector<std::string>	invited;
+		bool						topicRestricted;
+		std::string					topic;
+		std::string					key;
+		bool						limited;
+		size_t						limit;
+
 
 	public:
 		Channel();
-		Channel(std::string name);
+		Channel(std::string name, std::string owner);
 		Channel(const Channel &channel);
 		Channel	&operator=(const Channel &channel);
 		~Channel();
 
-		std::string			getName();
-		void				setName(std::string name);
-		std::vector<int>	getClients();
-		void				setClients(std::vector<int> clients);
+		std::vector<Client>			getOnlineClients(Server &server);
+		bool						hasRight(std::string addr);
+		bool						isMember(int socket);
+		bool						isFull();
+		std::string					getMemberNicks();
+
+		void						broadcast(Server &server, std::string command);
+		void						broadcast(Server &server, std::string command, std::string prefix);
+
+		std::string					getName();
+		void						setName(std::string name);
+		std::string					getOwner();
+		void						setOwner(std::string owner);
+		std::vector<std::string>	getOperators();
+		void						addOperator(std::string operatorName);
+		void						removeOperator(std::string operatorName);
+		void						setOperators(std::vector<std::string> operators);
+		std::vector<int>			getMembers();
+		void						addMember(int socket);
+		void						removeMember(int socket);
+		void						setMembers(std::vector<int> sockets);
+		bool						isInviteOnly();
+		void						setInviteOnly(bool inviteOnly);
+		std::vector<std::string>	getInvited();
+		void						addInvited(std::string invited);
+		void						removeInvited(std::string invited);
+		void						setInvited(std::vector<std::string> invited);
+		bool						isTopicRestricted();
+		void						setTopicRestricted(bool topicRestricted);
+		std::string					getTopic();
+		void						setTopic(std::string topic);
+		std::string					getKey();
+		void						setKey(std::string key);
+		bool						isLimited();
+		void						setLimited(bool limited);
+		size_t						getLimit();
+		void						setLimit(size_t limit);
 
 		class ChannelException : public IRCException {
 			public:

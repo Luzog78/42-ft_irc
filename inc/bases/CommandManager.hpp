@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:18:29 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 20:49:48 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 # define COMMANDMANAGER_HPP
 
 # include "ft_irc.hpp"
-# include "UserCommand.hpp"
+# include "JoinCommand.hpp"
 # include "NickCommand.hpp"
+# include "PartCommand.hpp"
 # include "PingCommand.hpp"
 # include "PongCommand.hpp"
+# include "PrivCommand.hpp"
 # include "QuitCommand.hpp"
+# include "UserCommand.hpp"
 
 class CommandManager {
 	private:

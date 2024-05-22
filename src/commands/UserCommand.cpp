@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 16:54:29 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 20:03:23 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,18 @@ bool	UserCommand::exec(Server &server, Client &client, std::string label,
 	(void) prefix;
 
 	if (client.isRegistered()) {
-		client.sendCommand(ERR_ALREADYREGISTRED);
+		client.send(ERR_ALREADYREGISTRED(client.getNick()));
 		return false;
 	}
 	if (argsCount < 4) {
-		client.sendCommand(ERR_NEEDMOREPARAMS(name));
+		client.send(ERR_NEEDMOREPARAMS(client.getNick(), name));
 		return false;
 	}
 
 	client.setUsername(args[0]);
 	client.setRealname(args[3]);
 
-	if (!client.getNickname().empty())
+	if (!client.getNick().empty())
 		server.welcome(client);
 	return true;
 }

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/13 15:02:44 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 21:41:04 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ bool	QuitCommand::exec(Server &server, Client &client, std::string label,
 	if (!client.isRegistered())
 		return false;
 
-	std::string	quitMessage = argsCount > 0 ? args[0] : "Got bored... -_-";
+	std::string					quitMessage = argsCount > 0 ? args[0] : "Got bored... -_-";
+	std::vector<std::string>	channels = client.getChannels();
 
-	std::vector<Client> clients = server.getClients();
-	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++) {
-		if (it->getSocket() == client.getSocket())
-			continue;
-		it->sendCommand(name + " :" + quitMessage, client.getPrefix());
+	for (std::vector<std::string>::iterator it = channels.begin(); it != channels.end(); it++) {
+		Channel	&channel = server.getChannelByName(*it);
+
+		channel.removeMember(client.getSocket());
+		channel.broadcast(server, name + " :" + quitMessage, client.getPrefix());
 	}
-
 	server.removeClient(client);
 	return true;
 }

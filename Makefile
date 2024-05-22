@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/08 17:43:48 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/22 21:09:27 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,12 @@ SRC_FILES			= \
 						src/bases/Channel.cpp \
 						src/bases/Command.cpp \
 						src/bases/CommandManager.cpp \
+						src/commands/JoinCommand.cpp \
 						src/commands/NickCommand.cpp \
+						src/commands/PartCommand.cpp \
 						src/commands/PingCommand.cpp \
 						src/commands/PongCommand.cpp \
+						src/commands/PrivCommand.cpp \
 						src/commands/QuitCommand.cpp \
 						src/commands/UserCommand.cpp \
 						src/main.cpp

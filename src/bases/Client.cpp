@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:59:23 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 16:51:51 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 21:25:36 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ Client::~Client() {
 
 void	Client::close() {
 	if (sckt >= 0) {
-		log(INFO, "Closing <" + getFullAddress() + ">...");
+		log(INFO, "Closing <" + getLogPrefix() + ">...");
 		::close(sckt);
 	}
 	sckt = -1;
@@ -89,22 +89,30 @@ std::string	Client::getPrefix() {
 }
 
 
-void	Client::sendCommand(std::string command) {
-	sendCommand(command, getPrefix());
+std::string	Client::getLogPrefix() {
+	if (nickname.empty() || username.empty())
+		return getFullAddress();
+	return nickname + "!" + username + "@" + ip
+			+ ":" + itoa(port) + "/" + itoa(sckt);
 }
 
 
-void	Client::sendCommand(std::string command, std::string prefix) {
+void	Client::send(std::string command) {
+	send(command, getPrefix());
+}
+
+
+void	Client::send(std::string command, std::string prefix) {
 	if (sckt < 0)
 		throw ClientException("Socket is not connected");
 	if (!(pollFd.revents & POLLOUT))
 		throw ClientException("Socket is not ready to send data");
 
-	log(INFO, "(S) <" + getFullAddress() + ">: " + command, C_GREEN);
-
 	std::string	finalCmd = ":" + prefix + " " + command + "\n";
-	if (send(sckt, finalCmd.c_str(), finalCmd.length(), 0) < 0)
-		throw ClientException("Send command '" + finalCmd + "' to <" + getFullAddress() + "> failed");
+
+	log(INFO, "(S) <" + getLogPrefix() + ">: " + finalCmd, C_GREEN);
+	if (::send(sckt, finalCmd.c_str(), finalCmd.length(), 0) < 0)
+		throw ClientException("Send command '" + finalCmd + "' to <" + getLogPrefix() + "> failed");
 }
 
 
@@ -175,12 +183,12 @@ void	Client::setRegistered(bool registered) {
 }
 
 
-std::string	Client::getNickname() {
+std::string	Client::getNick() {
 	return nickname;
 }
 
 
-void	Client::setNickname(std::string nickname) {
+void	Client::setNick(std::string nickname) {
 	this->nickname = nickname;
 }
 
@@ -202,4 +210,27 @@ std::string	Client::getRealname() {
 
 void	Client::setRealname(std::string realname) {
 	this->realname = realname;
+}
+
+
+std::vector<std::string>	Client::getChannels() {
+	return channels;
+}
+
+
+void	Client::addChannel(std::string channel) {
+	channels.push_back(channel);
+}
+
+
+void	Client::removeChannel(std::string channel) {
+	std::vector<std::string>::iterator it = std::find(
+		channels.begin(), channels.end(), channel);
+	if (it != channels.end())
+		channels.erase(it);
+}
+
+
+void	Client::setChannels(std::vector<std::string> channels) {
+	this->channels = channels;
 }

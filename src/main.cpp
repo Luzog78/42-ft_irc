@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/13 13:53:54 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 21:08:29 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,44 +78,21 @@ template <typename T>
 class List {
 	private:
 		std::vector<T>	list;
-	
+
 	public:
 		List() {
 		}
 
 		List(T item) {
-			add(item);
+			list.push_back(item);
 		}
 
 		List	operator()(T item) {
-			add(item);
-			return *this;
-		}
-
-		List	add(T item) {
 			list.push_back(item);
 			return *this;
 		}
-		
-		T	get(size_t index) {
-			return list[index];
-		}
 
-		size_t	size() {
-			return list.size();
-		}
-
-		List	clear() {
-			list.clear();
-			return *this;
-		}
-
-		List	remove(size_t index) {
-			list.erase(list.begin() + index);
-			return *this;
-		}
-
-		std::vector<T>	vec() {
+		std::vector<T>	v() {
 			return list;
 		}
 };
@@ -124,11 +101,14 @@ int main() {
 	signal(SIGINT, signalHandler);
 
 	commandManager
-		.addCommand(new UserCommand("USER", std::vector<std::string>()))
-		.addCommand(new NickCommand("NICK", std::vector<std::string>()))
-		.addCommand(new PingCommand("PING", std::vector<std::string>()))
-		.addCommand(new PongCommand("PONG", std::vector<std::string>()))
-		.addCommand(new QuitCommand("QUIT", std::vector<std::string>()))
+		.addCommand(new JoinCommand("JOIN", List<std::string>("J").v()))
+		.addCommand(new NickCommand("NICK", List<std::string>("N").v()))
+		.addCommand(new PartCommand("PART", List<std::string>("P").v()))
+		.addCommand(new PingCommand("PING", List<std::string>("PI").v()))
+		.addCommand(new PongCommand("PONG", List<std::string>("PO").v()))
+		.addCommand(new PrivCommand("PRIVMSG", List<std::string>("M")("MSG").v()))
+		.addCommand(new UserCommand("USER", List<std::string>("U").v()))
+		.addCommand(new QuitCommand("QUIT", List<std::string>("Q").v()))
 		;
 
 	try {

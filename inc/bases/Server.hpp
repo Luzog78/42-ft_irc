@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:44 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 17:26:29 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 20:30:09 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,14 @@ class Server {
 		void					setAddr(struct sockaddr_in addr);
 		struct sockaddr_in		*getAddrPtr();
 		std::vector<Client>		getClients();
+		Client					&getClientBySocket(int sckt);
+		Client					&getClientByAddress(std::string addr);
+		Client					&getClientByNickname(std::string nickname);
 		void					setClients(std::vector<Client> clients);
 		std::vector<Channel>	getChannels();
+		Channel					&getChannelByName(std::string name);
+		void					addChannel(Channel channel);
+		void					removeChannel(std::string name);
 		void					setChannels(std::vector<Channel> channels);
 		pollfd					getAcceptPoll();
 		pollfd					*getAcceptPollPtr();

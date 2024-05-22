@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:01 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 15:24:12 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 19:50:26 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ class IRCException : public std::exception {
 		}
 };
 
+class ITarget;
 class Server;
 class Client;
 class Channel;

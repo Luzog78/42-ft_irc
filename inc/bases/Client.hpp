@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:46 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/08 16:29:52 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 21:24:46 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ class Client {
 		void				close();
 		std::string			getFullAddress();
 		std::string			getPrefix();
+		std::string			getLogPrefix();
 
-		void				sendCommand(std::string command);
-		void				sendCommand(std::string command, std::string prefix);
+		void				send(std::string command);
+		void				send(std::string command, std::string prefix);
 
 		std::string			getIp();
 		int					getPort();
@@ -55,14 +56,18 @@ class Client {
 		pollfd				*getPollFdPtr();
 		void				setPollFd(pollfd pollFd);
 
-		bool				isRegistered();
-		void				setRegistered(bool registered);
-		std::string			getNickname();
-		void				setNickname(std::string nickname);
-		std::string			getUsername();
-		void				setUsername(std::string username);
-		std::string			getRealname();
-		void				setRealname(std::string realname);
+		bool						isRegistered();
+		void						setRegistered(bool registered);
+		std::string					getNick();
+		void						setNick(std::string nickname);
+		std::string					getUsername();
+		void						setUsername(std::string username);
+		std::string					getRealname();
+		void						setRealname(std::string realname);
+		std::vector<std::string>	getChannels();
+		void						addChannel(std::string channel);
+		void						removeChannel(std::string channel);
+		void						setChannels(std::vector<std::string> channels);
 
 		class ClientException : public IRCException {
 			public:

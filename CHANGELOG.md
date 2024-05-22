@@ -4,30 +4,50 @@
 
 <br>
 
-|           Version            |  Tag   | Importance | Runnable |
-| ---------------------------- | ------ | ---------- | -------- |
-| [1.1.1](#latest-111---minor) | Latest |  `minor`   |    ✅    |
-| [1.1.0](#110---major)        |  v1.1  |  `major`   |    ❌    |
-| [1.0.3](#103---minor)        |        |  `minor`   |    ✅    |
-| [1.0.2](#102---major)        |        |  `major`   |    ✅    |
-| [1.0.0](#first-100---major)  | First  |  `major`   |    ✅    |
-  
+|           Version            |       Tag        | Importance | Runnable |
+| ---------------------------- | ---------------- | ---------- | -------- |
+| [1.2.0](#latest-120---major) | Latest, Channels |  `major`   |    ✅    |
+| [1.1.1](#111---minor)        |                  |  `minor`   |    ✅    |
+| [1.1.0](#110---major)        |     Commands     |  `major`   |    ❌    |
+| [1.0.3](#103---minor)        |                  |  `minor`   |    ✅    |
+| [1.0.2](#102---major)        |                  |  `major`   |    ✅    |
+| [1.0.0](#first-100---major)  |     Initial      |  `major`   |    ✅    |
+
 </div>
 
 <br>
 
-## Latest: 1.1.1 - `minor`
+## Latest: 1.2.0 - `major`
+
+<br>
+
+&nbsp; &nbsp; &nbsp; __~ &nbsp; Channels ! &nbsp; ~__ &nbsp; &nbsp; &nbsp;
+
+> Finally, we have channels ! 🎉
+> *(It was a looong way to get here because of the RFC doc but... now we have it !)*
+
+- [x] PRIVMSG
+- [x] JOIN
+- [x] PART
+- [x] QUIT *(fix: send only to the current channels)*
+- Numeric replies refactoring
+- Commands logging update
+- Changlog organisation update
+
+<br><br>
+
+## 1.1.1 - `minor`
 
 <br>
 
 - Fixed commands:
   - [x] NICK
-  - [X] QUIT
+  - [x] QUIT
 - Makefile update (now runnable)
 
 <br><br>
 
-## Latest: 1.1.0 - `major`
+## 1.1.0 - `major`
 
 <br>
 
@@ -89,5 +109,5 @@
   ---
 
   See yall ! 😉
-  > — &nbsp;&nbsp; _[Luzog78](github.com/Luzog78)_ &nbsp; | &nbsp; _[ysabik](profile.intra.42.fr/users/ysabik)_
+  > — &nbsp;&nbsp; _[Luzog78](https://github.com/Luzog78)_ &nbsp; | &nbsp; _[ysabik](https://profile.intra.42.fr/users/ysabik)_
 </div>
