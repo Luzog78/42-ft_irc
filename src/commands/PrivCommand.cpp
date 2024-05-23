@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 20:03:23 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/22 23:19:32 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ static std::map<std::string, std::vector<Client> >	getTargets(Server &server, Cl
 				std::vector<Client>	channelMembers = channel.getOnlineClients(server);
 				targets[*it] = std::vector<Client>();
 				for (size_t i = 0; i < channelMembers.size(); i++)
-					targets[*it].push_back(channelMembers[i]);
+					if (channelMembers[i].getSocket() != client.getSocket())
+						targets[*it].push_back(channelMembers[i]);
 			} else {
 				Client	target = server.getClientByNickname(*it);
 				targets[*it] = std::vector<Client>();

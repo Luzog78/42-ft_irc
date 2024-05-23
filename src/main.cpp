@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 21:08:29 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/23 02:10:30 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int main() {
 
 	commandManager
 		.addCommand(new JoinCommand("JOIN", List<std::string>("J").v()))
+		.addCommand(new ModeCommand("MODE", List<std::string>("MD").v()))
 		.addCommand(new NickCommand("NICK", List<std::string>("N").v()))
 		.addCommand(new PartCommand("PART", List<std::string>("P").v()))
 		.addCommand(new PingCommand("PING", List<std::string>("PI").v()))

@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/22 21:09:27 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/23 02:10:40 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC_FILES			= \
 						src/bases/Command.cpp \
 						src/bases/CommandManager.cpp \
 						src/commands/JoinCommand.cpp \
+						src/commands/ModeCommand.cpp \
 						src/commands/NickCommand.cpp \
 						src/commands/PartCommand.cpp \
 						src/commands/PingCommand.cpp \

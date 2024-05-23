@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 21:25:49 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/23 19:33:34 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ void	Server::receive() {
 				throw ServerException("Receive failed from " + client.getFullAddress());
 
 			if (ret == 0) {
-				removeClient(client);
+				log(INFO, "(X) <" + client.getLogPrefix() + ">: QUIT :Client disconnected", C_MAGENTA);
+				commandManager.exec(*this, client, "QUIT :Client disconnected");
 				continue;
 			}
 

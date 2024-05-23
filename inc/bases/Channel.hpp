@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:41:06 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 20:07:51 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/23 02:08:44 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class Channel {
 
 	public:
 		Channel();
-		Channel(std::string name, std::string owner);
+		Channel(std::string name, std::string ownerAddr);
 		Channel(const Channel &channel);
 		Channel	&operator=(const Channel &channel);
 		~Channel();
@@ -45,6 +45,7 @@ class Channel {
 		bool						isMember(int socket);
 		bool						isFull();
 		std::string					getMemberNicks();
+		bool						isOperator(std::string addr);
 
 		void						broadcast(Server &server, std::string command);
 		void						broadcast(Server &server, std::string command, std::string prefix);
@@ -52,10 +53,10 @@ class Channel {
 		std::string					getName();
 		void						setName(std::string name);
 		std::string					getOwner();
-		void						setOwner(std::string owner);
+		void						setOwner(std::string ownerAddr);
 		std::vector<std::string>	getOperators();
-		void						addOperator(std::string operatorName);
-		void						removeOperator(std::string operatorName);
+		void						addOperator(std::string addr);
+		void						removeOperator(std::string addr);
 		void						setOperators(std::vector<std::string> operators);
 		std::vector<int>			getMembers();
 		void						addMember(int socket);

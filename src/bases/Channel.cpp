@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:50:36 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 20:08:13 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/23 02:59:19 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 Channel::Channel() {
 	inviteOnly = false;
-	topicRestricted = false;
+	topicRestricted = true;
 	limited = false;
 }
 
@@ -29,7 +29,7 @@ Channel::Channel(std::string name, std::string owner) {
 	this->name = name;
 	this->owner = owner;
 	inviteOnly = false;
-	topicRestricted = false;
+	topicRestricted = true;
 	limited = false;
 }
 
@@ -108,6 +108,11 @@ std::string	Channel::getMemberNicks() {
 }
 
 
+bool	Channel::isOperator(std::string addr) {
+	return std::find(operators.begin(), operators.end(), addr) != operators.end();
+}
+
+
 void	Channel::broadcast(Server &server, std::string command) {
 	for (std::vector<int>::iterator it = members.begin(); it != members.end(); it++)
 		try {
@@ -146,8 +151,8 @@ std::string	Channel::getOwner() {
 }
 
 
-void	Channel::setOwner(std::string owner) {
-	this->owner = owner;
+void	Channel::setOwner(std::string ownerAddr) {
+	this->owner = ownerAddr;
 }
 
 
@@ -179,14 +184,14 @@ std::vector<std::string>	Channel::getOperators() {
 }
 
 
-void	Channel::addOperator(std::string operatorName) {
-	operators.push_back(operatorName);
+void	Channel::addOperator(std::string operatorAddr) {
+	operators.push_back(operatorAddr);
 }
 
 
-void	Channel::removeOperator(std::string operatorName) {
+void	Channel::removeOperator(std::string operatorAddr) {
 	std::vector<std::string>::iterator it = std::find(
-		operators.begin(), operators.end(), operatorName);
+		operators.begin(), operators.end(), operatorAddr);
 	if (it != operators.end())
 		operators.erase(it);
 }
