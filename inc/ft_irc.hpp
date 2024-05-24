@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:01 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 19:50:26 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 10:51:16 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@
 
 typedef enum e_error_level {
 	INFO,
-	DATA,
 	WARNING,
 	ERROR
 }	ErrorLevel;

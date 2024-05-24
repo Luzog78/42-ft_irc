@@ -6,7 +6,7 @@
 /*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 12:48:36 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:08:22 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define COMMANDMANAGER_HPP
 
 # include "ft_irc.hpp"
-# include "NamesCommand.hpp"
+# include "InviteCommand.hpp"
 # include "JoinCommand.hpp"
 # include "ModeCommand.hpp"
+# include "NamesCommand.hpp"
 # include "NickCommand.hpp"
 # include "PartCommand.hpp"
 # include "PingCommand.hpp"

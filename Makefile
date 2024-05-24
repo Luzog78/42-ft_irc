@@ -6,7 +6,7 @@
 #    By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/24 12:48:10 by kbutor-b         ###   ########.fr        #
+#    Updated: 2024/05/24 13:07:59 by kbutor-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ SRC_FILES			= \
 						src/bases/Channel.cpp \
 						src/bases/Command.cpp \
 						src/bases/CommandManager.cpp \
-						src/commands/NamesCommand.cpp \
+						src/commands/InviteCommand.cpp \
 						src/commands/JoinCommand.cpp \
 						src/commands/ModeCommand.cpp \
+						src/commands/NamesCommand.cpp \
 						src/commands/NickCommand.cpp \
 						src/commands/PartCommand.cpp \
 						src/commands/PingCommand.cpp \

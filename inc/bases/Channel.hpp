@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:41:06 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/23 02:08:44 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:44:23 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ class Channel {
 		~Channel();
 
 		std::vector<Client>			getOnlineClients(Server &server);
-		bool						hasRight(std::string addr);
+		bool						hasRight(std::string nick, std::string addr);
 		bool						isMember(int socket);
 		bool						isFull();
 		std::string					getMemberNicks();
 		bool						isOperator(std::string addr);
+		bool						isInvited(std::string nick);
 
 		void						broadcast(Server &server, std::string command);
 		void						broadcast(Server &server, std::string command, std::string prefix);

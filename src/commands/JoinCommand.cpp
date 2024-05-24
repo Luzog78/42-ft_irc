@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 21:30:45 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:47:02 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,14 @@ bool	JoinCommand::exec(Server &server, Client &client, std::string label,
 
 			if (channel.isMember(client.getSocket())) {
 				// ignore
-			} else if (!channel.hasRight(client.getFullAddress())) {
+			} else if (!channel.hasRight(client.getNick(), client.getFullAddress())) {
 				client.send(ERR_INVITEONLYCHAN(client.getNick(), channel.getName()));
 			} else if (channel.isFull()) {
 				client.send(ERR_CHANNELISFULL(client.getNick(), channel.getName()));
 			} else if (!channel.getKey().empty() && channel.getKey() != key) {
 				client.send(ERR_BADCHANNELKEY(client.getNick(), channel.getName()));
 			} else {
+				channel.removeInvited(client.getNick());
 				client.addChannel(channel.getName());
 				channel.addMember(client.getSocket());
 				channel.broadcast(server, name + " " + channel.getName(), client.getPrefix());

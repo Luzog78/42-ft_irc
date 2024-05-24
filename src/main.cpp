@@ -6,7 +6,7 @@
 /*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 12:48:25 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:07:13 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,10 @@ int main() {
 	signal(SIGINT, signalHandler);
 
 	commandManager
-		.addCommand(new NamesCommand("NAMES", List<std::string>("NM")))
+		.addCommand(new InviteCommand("INVITE", List<std::string>("I")))
 		.addCommand(new JoinCommand("JOIN", List<std::string>("J")))
 		.addCommand(new ModeCommand("MODE", List<std::string>("MD")))
+		.addCommand(new NamesCommand("NAMES", List<std::string>("NM")))
 		.addCommand(new NickCommand("NICK", List<std::string>("N")))
 		.addCommand(new PartCommand("PART", List<std::string>("P")))
 		.addCommand(new PingCommand("PING", List<std::string>("PI")))
@@ -108,7 +109,7 @@ int main() {
 		;
 
 	try {
-		server.start(8080, 20);
+		server.start(8082, 20);
 	} catch (IRCException &e) {
 		log(ERROR, std::string(e.what()));
 		return 1;

@@ -6,7 +6,7 @@
 /*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 12:36:15 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:08:36 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 					channel.broadcast(server,
 						name + " " + channel.getName() + " " + grantChar + "i",
 						client.getPrefix());
+					if (!grant)
+						channel.setInvited(std::vector<std::string>());
 				} else if (args[1][i] == 't') {
 					if (channel.isTopicRestricted() == grant)
 						continue;
