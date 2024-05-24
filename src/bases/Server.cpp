@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 10:25:30 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 13:27:21 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,11 @@ void	Server::start(int port, int maxClients) {
 
 	log(INFO, "##############################");
 	log(INFO, "## >>> Server started ! <<< ##");
-	log(INFO, "##############################\n\n");
+	log(INFO, "##############################");
+	log(INFO, "\n");
+	log(INFO, "> Port:        " + std::string(C_YELLOW) + ":" + itoa(port));
+	log(INFO, "> Max clients: " + std::string(C_BLUE) + itoa(maxClients));
+	log(INFO, "\n");
 }
 
 

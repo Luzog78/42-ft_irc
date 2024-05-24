@@ -4,18 +4,19 @@
 
 <br>
 
-|           Version            |       Tag        | Importance | Runnable |
-| ---------------------------- | ---------------- | ---------- | -------- |
-| [1.2.9](#latest-128---major) |  Latest, INVITE  |  `major`   |    ✅    |
-| [1.2.8](#128---major)        |      TOPIC       |  `major`   |    ✅    |
-| [1.2.6](#126---minor)        |                  |  `minor`   |    ✅    |
-| [1.2.5](#125---major)        |       MODE       |  `major`   |    ✅    |
-| [1.2.0](#120---major)        |     Channels     |  `major`   |    ✅    |
-| [1.1.1](#111---minor)        |                  |  `minor`   |    ✅    |
-| [1.1.0](#110---major)        |     Commands     |  `major`   |    ❌    |
-| [1.0.3](#103---minor)        |                  |  `minor`   |    ✅    |
-| [1.0.2](#102---major)        |                  |  `major`   |    ✅    |
-| [1.0.0](#first-100---major)  |     Initial      |  `major`   |    ✅    |
+|            Version             |       Tag        | Importance | Runnable |
+| ------------------------------ | ---------------- | ---------- | -------- |
+| [1.2.10](#latest-1210---minor) |   Latest, argv   |  `minor`   |    ✅    |
+| [1.2.9](#129---major)          |      INVITE      |  `major`   |    ✅    |
+| [1.2.8](#128---major)          |      TOPIC       |  `major`   |    ✅    |
+| [1.2.6](#126---minor)          |                  |  `minor`   |    ✅    |
+| [1.2.5](#125---major)          |       MODE       |  `major`   |    ✅    |
+| [1.2.0](#120---major)          |     Channels     |  `major`   |    ✅    |
+| [1.1.1](#111---minor)          |                  |  `minor`   |    ✅    |
+| [1.1.0](#110---major)          |     Commands     |  `major`   |    ❌    |
+| [1.0.3](#103---minor)          |                  |  `minor`   |    ✅    |
+| [1.0.2](#102---major)          |                  |  `major`   |    ✅    |
+| [1.0.0](#first-100---major)    |     Initial      |  `major`   |    ✅    |
 
 <br><br>
 
@@ -46,7 +47,23 @@
 
 <br>
 
-## Latest 1.2.9: - `major`
+## Latest 1.2.10: - `minor`
+
+<br>
+
+- Deconnection when not registered.
+  - There was an infinite loop.
+  - Now, the `QUIT` command works even if the user is not registered.
+- Arguments parsing.
+  - Now, we can specify the port number and the maximum number of clients.
+  - `./ircserv [<port> [<maxClients>]]`
+  - `port` ∈ [1, 65535] (default: 8080)
+  - `maxClients` ∈ [1, 65535] (default: 100)
+- Port number and max clients number are now displayed in the server debug.
+
+<br><br>
+
+## 1.2.9: - `major`
 
 <br>
 
