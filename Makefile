@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/23 02:10:40 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/24 09:56:10 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_FILES			= \
 						src/commands/PongCommand.cpp \
 						src/commands/PrivCommand.cpp \
 						src/commands/QuitCommand.cpp \
+						src/commands/TopicCommand.cpp \
 						src/commands/UserCommand.cpp \
 						src/main.cpp
 

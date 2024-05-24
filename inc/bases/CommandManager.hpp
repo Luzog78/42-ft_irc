@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/23 01:12:55 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 09:51:25 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "PongCommand.hpp"
 # include "PrivCommand.hpp"
 # include "QuitCommand.hpp"
+# include "TopicCommand.hpp"
 # include "UserCommand.hpp"
 
 class CommandManager {

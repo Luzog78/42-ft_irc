@@ -6,7 +6,8 @@
 
 |           Version            |       Tag        | Importance | Runnable |
 | ---------------------------- | ---------------- | ---------- | -------- |
-| [1.2.6](#latest-126---minor) |      Latest      |  `minor`   |    ✅    |
+| [1.2.8](#latest-128---minor) |  Latest, TOPIC   |  `minor`   |    ✅    |
+| [1.2.6](#126---minor)        |                  |  `minor`   |    ✅    |
 | [1.2.5](#125---major)        |       MODE       |  `major`   |    ✅    |
 | [1.2.0](#120---major)        |     Channels     |  `major`   |    ✅    |
 | [1.1.1](#111---minor)        |                  |  `minor`   |    ✅    |
@@ -29,7 +30,7 @@
 |   ✅   | [PRIVMSG](https://datatracker.ietf.org/doc/html/rfc1459#section-4.4.1) | `PRIVMSG <receivers>[,...] <message>`            | Send a message. Receiver is either <br> **a user** or **a channel (#...)**. No <br> message should be sent to the <br> sender *(except when it is part <br> of the receivers)*. |
 | &nbsp; |                                                                        |                                                  |             |
 |   ✅   | [MODE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.3)    | `MODE <channel> [[+\|-]{i\|k\|l\|t\|o}] [<params...>]` <br> Flag `+k` - Param: `<key>` <br> Flag `+l` - Param: `<limit>` <br> Flag `(+\|-)o` - Param: `<operatorNick>` | Edit settings of a channel. <br> `i`: *Invite-only*, `k`: *Access key*, <br> `l`: *User limit*, `t`: *Topic restricted*, <br> `o`: *Channel operators*. |
-|   ❌   | [TOPIC](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.4)   |                                                  |             |
+|   ✅   | [TOPIC](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.4)   | `TOPIC <channel> [<newTopic>]`                   | Get or set the topic. To set a <br> new topic, the user must be a <br> channel operator OR the channel <br> must not have the `+t` option. |
 |   ❌   | [INVITE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.7)  |                                                  |             |
 |   ❌   | [KICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.8)    |                                                  |             |
 | &nbsp; |                                                                        |                                                  |             |
@@ -44,7 +45,15 @@
 
 <br>
 
-## Latest 1.2.6: - `minor`
+## Latest 1.2.8: - `major`
+
+<br>
+
+- [x] TOPIC
+
+<br><br>
+
+## 1.2.6: - `minor`
 
 <br>
 
