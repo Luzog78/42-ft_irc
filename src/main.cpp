@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 11:33:51 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 13:42:59 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,23 @@ class List : public std::vector<T> {
 		}
 };
 
-int main() {
+static size_t	parseUnsigned(const char *str, std::string message) {
+	size_t			res = 0;
+
+	while (*str >= '0' && *str <= '9') {
+		res = res * 10 + *str - '0';
+		if (res > 65535)
+			throw std::invalid_argument(message + " is too big (maximum: 65535)");
+		str++;
+	}
+	if (*str)
+		throw std::invalid_argument(message + " is not a positive number");
+	if (res == 0)
+		throw std::invalid_argument(message + " is too small (minimum: 1)");
+	return res;
+}
+
+int main(int argc, char **argv) {
 	signal(SIGINT, signalHandler);
 
 	commandManager
@@ -107,10 +123,25 @@ int main() {
 		.addCommand(new QuitCommand("QUIT", List<std::string>("Q")))
 		;
 
+	std::string	usage = "Usage: " + std::string(argv[0]) + " [<port> [<client_limit>]]";
+	const char	*port = argc > 1 ? argv[1] : "8080";
+	const char	*clientLimit = argc > 2 ? argv[2] : "100";
+
+	if (argc > 3) {
+		log(ERROR, "Too many arguments");
+		log(ERROR, usage);
+		return 1;
+	}
+
 	try {
-		server.start(8082, 20);
+		server.start(parseUnsigned(port, "Port"),
+			parseUnsigned(clientLimit, "Client limit"));
 	} catch (IRCException &e) {
 		log(ERROR, std::string(e.what()));
+		return 1;
+	} catch (std::invalid_argument &e) {
+		log(ERROR, std::string(e.what()));
+		log(ERROR, usage);
 		return 1;
 	}
 
