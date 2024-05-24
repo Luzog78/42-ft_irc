@@ -6,7 +6,8 @@
 
 |           Version            |       Tag        | Importance | Runnable |
 | ---------------------------- | ---------------- | ---------- | -------- |
-| [1.2.5](#latest-125---major) |   Latest, MODE   |  `major`   |    ✅    |
+| [1.2.6](#latest-126---minor) |      Latest      |  `minor`   |    ✅    |
+| [1.2.5](#125---major)        |       MODE       |  `major`   |    ✅    |
 | [1.2.0](#120---major)        |     Channels     |  `major`   |    ✅    |
 | [1.1.1](#111---minor)        |                  |  `minor`   |    ✅    |
 | [1.1.0](#110---major)        |     Commands     |  `major`   |    ❌    |
@@ -43,7 +44,16 @@
 
 <br>
 
-## Latest 1.2.5: - `major`
+## Latest 1.2.6: - `minor`
+
+<br>
+
+- Nicknames are now case-insensitive (--> Update of the `NICK` command)
+- Channel names are now case-insensitive
+
+<br><br>
+
+## 1.2.5: - `major`
 
 <br>
 

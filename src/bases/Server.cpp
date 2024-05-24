@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/23 19:33:34 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 10:25:30 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,10 +277,15 @@ Client	&Server::getClientByAddress(std::string addr) {
 
 
 Client	&Server::getClientByNickname(std::string nickname) {
-	for (size_t i = 0; i < clients.size(); i++) {
-		if (clients[i].getNick() == nickname)
-			return clients[i];
-	}
+	std::transform(nickname.begin(), nickname.end(), nickname.begin(), ::tolower);
+	for (size_t i = 0; i < clients.size(); i++)
+		if (clients[i].getNick().length() == nickname.length()) {
+			std::string	clientNickname = clients[i].getNick();
+			std::transform(clientNickname.begin(), clientNickname.end(),
+				clientNickname.begin(), ::tolower);
+			if (clientNickname == nickname)
+				return clients[i];
+		}
 	throw ServerException("Client not found (nickname: " + nickname + ")");
 }
 
@@ -296,10 +301,15 @@ std::vector<Channel>	Server::getChannels() {
 
 
 Channel	&Server::getChannelByName(std::string name) {
-	for (size_t i = 0; i < channels.size(); i++) {
-		if (channels[i].getName() == name)
-			return channels[i];
-	}
+	std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+	for (size_t i = 0; i < channels.size(); i++)
+		if (channels[i].getName().length() == name.length()) {
+			std::string	channelName = channels[i].getName();
+			std::transform(channelName.begin(), channelName.end(),
+				channelName.begin(), ::tolower);
+			if (channelName == name)
+				return channels[i];
+		}
 	throw ServerException("Channel not found (name: " + name + ")");
 }
 

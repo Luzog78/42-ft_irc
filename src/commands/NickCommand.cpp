@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 20:03:23 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 10:29:32 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ bool	NickCommand::exec(Server &server, Client &client, std::string label,
 		return false;
 	}
 
-	std::vector<std::string>	nicknames = server.getNicknames();
-	if (find(nicknames.begin(), nicknames.end(), args[0]) != nicknames.end()) {
+	try {
+		server.getClientByNickname(args[0]);
 		client.send(ERR_NICKNAMEINUSE(client.getNick(), args[0]));
 		return false;
+	} catch (Server::ServerException &ignored) {
 	}
 
 	if (client.isRegistered()) {
