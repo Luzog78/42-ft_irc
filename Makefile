@@ -6,9 +6,10 @@
 #    By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/24 13:07:59 by kbutor-b         ###   ########.fr        #
+#    Updated: 2024/05/24 15:10:39 by kbutor-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 CCXX				= c++
 CXXFLAGS			= -Werror -Wall -Wextra -std=c++98 -g
@@ -22,6 +23,7 @@ SRC_FILES			= \
 						src/bases/CommandManager.cpp \
 						src/commands/InviteCommand.cpp \
 						src/commands/JoinCommand.cpp \
+						src/commands/KickCommand.cpp \
 						src/commands/ModeCommand.cpp \
 						src/commands/NamesCommand.cpp \
 						src/commands/NickCommand.cpp \

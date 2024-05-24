@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:01:27 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 12:42:05 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:55:03 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define RPL_NAMREPLY(n, chan, nicks)		"353 " + n + " = " + chan + " :" + nicks
 # define RPL_ENDOFNAMES(n, chan)			"366 " + n + " " + chan + " :End of /NAMES list"
 
-# define ERR_NOSUCHNICK(n, nick)			"401 " + n + " " + nick + " :No such n/channel"
+# define ERR_NOSUCHNICK(n, nick)			"401 " + n + " " + nick + " :No such nick/channel"
 # define ERR_NOSUCHCHANNEL(n, chan)			"403 " + n + " " + chan + " :No such channel"
 # define ERR_CANNOTSENDTOCHAN(n, chan)		"404 " + n + " " + chan + " :Cannot send to channel"
 # define ERR_NOORIGIN(n)					"409 " + n + " :No origin specified"
@@ -32,6 +32,7 @@
 # define ERR_UNKNOWNCOMMAND(n, cmd)			"421 " + n + " " + cmd + " :Unknown command"
 # define ERR_NONICKNAMEGIVEN(n)				"431 " + n + " :No nickname given"
 # define ERR_NICKNAMEINUSE(n, nick)			"433 " + n + " " + nick + " :Nickname is already in use"
+# define ERR_USERNOTINCHANNEL(n, nick, chn)	"441 " + n + " " + nick + " " + chn + " :They aren't on that channel"
 # define ERR_NOTONCHANNEL(n, chan)			"442 " + n + " " + chan + " :You're not on that channel"
 # define ERR_USERONCHANNEL(n, nick, chan)	"443 " + n + " " + nick + " " + chan + " :is already on channel"
 # define ERR_NEEDMOREPARAMS(n, cmd)			"461 " + n + " " + cmd + " :Not enough parameters"

@@ -6,7 +6,11 @@
 /*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/05/24 13:08:22 by kbutor-b         ###   ########.fr       */
+=======
+/*   Updated: 2024/05/24 14:30:30 by ysabik           ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +20,7 @@
 # include "ft_irc.hpp"
 # include "InviteCommand.hpp"
 # include "JoinCommand.hpp"
+# include "KickCommand.hpp"
 # include "ModeCommand.hpp"
 # include "NamesCommand.hpp"
 # include "NickCommand.hpp"
