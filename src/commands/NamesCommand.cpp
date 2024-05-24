@@ -77,9 +77,8 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 	for (size_t i = 0; i < channels.size(); i++) {
 		try {
 			Channel	&channel = server.getChannelByName(channels[i]);
-			client.send(channel.getName());
-			client.send(channel.getMemberNicks());
-			(void) channel;
+			client.send(channel.getName() + " :" + channel.getMemberNicks());
+			client.send(RPL_ENDOFNAMES(client.getNick(), channel.getName()));
 		} catch (std::exception &e) {
 			client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
 			continue ;
