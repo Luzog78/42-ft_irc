@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:50:36 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 12:45:24 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:36:37 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,11 @@ std::string	Channel::getMemberNicks() {
 	std::string	memberNicks;
 	for (std::vector<int>::iterator it = members.begin(); it != members.end(); it++)
 		try {
-			memberNicks += " " + server.getClientBySocket(*it).getNick();
+			Client &client = server.getClientBySocket(*it);
+			if(this->isOperator(client.getFullAddress()) == true) {
+				memberNicks += " @" + client.getNick();
+			} else
+				memberNicks += " " + client.getNick();
 		} catch (Server::ServerException &ignored) {
 		}
 	return memberNicks.empty() ? "" : memberNicks.substr(1);

@@ -6,13 +6,10 @@
 /*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/24 13:07:13 by kbutor-b         ###   ########.fr       */
-=======
-/*   Updated: 2024/05/24 13:42:59 by ysabik           ###   ########.fr       */
->>>>>>> refs/remotes/origin/main
+/*   Updated: 2024/05/24 14:15:38 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "ft_irc.hpp"
 

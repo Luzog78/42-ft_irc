@@ -68,8 +68,8 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 	(void) prefix;
 
 	if (argsCount == 0) {
-		client.send("list of all users");
-		//print all channels and users, and all user left on channel *
+		std::vector<Channel> channels = server.getChannels();
+		client.send(RPL_ENDOFNAMES(client.getNick(), ""));
 		return true;
 	}
 	std::vector<std::string> channels = split(args[1]);
@@ -77,7 +77,7 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 	for (size_t i = 0; i < channels.size(); i++) {
 		try {
 			Channel	&channel = server.getChannelByName(channels[i]);
-			client.send(channel.getName() + " :" + channel.getMemberNicks());
+			client.send(RPL_NAMREPLY(client.getNick(), channel.getName(), channel.getMemberNicks()));
 			client.send(RPL_ENDOFNAMES(client.getNick(), channel.getName()));
 		} catch (std::exception &e) {
 			client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
