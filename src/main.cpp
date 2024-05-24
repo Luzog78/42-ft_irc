@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 09:55:37 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:48:25 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int main() {
 	signal(SIGINT, signalHandler);
 
 	commandManager
+		.addCommand(new NamesCommand("NAMES", List<std::string>("NM")))
 		.addCommand(new JoinCommand("JOIN", List<std::string>("J")))
 		.addCommand(new ModeCommand("MODE", List<std::string>("MD")))
 		.addCommand(new NickCommand("NICK", List<std::string>("N")))

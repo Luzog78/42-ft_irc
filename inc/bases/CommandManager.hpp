@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandManager.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 09:51:25 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:48:36 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define COMMANDMANAGER_HPP
 
 # include "ft_irc.hpp"
+# include "NamesCommand.hpp"
 # include "JoinCommand.hpp"
 # include "ModeCommand.hpp"
 # include "NickCommand.hpp"
