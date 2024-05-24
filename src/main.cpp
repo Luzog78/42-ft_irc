@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 13:42:59 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:46:12 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int main(int argc, char **argv) {
 	commandManager
 		.addCommand(new InviteCommand("INVITE", List<std::string>("I")))
 		.addCommand(new JoinCommand("JOIN", List<std::string>("J")))
+		.addCommand(new KickCommand("KICK", List<std::string>("K")))
 		.addCommand(new ModeCommand("MODE", List<std::string>("MD")))
 		.addCommand(new NickCommand("NICK", List<std::string>("N")))
 		.addCommand(new PartCommand("PART", List<std::string>("P")))

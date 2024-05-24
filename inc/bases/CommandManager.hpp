@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 11:25:59 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:30:30 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_irc.hpp"
 # include "InviteCommand.hpp"
 # include "JoinCommand.hpp"
+# include "KickCommand.hpp"
 # include "ModeCommand.hpp"
 # include "NickCommand.hpp"
 # include "PartCommand.hpp"

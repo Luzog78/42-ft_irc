@@ -6,7 +6,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.2.10](#latest-1210---minor) |   Latest, argv   |  `minor`   |    ✅    |
+| [1.2.11](#latest-1211---major) |   Latest, KICK   |  `major`   |    ✅    |
+| [1.2.10](#1210---minor)        |       argv       |  `minor`   |    ✅    |
 | [1.2.9](#129---major)          |      INVITE      |  `major`   |    ✅    |
 | [1.2.8](#128---major)          |      TOPIC       |  `major`   |    ✅    |
 | [1.2.6](#126---minor)          |                  |  `minor`   |    ✅    |
@@ -34,7 +35,7 @@
 |   ✅   | [MODE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.3)    | `MODE <channel> [[+\|-]{i\|k\|l\|t\|o}] [<params...>]` <br> Flag `+k` - Param: `<key>` <br> Flag `+l` - Param: `<limit>` <br> Flag `(+\|-)o` - Param: `<operatorNick>` | Edit settings of a channel. <br> `i`: *Invite-only*, `k`: *Access key*, <br> `l`: *User limit*, `t`: *Topic restricted*, <br> `o`: *Channel operators*. |
 |   ✅   | [TOPIC](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.4)   | `TOPIC <channel> [<newTopic>]`                   | Get or set the topic. To set a <br> new topic, the user must be a <br> channel operator OR the channel <br> must not have the `+t` option. |
 |   ✅   | [INVITE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.7)  | `INVITE <nick> <channel>`                        | Invite a member on *Invite-Only* <br> channel. The user must be a <br> channel operator. |
-|   ❌   | [KICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.8)    |                                                  |             |
+|   ✅   | [KICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.8)    | `KICK <channel> <nick> [<message>]`              | Kick a member. The user <br> must be a channel operator. |
 | &nbsp; |                                                                        |                                                  |             |
 |   ❌   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   |                                                  |             |
 |   ❌   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    |                                                  |             |
@@ -47,7 +48,15 @@
 
 <br>
 
-## Latest 1.2.10: - `minor`
+## Latest 1.2.11: - `major`
+
+<br>
+
+- [x] KICK
+
+<br><br>
+
+## 1.2.10: - `minor`
 
 <br>
 
