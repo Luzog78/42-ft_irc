@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:59:23 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 21:25:36 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 17:09:57 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,33 @@ Client::~Client() {
 /* ************************************************************************** */
 /* ---------------------------- Member functions ---------------------------- */
 /* ************************************************************************** */
+
+
+bool	Client::isLegalNickname(std::string name) {
+	if (name.length() < 1 || name.size() > 9
+		|| std::isdigit(name[0]) || name[0] == '-')
+		return false;
+	for (size_t i = 0; i < name.size(); i++)
+		if (!std::isprint(name[i]) || std::isspace(name[i])
+			|| (!std::isalnum(name[i]) && name[i] != '-'
+				&& name[i] != '[' && name[i] != ']' && name[i] != '\\'
+				&& name[i] != '_' && name[i] != '^' && name[i] != '{'
+				&& name[i] != '|' && name[i] != '}' && name[i] != '`'))
+			return false;
+	return true;
+}
+
+
+bool	Client::isLegalUsername(std::string name) {
+	if (name.length() < 1 || name.size() > 50)
+		return false;
+	for (size_t i = 0; i < name.size(); i++)
+		if (!std::isprint(name[i]) || std::isspace(name[i])
+			|| name[i] == ',' || name[i] == ':' || name[i] == '!'
+			|| name[i] == '@' || name[i] == '*')
+			return false;
+	return true;
+}
 
 
 void	Client::close() {

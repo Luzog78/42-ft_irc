@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:46 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 21:24:46 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 17:10:13 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ class Client {
 		Client(const Client &client);
 		Client	&operator=(const Client &client);
 		~Client();
+
+		static bool			isLegalNickname(std::string name);
+		static bool			isLegalUsername(std::string name);
 
 		void				close();
 		std::string			getFullAddress();
