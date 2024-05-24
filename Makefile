@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/24 09:56:10 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/24 11:26:55 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC_FILES			= \
 						src/bases/Channel.cpp \
 						src/bases/Command.cpp \
 						src/bases/CommandManager.cpp \
+						src/commands/InviteCommand.cpp \
 						src/commands/JoinCommand.cpp \
 						src/commands/ModeCommand.cpp \
 						src/commands/NickCommand.cpp \

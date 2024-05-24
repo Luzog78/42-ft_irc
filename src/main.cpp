@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 09:55:37 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 11:33:51 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int main() {
 	signal(SIGINT, signalHandler);
 
 	commandManager
+		.addCommand(new InviteCommand("INVITE", List<std::string>("I")))
 		.addCommand(new JoinCommand("JOIN", List<std::string>("J")))
 		.addCommand(new ModeCommand("MODE", List<std::string>("MD")))
 		.addCommand(new NickCommand("NICK", List<std::string>("N")))
@@ -107,7 +108,7 @@ int main() {
 		;
 
 	try {
-		server.start(8080, 20);
+		server.start(8082, 20);
 	} catch (IRCException &e) {
 		log(ERROR, std::string(e.what()));
 		return 1;

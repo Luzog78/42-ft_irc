@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:50:36 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/23 02:59:19 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:45:24 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ std::vector<Client>	Channel::getOnlineClients(Server &server) {
 }
 
 
-bool	Channel::hasRight(std::string addr) {
+bool	Channel::hasRight(std::string nick, std::string addr) {
 	if (owner == addr)
 		return true;
 	if (std::find(operators.begin(), operators.end(), addr) != operators.end())
 		return true;
-	if (std::find(invited.begin(), invited.end(), addr) != invited.end())
+	if (std::find(invited.begin(), invited.end(), nick) != invited.end())
 		return true;
 	return !inviteOnly;
 }
@@ -110,6 +110,11 @@ std::string	Channel::getMemberNicks() {
 
 bool	Channel::isOperator(std::string addr) {
 	return std::find(operators.begin(), operators.end(), addr) != operators.end();
+}
+
+
+bool	Channel::isInvited(std::string nick) {
+	return std::find(invited.begin(), invited.end(), nick) != invited.end();
 }
 
 
