@@ -47,18 +47,18 @@ NamesCommand::~NamesCommand() {
 /* ---------------------------- Member functions ---------------------------- */
 /* ************************************************************************** */
 
-static std::vector<std::string>		split(std::string raw) {
-	std::vector<std::string>	list;
-	std::string					sub;
+static std::vector<std::string>		splitTargets(std::string rawTargets) {
+	std::vector<std::string>	targetNames;
 	size_t						pos = 0;
 
-	while ((pos = raw.find(",")) != std::string::npos) {
-		sub = raw.substr(0, pos);
-		list.push_back(sub);
-		raw.erase(0, pos + 1);
+	while ((pos = rawTargets.find(",")) != std::string::npos) {
+		if (!rawTargets.substr(0, pos).empty())
+			targetNames.push_back(rawTargets.substr(0, pos));
+		rawTargets.erase(0, pos + 1);
 	}
-	list.push_back(raw);
-	return list;
+	if (!rawTargets.empty())
+		targetNames.push_back(rawTargets);
+	return targetNames;
 }
 
 bool	NamesCommand::exec(Server &server, Client &client, std::string label,
@@ -69,11 +69,30 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 
 	if (argsCount == 0) {
 		std::vector<Channel> channels = server.getChannels();
-		client.send(RPL_ENDOFNAMES(client.getNick(), ""));
+		for (size_t i = 0; i < channels.size(); i++) {
+			try {
+				client.send(RPL_NAMREPLY(client.getNick(), channels[i].getName(), channels[i].getMemberNicks()));
+				client.send(RPL_ENDOFNAMES(client.getNick(), channels[i].getName()));
+			} catch (std::exception &e) {
+				client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i].getName()));
+			}
+		}
+
+		std::vector<Client> clients = server.getClients();
+		if (!clients.empty()) {
+			std::string clientsNick;
+			for (size_t i = 0; i < clients.size(); i++) {
+				if (clients[i].getChannels().empty())
+					clientsNick += " " + clients[i].getNick();
+			}
+			if (clientsNick.size()) {
+				client.send(RPL_NAMREPLY(client.getNick(), "*", clientsNick));
+				client.send(RPL_ENDOFNAMES(client.getNick(), "*"));
+			}
+		}
 		return true;
 	}
-	std::vector<std::string> channels = split(args[1]);
-
+	std::vector<std::string> channels = splitTargets(args[1]);
 	for (size_t i = 0; i < channels.size(); i++) {
 		try {
 			Channel	&channel = server.getChannelByName(channels[i]);
@@ -81,9 +100,7 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 			client.send(RPL_ENDOFNAMES(client.getNick(), channel.getName()));
 		} catch (std::exception &e) {
 			client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
-			continue ;
 		}
-
 	}
 	return true;
 }
