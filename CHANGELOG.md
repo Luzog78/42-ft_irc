@@ -68,7 +68,7 @@
 
 <br><br>
 
-## Latest 1.2.15: - `minor`
+## 1.2.15: - `minor`
 
 <br>
 
