@@ -63,7 +63,6 @@ static std::vector<std::string>		splitTargets(std::string rawTargets) {
 
 bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 			std::string prefix, std::string args[], int argsCount) {
-	(void) server;
 	(void) label;
 	(void) prefix;
 
