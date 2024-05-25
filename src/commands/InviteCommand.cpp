@@ -67,8 +67,7 @@ bool	InviteCommand::exec(Server &server, Client &client, std::string label,
 			client.send(server, ERR_NOTONCHANNEL(client.getNick(), channel.getName()));
 			return false;
 		}
-		if (!channel.isOperator(client.getFullAddress())
-			&& channel.getOwner() != client.getFullAddress()) {
+		if (!channel.isOperator(client.getFullAddress())) {
 			client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
 			return false;
 		}

@@ -6,7 +6,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.3.2](#latest-132---major)   | Latest, Hostname |  `major`   |    ✅    |
+| [1.3.3](#latest-133---minor)   |      Latest      |  `minor`   |    ✅    |
+| [1.3.2](#132---major)          |     Hostname     |  `major`   |    ✅    |
 | [1.3.0](#130---major)          |       PASS       |  `major`   |    ✅    |
 | [1.2.17](#1217---minor)        |                  |  `minor`   |    ✅    |
 | [1.2.15](#1215---minor)        |                  |  `minor`   |    ✅    |
@@ -54,7 +55,17 @@
 
 <br>
 
-## Latest 1.3.2: - `major`
+## Latest 1.3.3: - `minor`
+
+<br>
+
+- Getting rid of Channel's `owner` field.
+- Now, at the creation of a channel, the creator is automatically added to the `operators` list.
+
+
+<br><br>
+
+## 1.3.2: - `major`
 
 <br>
 

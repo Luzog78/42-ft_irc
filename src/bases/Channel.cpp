@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:50:36 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 19:57:22 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 00:13:18 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ Channel::Channel() {
 }
 
 
-Channel::Channel(std::string name, std::string owner) {
+Channel::Channel(std::string name) {
 	this->name = name;
-	this->owner = owner;
 	inviteOnly = false;
 	topicRestricted = true;
 	limited = false;
@@ -42,7 +41,6 @@ Channel::Channel(const Channel &channel) {
 Channel &Channel::operator=(const Channel &channel) {
 	if (this != &channel) {
 		name = channel.name;
-		owner = channel.owner;
 		members = channel.members;
 		operators = channel.operators;
 		inviteOnly = channel.inviteOnly;
@@ -101,11 +99,8 @@ std::vector<Client>	Channel::getOnlineClients(Server &server) {
 
 
 bool	Channel::hasRight(std::string nick, std::string addr) {
-	if (owner == addr)
-		return true;
-	if (std::find(operators.begin(), operators.end(), addr) != operators.end())
-		return true;
-	if (std::find(invited.begin(), invited.end(), nick) != invited.end())
+	if (std::find(operators.begin(), operators.end(), addr) != operators.end()
+		|| std::find(invited.begin(), invited.end(), nick) != invited.end())
 		return true;
 	return !inviteOnly;
 }
@@ -128,7 +123,7 @@ std::string	Channel::getMemberNicks() {
 		try {
 			Client	&client = server.getClientBySocket(*it);
 
-			if(this->isOperator(client.getFullAddress()) || client.getFullAddress() == owner) {
+			if(isOperator(client.getFullAddress())) {
 				memberNicks += " @" + client.getNick();
 			} else
 				memberNicks += " " + client.getNick();
@@ -178,16 +173,6 @@ std::string	Channel::getName() {
 
 void	Channel::setName(std::string name) {
 	this->name = name;
-}
-
-
-std::string	Channel::getOwner() {
-	return owner;
-}
-
-
-void	Channel::setOwner(std::string ownerAddr) {
-	this->owner = ownerAddr;
 }
 
 

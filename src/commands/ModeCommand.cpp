@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 19:54:13 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 00:14:47 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 	}
 	try {
 		Channel	&channel = server.getChannelByName(args[0]);
-		bool	isMaster = channel.getOwner() == client.getFullAddress()
-							|| channel.isOperator(client.getFullAddress());
+		bool	isOp = channel.isOperator(client.getFullAddress());
 
 		if (argsCount == 1) {
 			std::string	mode = "+";
@@ -97,7 +96,7 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 			if (channel.isLimited() && channel.isMember(client.getSocket()))
 				mode += " " + itoa(channel.getLimit());
 			client.send(server, RPL_CHANNELMODEIS(client.getNick(), channel.getName(), mode));
-		} else if (!isMaster) {
+		} else if (!isOp) {
 			client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
 			return false;
 		} else {

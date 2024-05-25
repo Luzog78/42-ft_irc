@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 19:52:51 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 00:16:00 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,10 @@ bool	JoinCommand::exec(Server &server, Client &client, std::string label,
 				client.send(server, RPL_ENDOFNAMES(client.getNick(), channel.getName()));
 			}
 		} catch (Server::ServerException &e) {
-			Channel		channel(channelNames[i], client.getFullAddress());
+			Channel		channel(channelNames[i]);
 			std::string	newArgs[] = {channelNames[i]};
 
+			channel.addOperator(client.getFullAddress());
 			server.addChannel(channel);
 			return exec(server, client, label, prefix, newArgs, 1);
 		}

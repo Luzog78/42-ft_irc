@@ -74,7 +74,6 @@ bool	TopicCommand::exec(Server &server, Client &client, std::string label,
 				return false;
 			}
 			if (!channel.isOperator(client.getFullAddress())
-				&& channel.getOwner() != client.getFullAddress()
 				&& channel.isTopicRestricted()) {
 				client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
 				return false;

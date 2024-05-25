@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 19:53:47 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 00:14:32 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ bool	KickCommand::exec(Server &server, Client &client, std::string label,
 			client.send(server, ERR_NOTONCHANNEL(client.getNick(), channel.getName()));
 			return false;
 		}
-		if (!channel.isOperator(client.getFullAddress())
-			&& channel.getOwner() != client.getFullAddress()) {
+		if (!channel.isOperator(client.getFullAddress())) {
 			client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
 			return false;
 		}

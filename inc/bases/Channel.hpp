@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:41:06 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:28:27 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 00:14:17 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ class Channel {
 	private:
 		std::string					name;
 
-		std::string					owner;
 		std::vector<std::string>	operators;
-
 		std::vector<int>			members;
 
 		bool						inviteOnly;
@@ -35,7 +33,7 @@ class Channel {
 
 	public:
 		Channel();
-		Channel(std::string name, std::string ownerAddr);
+		Channel(std::string name);
 		Channel(const Channel &channel);
 		Channel	&operator=(const Channel &channel);
 		~Channel();
@@ -56,8 +54,6 @@ class Channel {
 
 		std::string					getName();
 		void						setName(std::string name);
-		std::string					getOwner();
-		void						setOwner(std::string ownerAddr);
 		std::vector<std::string>	getOperators();
 		void						addOperator(std::string addr);
 		void						removeOperator(std::string addr);
