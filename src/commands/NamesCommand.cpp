@@ -47,6 +47,7 @@ NamesCommand::~NamesCommand() {
 /* ---------------------------- Member functions ---------------------------- */
 /* ************************************************************************** */
 
+
 static std::vector<std::string>		splitTargets(std::string rawTargets) {
 	std::vector<std::string>	targetNames;
 	size_t						pos = 0;
@@ -61,44 +62,49 @@ static std::vector<std::string>		splitTargets(std::string rawTargets) {
 	return targetNames;
 }
 
+
 bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 			std::string prefix, std::string args[], int argsCount) {
 	(void) label;
 	(void) prefix;
 
 	if (argsCount == 0) {
-		std::vector<Channel> channels = server.getChannels();
+		std::vector<Channel>	channels = server.getChannels();
+		std::vector<Client>		clients = server.getClients();
+		std::string				clientsNick;
+
 		for (size_t i = 0; i < channels.size(); i++) {
 			try {
-				client.send(RPL_NAMREPLY(client.getNick(), channels[i].getName(), channels[i].getMemberNicks()));
-				client.send(RPL_ENDOFNAMES(client.getNick(), channels[i].getName()));
+				client.send(RPL_NAMREPLY(client.getNick(),
+					channels[i].getName(), channels[i].getMemberNicks()));
+				client.send(RPL_ENDOFNAMES(client.getNick(), 
+					channels[i].getName()));
 			} catch (std::exception &e) {
-				client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i].getName()));
+				client.send(ERR_NOSUCHCHANNEL(client.getNick(),
+					channels[i].getName()));
 			}
 		}
+		for (size_t i = 0; i < clients.size(); i++) {
+			if (clients[i].getChannels().empty())
+				clientsNick += " " + clients[i].getNick();
+		}
+		if (!clientsNick.empty()) {
+			client.send(RPL_NAMREPLY(client.getNick(), "*", clientsNick));
+			client.send(RPL_ENDOFNAMES(client.getNick(), "*"));
+		}
+	} else {
+		std::vector<std::string>	channels = splitTargets(args[1]);
 
-		std::vector<Client> clients = server.getClients();
-		if (!clients.empty()) {
-			std::string clientsNick;
-			for (size_t i = 0; i < clients.size(); i++) {
-				if (clients[i].getChannels().empty())
-					clientsNick += " " + clients[i].getNick();
+		for (size_t i = 0; i < channels.size(); i++) {
+			try {
+				Channel	&channel = server.getChannelByName(channels[i]);
+
+				client.send(RPL_NAMREPLY(client.getNick(),
+					channel.getName(), channel.getMemberNicks()));
+				client.send(RPL_ENDOFNAMES(client.getNick(), channel.getName()));
+			} catch (std::exception &e) {
+				client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
 			}
-			if (clientsNick.size()) {
-				client.send(RPL_NAMREPLY(client.getNick(), "*", clientsNick));
-				client.send(RPL_ENDOFNAMES(client.getNick(), "*"));
-			}
-		}
-		return true;
-	}
-	std::vector<std::string> channels = splitTargets(args[1]);
-	for (size_t i = 0; i < channels.size(); i++) {
-		try {
-			Channel	&channel = server.getChannelByName(channels[i]);
-			client.send(RPL_NAMREPLY(client.getNick(), channel.getName(), channel.getMemberNicks()));
-			client.send(RPL_ENDOFNAMES(client.getNick(), channel.getName()));
-		} catch (std::exception &e) {
-			client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
 		}
 	}
 	return true;

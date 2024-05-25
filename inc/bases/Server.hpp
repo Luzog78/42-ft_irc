@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:44 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 20:30:09 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 17:27:33 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ class Server {
 		Server(const Server &server);
 		Server	&operator=(const Server &server);
 		~Server();
+
+		static bool				isLegalPassword(std::string password);
 
 		void					start(int port, int maxClients);
 		void					poll();

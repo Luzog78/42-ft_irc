@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ModeCommand.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 13:08:36 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:27:24 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,10 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 					}
 					if (argsCount == 2)
 						continue;
+					if (!Channel::isLegalKey(args[2])) {
+						client.send(ERR_PASSWDMISMATCH(client.getNick()));
+						return false;
+					}
 
 					std::string	key = args[2];
 

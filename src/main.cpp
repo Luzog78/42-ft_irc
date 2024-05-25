@@ -3,69 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 17:30:06 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:22:07 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "ft_irc.hpp"
+
 
 Server			server;
 CommandManager	commandManager;
 
-std::string	itoa(int n) {
-	std::string str;
-	std::stringstream ss;
-	ss << n;
-	ss >> str;
-	return str;
-}
-
-void	log(ErrorLevel errorLevel, std::string message, std::string color) {
-	std::time_t			t = std::time(0);
-	std::tm*			now = std::localtime(&t);
-	std::istringstream	mess(message);
-	std::string			prefix;
-	std::string			prefixColor = "", messageColor = "";
-
-	switch (errorLevel)
-	{
-	case INFO:
-		prefix = "[INFO]    ";
-		messageColor = color;
-		break;
-	case WARNING:
-		prefix = "[WARNING] ";
-		prefixColor = C_YELLOW;
-		messageColor = color.empty() ? C_YELLOW : color;
-		break;
-	case ERROR:
-		prefix = "[ERROR]   ";
-		prefixColor = C_RED;
-		messageColor = color.empty() ? C_RED : color;
-		break;
-	default:
-		prefix = "          ";
-		messageColor = color;
-		break;
-	}
-
-	for (std::string str; std::getline(mess, str);)
-		std::cout	<< C_DIM << std::setfill('0') << "["
-					<< std::setw(4) << now->tm_year + 1900 << "-"
-					<< std::setw(2) << now->tm_mon + 1 << "-"
-					<< std::setw(2) << now->tm_mday << " "
-					<< std::setw(2) << now->tm_hour << ":"
-					<< std::setw(2) << now->tm_min << ":"
-					<< std::setw(2) << now->tm_sec << "] " << C_RESET
-					<< prefixColor + C_BOLD + prefix + C_RESET
-					<< prefixColor + ": " + C_RESET
-					<< messageColor + str + C_RESET << std::endl;
-}
 
 void	signalHandler(int signum) {
 	std::cerr << std::endl;
@@ -76,21 +26,6 @@ void	signalHandler(int signum) {
 	exit(signum);
 }
 
-template <typename T>
-class List : public std::vector<T> {
-	public:
-		List() {
-		}
-
-		List(T item) {
-			this->push_back(item);
-		}
-
-		List	operator()(T item) {
-			this->push_back(item);
-			return *this;
-		}
-};
 
 static size_t	parseUnsigned(const char *str, std::string message) {
 	size_t			res = 0;
@@ -107,6 +42,7 @@ static size_t	parseUnsigned(const char *str, std::string message) {
 		throw std::invalid_argument(message + " is too small (minimum: 1)");
 	return res;
 }
+
 
 int main(int argc, char **argv) {
 	signal(SIGINT, signalHandler);

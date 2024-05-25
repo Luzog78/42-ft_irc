@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:41:06 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 17:21:07 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 17:28:27 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ class Channel {
 		Channel	&operator=(const Channel &channel);
 		~Channel();
 
-		static bool					isLegal(std::string name);
+		static bool					isLegalName(std::string name);
+		static bool					isLegalKey(std::string key);
 
 		std::vector<Client>			getOnlineClients(Server &server);
 		bool						hasRight(std::string nick, std::string addr);

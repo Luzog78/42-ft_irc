@@ -6,7 +6,9 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.2.14](#latest-1214---major) | Latest, identifiers |  `major`   |    ✅    |
+| [1.2.17](#latest-1217---minor) |      Latest      |  `minor`   |    ✅    |
+| [1.2.15](#1215---minor)        |                  |  `minor`   |    ✅    |
+| [1.2.14](#1214---major)        |   identifiers    |  `major`   |    ✅    |
 | [1.2.12](#1212---major)        |      NAMES       |  `major`   |    ✅    |
 | [1.2.11](#1211---major)        |       KICK       |  `major`   |    ✅    |
 | [1.2.10](#1210---minor)        |       argv       |  `minor`   |    ✅    |
@@ -39,12 +41,8 @@
 |   ✅   | [INVITE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.7)  | `INVITE <nick> <channel>`                        | Invite a member on *Invite-Only* <br> channel. The user must be a <br> channel operator. |
 |   ✅   | [KICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.8)    | `KICK <channel> <nick> [<message>]`              | Kick a member. The user <br> must be a channel operator. |
 | &nbsp; |                                                                        |                                                  |             |
-<<<<<<< HEAD
-|   ✅   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   |                                                  |             |
-=======
 |   ✅   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   | `NAMES [<channel>[,...]]`                        | List all the users on a channel. <br> Operators' nicks are preceded <br> by an `@`. If no arg is given, every <br> channel is listed, and every <br> user without a channel is <br> in an ultimate `*` channel. |
->>>>>>> refs/remotes/origin/main
-|   ❌   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    |                                                  |             |
+|   🟠   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    | `LIST [<channel>[,...]]`                         |             |
 |   ❌   | [USERS](https://datatracker.ietf.org/doc/html/rfc1459#section-5.5)     |                                                  |             |
 | &nbsp; |                                                                        |                                                  |             |
 |   ✅   | [PING](https://datatracker.ietf.org/doc/html/rfc1459#section-4.6.2)    | `PING *`                                         | Ping. <br> Asking for a Pong. |
@@ -54,7 +52,31 @@
 
 <br>
 
-## Latest 1.2.14: - `major`
+## Latest 1.2.17: - `minor`
+
+<br>
+
+- Keys
+  - [x] *now* Limited to 23 characters
+  - [x] *now* Must contain at least 1 character
+  - [x] *now* Forbidden characters: `,` `:` (+ all whitespaces) (+ all non-printable characters)
+- Passwords
+  - [x] *now* Limited to 256 characters
+  - [x] *now* Must contain at least 1 character
+  - [x] *now* Forbidden characters: all whitespaces AND all non-printable characters
+- Merge correction (from 1.2.15 commit)
+
+<br><br>
+
+## Latest 1.2.15: - `minor`
+
+<br>
+
+- [ ] LIST (not completed yet)
+
+<br><br>
+
+## 1.2.14: - `major`
 
 <br>
 

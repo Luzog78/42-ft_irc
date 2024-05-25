@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:01:27 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 17:24:19 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 17:26:42 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define ERR_USERONCHANNEL(n, nick, chan)	"443 " + n + " " + nick + " " + chan + " :is already on channel"
 # define ERR_NEEDMOREPARAMS(n, cmd)			"461 " + n + " " + cmd + " :Not enough parameters"
 # define ERR_ALREADYREGISTRED(n)			"462 " + n + " :Unauthorized command (already registered)"
+# define ERR_PASSWDMISMATCH(n)				"464 " + n + " :Password incorrect"
 # define ERR_CHANNELISFULL(n, chan)			"471 " + n + " " + chan + " :Cannot join channel (+l)"
 # define ERR_UNKNOWNMODE(n, mode)			"472 " + n + " " + mode + " :is unknown mode char to me"
 # define ERR_INVITEONLYCHAN(n, chan)		"473 " + n + " " + chan + " :Cannot join channel (+i)"

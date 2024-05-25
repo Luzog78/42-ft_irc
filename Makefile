@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/24 17:28:45 by kbutor-b         ###   ########.fr        #
+#    Updated: 2024/05/25 17:30:29 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC_FILES			= \
 						src/commands/QuitCommand.cpp \
 						src/commands/TopicCommand.cpp \
 						src/commands/UserCommand.cpp \
+						src/utils.cpp \
 						src/main.cpp
 
 BUILD_FOLDER		= build

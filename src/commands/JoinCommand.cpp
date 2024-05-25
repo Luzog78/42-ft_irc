@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 17:27:15 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 17:28:27 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	JoinCommand::exec(Server &server, Client &client, std::string label,
 	for (size_t i = 0; i < channelNames.size(); i++) {
 		if (channelNames[i].empty())
 			continue;
-		if (!Channel::isLegal(channelNames[i])) {
+		if (!Channel::isLegalName(channelNames[i])) {
 			client.send(ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
 			continue;
 		}

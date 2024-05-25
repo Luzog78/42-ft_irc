@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:50:36 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 17:21:03 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 17:28:27 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ Channel::~Channel() {
 /* ************************************************************************** */
 
 
-bool	Channel::isLegal(std::string name) {
+bool	Channel::isLegalName(std::string name) {
 	if (name.length() < 2 || name.size() > 50 || name[0] != '#')
 		return false;
 	for (size_t i = 1; i < name.size(); i++)
@@ -76,8 +76,21 @@ bool	Channel::isLegal(std::string name) {
 }
 
 
+bool	Channel::isLegalKey(std::string key) {
+	if (key.length() < 1 || key.length() > 23)
+		return false;
+	for (size_t i = 0; i < key.length(); i++) {
+		if (!isprint(key[i]) || isspace(key[i])
+			|| key[i] == ',' || key[i] == ':')
+			return false;
+	}
+	return true;
+}
+
+
 std::vector<Client>	Channel::getOnlineClients(Server &server) {
 	std::vector<Client>	onlineClients;
+
 	for (std::vector<int>::iterator it = members.begin(); it != members.end(); it++)
 		try {
 			onlineClients.push_back(server.getClientBySocket(*it));
@@ -110,9 +123,11 @@ bool	Channel::isFull() {
 
 std::string	Channel::getMemberNicks() {
 	std::string	memberNicks;
+
 	for (std::vector<int>::iterator it = members.begin(); it != members.end(); it++)
 		try {
-			Client &client = server.getClientBySocket(*it);
+			Client	&client = server.getClientBySocket(*it);
+
 			if(this->isOperator(client.getFullAddress()) || client.getFullAddress() == owner) {
 				memberNicks += " @" + client.getNick();
 			} else
@@ -187,7 +202,7 @@ void	Channel::addMember(int socket) {
 
 
 void	Channel::removeMember(int socket) {
-	std::vector<int>::iterator it = std::find(
+	std::vector<int>::iterator	it = std::find(
 		members.begin(), members.end(), socket);
 	if (it != members.end())
 		members.erase(it);
@@ -210,7 +225,7 @@ void	Channel::addOperator(std::string operatorAddr) {
 
 
 void	Channel::removeOperator(std::string operatorAddr) {
-	std::vector<std::string>::iterator it = std::find(
+	std::vector<std::string>::iterator	it = std::find(
 		operators.begin(), operators.end(), operatorAddr);
 	if (it != operators.end())
 		operators.erase(it);
@@ -243,7 +258,7 @@ void	Channel::addInvited(std::string invited) {
 
 
 void	Channel::removeInvited(std::string invited) {
-	std::vector<std::string>::iterator it = std::find(
+	std::vector<std::string>::iterator	it = std::find(
 		this->invited.begin(), this->invited.end(), invited);
 	if (it != this->invited.end())
 		this->invited.erase(it);

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:01 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 10:51:16 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 18:57:19 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,6 @@ typedef enum e_error_level {
 }	ErrorLevel;
 
 
-class IRCException : public std::exception {
-	private:
-		std::string	message;
-
-	public:
-		IRCException(std::string prefix = "IRCException", std::string message = "") {
-			if (message.empty())
-				this->message = prefix.empty() ? "Unknown exception" : prefix;
-			else
-				this->message = prefix + ": " + message;
-		}
-		~IRCException() throw() {}
-
-		const char	*what() const throw() {
-			return message.c_str();
-		}
-};
-
 class ITarget;
 class Server;
 class Client;
@@ -83,6 +65,7 @@ class Channel;
 class Command;
 class CommandManager;
 
+# include "IRCException.hpp"
 # include "Server.hpp"
 # include "Client.hpp"
 # include "Channel.hpp"
@@ -98,6 +81,23 @@ extern CommandManager	commandManager;
 
 std::string	itoa(int n);
 void		log(ErrorLevel errorLevel, std::string message, std::string color = "");
+
+
+template <typename T>
+class List : public std::vector<T> {
+	public:
+		List() {
+		}
+
+		List(T item) {
+			this->push_back(item);
+		}
+
+		List	operator()(T item) {
+			this->push_back(item);
+			return *this;
+		}
+};
 
 
 #endif

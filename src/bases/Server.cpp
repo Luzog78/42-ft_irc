@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 13:27:21 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 17:27:56 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,17 @@ Server::~Server() {
 /* ************************************************************************** */
 /* ---------------------------- Member functions ---------------------------- */
 /* ************************************************************************** */
+
+
+bool	Server::isLegalPassword(std::string password) {
+	if (password.length() < 1 || password.length() > 256)
+		return false;
+	for (size_t i = 0; i < password.length(); i++) {
+		if (!isprint(password[i]) || isspace(password[i]))
+			return false;
+	}
+	return true;
+}
 
 
 void	Server::start(int port, int maxClients) {
