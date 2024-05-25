@@ -56,7 +56,7 @@ bool	TopicCommand::exec(Server &server, Client &client, std::string label,
 	if (!client.isRegistered())
 		return false;
 	if (argsCount == 0) {
-		client.send(ERR_NEEDMOREPARAMS(client.getNick(), "TOPIC"));
+		client.send(server, ERR_NEEDMOREPARAMS(client.getNick(), "TOPIC"));
 		return false;
 	}
 
@@ -65,18 +65,18 @@ bool	TopicCommand::exec(Server &server, Client &client, std::string label,
 
 		if (argsCount == 1) {
 			if (channel.getTopic().empty())
-				client.send(RPL_NOTOPIC(client.getNick(), channel.getName()));
+				client.send(server, RPL_NOTOPIC(client.getNick(), channel.getName()));
 			else
-				client.send(RPL_TOPIC(client.getNick(), channel.getName(), channel.getTopic()));
+				client.send(server, RPL_TOPIC(client.getNick(), channel.getName(), channel.getTopic()));
 		} else {
 			if (!channel.isMember(client.getSocket())) {
-				client.send(ERR_NOTONCHANNEL(client.getNick(), channel.getName()));
+				client.send(server, ERR_NOTONCHANNEL(client.getNick(), channel.getName()));
 				return false;
 			}
 			if (!channel.isOperator(client.getFullAddress())
 				&& channel.getOwner() != client.getFullAddress()
 				&& channel.isTopicRestricted()) {
-				client.send(ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
+				client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
 				return false;
 			}
 			if (args[1] != channel.getTopic()) {
@@ -87,7 +87,7 @@ bool	TopicCommand::exec(Server &server, Client &client, std::string label,
 			}
 		}
 	} catch (std::exception &e) {
-		client.send(ERR_NOSUCHCHANNEL(client.getNick(), args[0]));
+		client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), args[0]));
 		return false;
 	}
 

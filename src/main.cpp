@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 18:40:50 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 20:10:57 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,20 @@ int main(int argc, char **argv) {
 	std::string	usage = "Usage: " + std::string(argv[0]) + " [<params...>]\n"
 		+ "\n"
 		+ "Params:\n"
-		+ "  -h, --help                  - display this help\n"
-		+ "  -p, --port   =<port>        - port number (default: 8080)\n"
-		+ "  -k, --key    =<password>    - password for server (default: '')\n"
-		+ "  -l, --limit  =<clientLimit> - maximum number of clients (default: 100)\n"
+		+ "  -?, --help                     - display this help\n"
+		+ "  -p, --port      =<port>        - port number (default: 8080)\n"
+		+ "  -k, --key       =<password>    - password for server (default: '')\n"
+		+ "  -h, --hostname  =<hostname>    - hostname (default: 'localhost')\n"
+		+ "  -l, --limit     =<clientLimit> - maximum number of clients (default: 100)\n"
 		+ "\n"
 		+ "Example: \n"
 		+ std::string(argv[0]) + " 8080\n"
 		+ std::string(argv[0]) + " 8080 P4ssK3y\n"
-		+ std::string(argv[0]) + " --password=P4ssK3y --limit=50\n";
+		+ std::string(argv[0]) + " --password=P4ssK3y --limit=50 -h=42.irc.net\n";
 
 	int			port = 8080;
 	int			clientLimit = 100;
+	std::string	hostname = "localhost";
 	std::string	password;
 	bool		plainArgs = true;
 
@@ -97,12 +99,17 @@ int main(int argc, char **argv) {
 					throw std::invalid_argument("Password is missing");
 				password = arg.substr(arg.find('=') + 1);
 				plainArgs = false;
+			} else if (startsWith(arg, "-h") || startsWith(arg, "--hostname")) {
+				if (arg.find('=') == std::string::npos)
+					throw std::invalid_argument("Hostname is missing");
+				hostname = arg.substr(arg.find('=') + 1);
+				plainArgs = false;
 			} else if (startsWith(arg, "-l") || startsWith(arg, "--limit")) {
 				if (arg.find('=') == std::string::npos)
 					throw std::invalid_argument("Client limit is missing");
 				clientLimit = parseUnsigned(arg.substr(arg.find('=') + 1).c_str(), "Client limit");
 				plainArgs = false;
-			} else if (startsWith(arg, "-h") || startsWith(arg, "--help")) {
+			} else if (startsWith(arg, "-?") || startsWith(arg, "--help")) {
 				log(ERROR, usage);
 				return 0;
 			} else if (i == 1 && argv[i][0] != '-')
@@ -113,7 +120,7 @@ int main(int argc, char **argv) {
 				throw std::invalid_argument("Unknown argument: " + arg);
 		}
 
-		server.start(port, clientLimit, password);
+		server.start(port, clientLimit, hostname, password);
 	} catch (IRCException &e) {
 		log(ERROR, std::string(e.what()));
 		return 1;

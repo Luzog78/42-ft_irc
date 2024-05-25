@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:27:24 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:54:13 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 	if (!client.isRegistered())
 		return false;
 	if (argsCount == 0) {
-		client.send(ERR_NEEDMOREPARAMS(client.getNick(), name));
+		client.send(server, ERR_NEEDMOREPARAMS(client.getNick(), name));
 		return false;
 	}
 	try {
@@ -96,9 +96,9 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 				mode += " " + channel.getKey();
 			if (channel.isLimited() && channel.isMember(client.getSocket()))
 				mode += " " + itoa(channel.getLimit());
-			client.send(RPL_CHANNELMODEIS(client.getNick(), channel.getName(), mode));
+			client.send(server, RPL_CHANNELMODEIS(client.getNick(), channel.getName(), mode));
 		} else if (!isMaster) {
-			client.send(ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
+			client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
 			return false;
 		} else {
 			bool	grant = args[1].empty() || args[1][0] != '-';
@@ -140,7 +140,7 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 							name + " " + channel.getName() + " " + grantChar + "o " + target.getNick(),
 							client.getPrefix());
 					} catch (Server::ServerException &e) {
-						client.send(ERR_NOSUCHNICK(client.getNick(), args[2]));
+						client.send(server, ERR_NOSUCHNICK(client.getNick(), args[2]));
 						return false;
 					}
 				} else if (args[1][i] == 'l') {
@@ -182,7 +182,7 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 					if (argsCount == 2)
 						continue;
 					if (!Channel::isLegalKey(args[2])) {
-						client.send(ERR_PASSWDMISMATCH(client.getNick()));
+						client.send(server, ERR_PASSWDMISMATCH(client.getNick()));
 						return false;
 					}
 
@@ -198,12 +198,12 @@ bool	ModeCommand::exec(Server &server, Client &client, std::string label,
 						name + " " + channel.getName() + " +k " + key,
 						client.getPrefix());
 				} else {
-					client.send(ERR_UNKNOWNMODE(client.getNick(), args[1][i]));
+					client.send(server, ERR_UNKNOWNMODE(client.getNick(), args[1][i]));
 					return false;
 				}
 		}
 	} catch (std::exception &e) {
-		client.send(ERR_NOSUCHCHANNEL(client.getNick(), args[0]));
+		client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), args[0]));
 		return false;
 	}
 

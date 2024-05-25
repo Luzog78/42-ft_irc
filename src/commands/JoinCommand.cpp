@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:28:27 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:52:51 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	JoinCommand::exec(Server &server, Client &client, std::string label,
 	if (!client.isRegistered())
 		return false;
 	if (argsCount == 0) {
-		client.send(ERR_NEEDMOREPARAMS(client.getNick(), name));
+		client.send(server, ERR_NEEDMOREPARAMS(client.getNick(), name));
 		return false;
 	}
 
@@ -79,7 +79,7 @@ bool	JoinCommand::exec(Server &server, Client &client, std::string label,
 		if (channelNames[i].empty())
 			continue;
 		if (!Channel::isLegalName(channelNames[i])) {
-			client.send(ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
+			client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
 			continue;
 		}
 		try {
@@ -90,22 +90,22 @@ bool	JoinCommand::exec(Server &server, Client &client, std::string label,
 			if (channel.isMember(client.getSocket())) {
 				// ignore
 			} else if (!channel.hasRight(client.getNick(), client.getFullAddress())) {
-				client.send(ERR_INVITEONLYCHAN(client.getNick(), channel.getName()));
+				client.send(server, ERR_INVITEONLYCHAN(client.getNick(), channel.getName()));
 			} else if (channel.isFull()) {
-				client.send(ERR_CHANNELISFULL(client.getNick(), channel.getName()));
+				client.send(server, ERR_CHANNELISFULL(client.getNick(), channel.getName()));
 			} else if (!channel.getKey().empty() && channel.getKey() != key) {
-				client.send(ERR_BADCHANNELKEY(client.getNick(), channel.getName()));
+				client.send(server, ERR_BADCHANNELKEY(client.getNick(), channel.getName()));
 			} else {
 				channel.removeInvited(client.getNick());
 				client.addChannel(channel.getName());
 				channel.addMember(client.getSocket());
 				channel.broadcast(server, name + " " + channel.getName(), client.getPrefix());
 				if (channel.getTopic().empty())
-					client.send(RPL_NOTOPIC(client.getNick(), channel.getName()));
+					client.send(server, RPL_NOTOPIC(client.getNick(), channel.getName()));
 				else
-					client.send(RPL_TOPIC(client.getNick(), channel.getName(), channel.getTopic()));
-				client.send(RPL_NAMREPLY(client.getNick(), channel.getName(), channel.getMemberNicks()));
-				client.send(RPL_ENDOFNAMES(client.getNick(), channel.getName()));
+					client.send(server, RPL_TOPIC(client.getNick(), channel.getName(), channel.getTopic()));
+				client.send(server, RPL_NAMREPLY(client.getNick(), channel.getName(), channel.getMemberNicks()));
+				client.send(server, RPL_ENDOFNAMES(client.getNick(), channel.getName()));
 			}
 		} catch (Server::ServerException &e) {
 			Channel		channel(channelNames[i], client.getFullAddress());

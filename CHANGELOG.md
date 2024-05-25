@@ -6,7 +6,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.3.0](#latest-130---major)   |   Latest, PASS   |  `major`   |    ✅    |
+| [1.3.2](#latest-132---major)   | Latest, Hostname |  `major`   |    ✅    |
+| [1.3.0](#130---major)          |       PASS       |  `major`   |    ✅    |
 | [1.2.17](#1217---minor)        |                  |  `minor`   |    ✅    |
 | [1.2.15](#1215---minor)        |                  |  `minor`   |    ✅    |
 | [1.2.14](#1214---major)        |   identifiers    |  `major`   |    ✅    |
@@ -53,7 +54,26 @@
 
 <br>
 
-## Latest 1.3.0: - `major`
+## Latest 1.3.2: - `major`
+
+<br>
+
+- **Hostname for server !** 🏠
+- New argument:
+  ```usage
+  -?, --help                     - display this help
+  -h, --hostname  =<hostname>    - hostname (default: 'localhost')
+  ```
+- Hostname displayed in the server debug (in addition to every other information)
+- Since the beginning, the server was sending response with the full identifier
+  of the client as prefix (e.g. `:nick!username@host 001 ...`).
+- Now, the server sends the correct prefix (e.g. `:hostname 001 ...`).
+- *(So, basically, every CPP file has been modified to match the new `Client::send` function... 😅)*
+
+
+<br><br>
+
+## 1.3.0: - `major`
 
 <br>
 

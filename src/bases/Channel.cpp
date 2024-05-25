@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:50:36 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:28:27 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:57:22 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ bool	Channel::isInvited(std::string nick) {
 void	Channel::broadcast(Server &server, std::string command) {
 	for (std::vector<int>::iterator it = members.begin(); it != members.end(); it++)
 		try {
-			server.getClientBySocket(*it).send(command);
+			server.getClientBySocket(*it).send(server, command);
 		} catch (Server::ServerException &ignored) {
 		}
 }

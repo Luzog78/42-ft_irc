@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 23:19:32 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:56:01 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static std::map<std::string, std::vector<Client> >	getTargets(Server &server, Cl
 			if (it->at(0) == '#') {
 				Channel				channel = server.getChannelByName(*it);
 				if (!channel.isMember(client.getSocket())) {
-					client.send(ERR_CANNOTSENDTOCHAN(client.getNick(), *it));
+					client.send(server, ERR_CANNOTSENDTOCHAN(client.getNick(), *it));
 					*error = true;
 					continue;
 				}
@@ -92,9 +92,9 @@ static std::map<std::string, std::vector<Client> >	getTargets(Server &server, Cl
 			}
 		} catch (Server::ServerException &e) {
 			if (it->at(0) == '#')
-				client.send(ERR_NOSUCHCHANNEL(client.getNick(), *it));
+				client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), *it));
 			else
-				client.send(ERR_NOSUCHNICK(client.getNick(), *it));
+				client.send(server, ERR_NOSUCHNICK(client.getNick(), *it));
 			*error = true;
 		}
 	return targets;
@@ -118,11 +118,11 @@ bool	PrivCommand::exec(Server &server, Client &client, std::string label,
 	if (!client.isRegistered())
 		return false;
 	if (argsCount == 0) {
-		client.send(ERR_NORECIPIENT(client.getNick()));
+		client.send(server, ERR_NORECIPIENT(client.getNick()));
 		return false;
 	}
 	if (argsCount == 1) {
-		client.send(ERR_NOTEXTTOSEND(client.getNick()));
+		client.send(server, ERR_NOTEXTTOSEND(client.getNick()));
 		return false;
 	}
 
@@ -135,7 +135,7 @@ bool	PrivCommand::exec(Server &server, Client &client, std::string label,
 		return false;
 
 	if (isEmpty(targets)) {
-		client.send(ERR_NORECIPIENT(client.getNick()));
+		client.send(server, ERR_NORECIPIENT(client.getNick()));
 		return false;
 	}
 

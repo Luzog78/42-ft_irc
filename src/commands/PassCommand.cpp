@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 19:20:51 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:54:56 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ bool	PassCommand::exec(Server &server, Client &client, std::string label,
 
 	if (client.isRegistered()
 		|| !client.getNick().empty() || !client.getUsername().empty()) {
-		client.send(ERR_ALREADYREGISTRED(client.getNick()));
+		client.send(server, ERR_ALREADYREGISTRED(client.getNick()));
 		return false;
 	}
 	if (argsCount < 1) {
-		client.send(ERR_NEEDMOREPARAMS(client.getNick(), name));
+		client.send(server, ERR_NEEDMOREPARAMS(client.getNick(), name));
 		return false;
 	}
 

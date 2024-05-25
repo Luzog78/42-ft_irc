@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:46 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 18:58:42 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:46:32 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ class Client {
 		std::string			getPrefix();
 		std::string			getLogPrefix();
 
-		void				send(std::string command);
+		void				send(Server &server, std::string command);
 		void				send(std::string command, std::string prefix);
 
 		std::string			getIp();

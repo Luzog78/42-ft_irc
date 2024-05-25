@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 20:03:23 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:55:16 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ bool	PingCommand::exec(Server &server, Client &client, std::string label,
 	if (!client.isRegistered())
 		return false;
 	if (argsCount == 0) {
-		client.send(ERR_NOORIGIN(client.getNick()));
+		client.send(server, ERR_NOORIGIN(client.getNick()));
 		return false;
 	}
 
-	client.send("PONG " + client.getNick() + " :" + args[0]);
+	client.send(server, "PONG " + client.getNick() + " :" + args[0]);
 	return true;
 }

@@ -56,7 +56,7 @@ bool	InviteCommand::exec(Server &server, Client &client, std::string label,
 	if (!client.isRegistered())
 		return false;
 	if (argsCount < 2) {
-		client.send(ERR_NEEDMOREPARAMS(client.getNick(), name));
+		client.send(server, ERR_NEEDMOREPARAMS(client.getNick(), name));
 		return false;
 	}
 
@@ -64,33 +64,33 @@ bool	InviteCommand::exec(Server &server, Client &client, std::string label,
 		Channel &channel = server.getChannelByName(args[1]);
 
 		if (!channel.isMember(client.getSocket())) {
-			client.send(ERR_NOTONCHANNEL(client.getNick(), channel.getName()));
+			client.send(server, ERR_NOTONCHANNEL(client.getNick(), channel.getName()));
 			return false;
 		}
 		if (!channel.isOperator(client.getFullAddress())
 			&& channel.getOwner() != client.getFullAddress()) {
-			client.send(ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
+			client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
 			return false;
 		}
 		try {
 			Client &invitee = server.getClientByNickname(args[0]);
 
 			if (channel.isMember(invitee.getSocket())) {
-				client.send(ERR_USERONCHANNEL(client.getNick(), invitee.getNick(), channel.getName()));
+				client.send(server, ERR_USERONCHANNEL(client.getNick(), invitee.getNick(), channel.getName()));
 				return false;
 			}
 			if (!channel.isInvited(invitee.getNick())) {
+				client.send(server, RPL_INVITING(client.getNick(), invitee.getNick(), channel.getName()));
+				channel.broadcast(server, "NOTICE @" + channel.getName() + " :" + client.getNick() + " invited " + invitee.getNick() + " into the channel.");
 				channel.addInvited(invitee.getNick());
-				client.send(RPL_INVITING(client.getNick(), invitee.getNick(), channel.getName()));
-				client.send("NOTICE @" + channel.getName() + " :" + client.getNick() + " invited " + invitee.getNick() + " into the channel.");
 				invitee.send(name + " " + invitee.getNick() + " " + channel.getName(), client.getPrefix());
 			}
 		} catch (Server::ServerException &e) {
-			client.send(ERR_NOSUCHNICK(client.getNick(), args[1]));
+			client.send(server, ERR_NOSUCHNICK(client.getNick(), args[1]));
 			return false;
 		}
 	} catch (Server::ServerException &e) {
-		client.send(ERR_NOSUCHCHANNEL(client.getNick(), args[0]));
+		client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), args[0]));
 		return false;
 	}
 

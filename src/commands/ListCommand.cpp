@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ListCommand.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 13:01:53 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:49:21 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ bool	ListCommand::exec(Server &server, Client &client, std::string label,
 		for (size_t i = 0; i < channelNames.size(); i++) {
 			try {
 				Channel &channel = server.getChannelByName(channelNames[i]);
-				client.send(channel.getName() + ": " + channel.getTopic());
+				client.send(server, channel.getName() + ": " + channel.getTopic());
 			} catch (std::exception &e) {
-				client.send(ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
+				client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
 			}
 		}
 		return true;
@@ -105,9 +105,9 @@ bool	ListCommand::exec(Server &server, Client &client, std::string label,
 	for (size_t i = 0; i < channels.size(); i++) {
 		try {
 			Channel	&channel = server.getChannelByName(channels[i]);
-			client.send(channel.getName() + ": " + channel.getTopic());
+			client.send(server, channel.getName() + ": " + channel.getTopic());
 		} catch (std::exception &e) {
-			client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
+			client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
 		}
 	}
 	return true;

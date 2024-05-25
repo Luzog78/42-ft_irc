@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 19:05:41 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:49:53 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,22 @@ Server::~Server() {
 /* ************************************************************************** */
 
 
+bool	Server::isLegalHostname(std::string hostname) {
+	std::string	s = "." + hostname + ".";
+	
+	if (hostname.empty() || hostname.length() > 63
+		|| s.find("..") != std::string::npos
+		|| s.find(".-") != std::string::npos
+		|| s.find("-.") != std::string::npos)
+		return false;
+	for (size_t i = 0; i < hostname.length(); i++) {
+		if (!isalnum(hostname[i]) && hostname[i] != '-' && hostname[i] != '.')
+			return false;
+	}
+	return true;
+}
+
+
 bool	Server::isLegalPassword(std::string password) {
 	if (password.length() > 256)
 		return false;
@@ -67,13 +83,18 @@ bool	Server::isLegalPassword(std::string password) {
 }
 
 
-void	Server::start(int port, int maxClients, std::string password) {
+void	Server::start(int port, int maxClients,
+			std::string hostname, std::string password) {
 	this->port = port;
 	this->maxClients = maxClients;
+	this->hostname = hostname;
 	this->password = password;
 
 	if (port < 1024 || port > 65535)
 		throw ServerException("Illegal port number (port: " + itoa(port) + ")");
+
+	if (!isLegalHostname(hostname))
+		throw ServerException("Illegal hostname (hostname: '" + hostname + "')");
 
 	if (!isLegalPassword(password))
 		throw ServerException("Illegal password (password: '" + password + "')");
@@ -98,6 +119,7 @@ void	Server::start(int port, int maxClients, std::string password) {
 	log(INFO, "## >>> Server started ! <<< ##");
 	log(INFO, "##############################");
 	log(INFO, "\n");
+	log(INFO, "> Hostname:    " + std::string(C_YELLOW) + hostname);
 	log(INFO, "> Port:        " + std::string(C_YELLOW) + ":" + itoa(port));
 	log(INFO, "> Max clients: " + std::string(C_BLUE) + itoa(maxClients));
 	if (password.empty())
@@ -195,14 +217,14 @@ void	Server::receive() {
 
 void	Server::welcome(Client &client) {
 	if (!password.empty() && client.getPass() != password) {
-		client.send(ERR_PASSWDMISMATCH(client.getNick()));
+		client.send(server, ERR_PASSWDMISMATCH(client.getNick()));
 		removeClient(client);
 		return;
 	}
 	client.setRegistered(true);
-	client.send(RPL_WELCOME(client.getNick()));
-	client.send(RPL_YOURHOST(client.getNick(), std::string("localhost"), "1.0"));
-	client.send(RPL_CREATED(client.getNick(), std::string("once upon a time...")));
+	client.send(server, RPL_WELCOME(client.getNick()));
+	client.send(server, RPL_YOURHOST(client.getNick(), std::string("localhost"), "1.0"));
+	client.send(server, RPL_CREATED(client.getNick(), std::string("once upon a time...")));
 }
 
 
@@ -255,6 +277,11 @@ int	Server::getPort() {
 
 int	Server::getMaxClients() {
 	return maxClients;
+}
+
+
+std::string	Server::getHostname() {
+	return hostname;
 }
 
 

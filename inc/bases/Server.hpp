@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:44 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:55:12 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:36:13 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ class Server {
 	private:
 		int						port;
 		int						maxClients;
+		std::string				hostname;
 		std::string				password;
 
 		int						sckt;
@@ -39,9 +40,11 @@ class Server {
 		Server	&operator=(const Server &server);
 		~Server();
 
+		static bool				isLegalHostname(std::string hostname);
 		static bool				isLegalPassword(std::string password);
 
-		void					start(int port, int maxClients, std::string password);
+		void					start(int port, int maxClients,
+									std::string hostname,  std::string password);
 		void					poll();
 		void					accept();
 		void					receive();
@@ -55,6 +58,7 @@ class Server {
 		
 		int						getPort();
 		int						getMaxClients();
+		std::string				getHostname();
 		std::string				getPassword();
 		int						getSocket();
 		void					setSocket(int sckt);

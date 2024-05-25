@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/22 21:31:30 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:54:51 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool	PartCommand::exec(Server &server, Client &client, std::string label,
 	if (!client.isRegistered())
 		return false;
 	if (argsCount == 0) {
-		client.send(ERR_NEEDMOREPARAMS(client.getNick(), name));
+		client.send(server, ERR_NEEDMOREPARAMS(client.getNick(), name));
 		return false;
 	}
 
@@ -85,7 +85,7 @@ bool	PartCommand::exec(Server &server, Client &client, std::string label,
 			Channel	&channel = server.getChannelByName(channelNames[i]);
 
 			if (!channel.isMember(client.getSocket())) {
-				client.send(ERR_NOTONCHANNEL(client.getNick(), channelNames[i]));
+				client.send(server, ERR_NOTONCHANNEL(client.getNick(), channelNames[i]));
 				continue;
 			}
 			channel.broadcast(server,
@@ -95,7 +95,7 @@ bool	PartCommand::exec(Server &server, Client &client, std::string label,
 				server.removeChannel(channel.getName());
 			client.removeChannel(channel.getName());
 		} catch (Server::ServerException &e) {
-			client.send(ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
+			client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
 		}
 	}
 

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:59:23 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 18:58:58 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:47:19 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ std::string	Client::getLogPrefix() {
 }
 
 
-void	Client::send(std::string command) {
-	send(command, getPrefix());
+void	Client::send(Server &server, std::string command) {
+	send(command, server.getHostname());
 }
 
 

@@ -75,12 +75,12 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 
 		for (size_t i = 0; i < channels.size(); i++) {
 			try {
-				client.send(RPL_NAMREPLY(client.getNick(),
+				client.send(server, RPL_NAMREPLY(client.getNick(),
 					channels[i].getName(), channels[i].getMemberNicks()));
-				client.send(RPL_ENDOFNAMES(client.getNick(), 
+				client.send(server, RPL_ENDOFNAMES(client.getNick(), 
 					channels[i].getName()));
 			} catch (std::exception &e) {
-				client.send(ERR_NOSUCHCHANNEL(client.getNick(),
+				client.send(server, ERR_NOSUCHCHANNEL(client.getNick(),
 					channels[i].getName()));
 			}
 		}
@@ -89,8 +89,8 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 				clientsNick += " " + clients[i].getNick();
 		}
 		if (!clientsNick.empty()) {
-			client.send(RPL_NAMREPLY(client.getNick(), "*", clientsNick));
-			client.send(RPL_ENDOFNAMES(client.getNick(), "*"));
+			client.send(server, RPL_NAMREPLY(client.getNick(), "*", clientsNick));
+			client.send(server, RPL_ENDOFNAMES(client.getNick(), "*"));
 		}
 	} else {
 		std::vector<std::string>	channels = splitTargets(args[1]);
@@ -99,11 +99,11 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 			try {
 				Channel	&channel = server.getChannelByName(channels[i]);
 
-				client.send(RPL_NAMREPLY(client.getNick(),
+				client.send(server, RPL_NAMREPLY(client.getNick(),
 					channel.getName(), channel.getMemberNicks()));
-				client.send(RPL_ENDOFNAMES(client.getNick(), channel.getName()));
+				client.send(server, RPL_ENDOFNAMES(client.getNick(), channel.getName()));
 			} catch (std::exception &e) {
-				client.send(ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
+				client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
 			}
 		}
 	}
