@@ -6,7 +6,7 @@
 /*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 15:17:00 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:26:46 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "InviteCommand.hpp"
 # include "JoinCommand.hpp"
 # include "KickCommand.hpp"
+# include "ListCommand.hpp"
 # include "ModeCommand.hpp"
 # include "NamesCommand.hpp"
 # include "NickCommand.hpp"

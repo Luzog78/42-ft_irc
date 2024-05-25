@@ -6,7 +6,7 @@
 /*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 15:10:34 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:30:06 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int main(int argc, char **argv) {
 		.addCommand(new InviteCommand("INVITE", List<std::string>("I")))
 		.addCommand(new JoinCommand("JOIN", List<std::string>("J")))
 		.addCommand(new KickCommand("KICK", List<std::string>("K")))
+		.addCommand(new ListCommand("LIST", List<std::string>("L")))
 		.addCommand(new ModeCommand("MODE", List<std::string>("MD")))
 		.addCommand(new NamesCommand("NAMES", List<std::string>("NM")))
 		.addCommand(new NickCommand("NICK", List<std::string>("N")))

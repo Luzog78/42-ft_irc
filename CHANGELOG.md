@@ -37,7 +37,7 @@
 |   ✅   | [INVITE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.7)  | `INVITE <nick> <channel>`                        | Invite a member on *Invite-Only* <br> channel. The user must be a <br> channel operator. |
 |   ✅   | [KICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.8)    | `KICK <channel> <nick> [<message>]`              | Kick a member. The user <br> must be a channel operator. |
 | &nbsp; |                                                                        |                                                  |             |
-|   ❌   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   |                                                  |             |
+|   ✅   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   |                                                  |             |
 |   ❌   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    |                                                  |             |
 |   ❌   | [USERS](https://datatracker.ietf.org/doc/html/rfc1459#section-5.5)     |                                                  |             |
 | &nbsp; |                                                                        |                                                  |             |
