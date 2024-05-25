@@ -6,7 +6,9 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.2.11](#latest-1211---major) |   Latest, KICK   |  `major`   |    ✅    |
+| [1.2.14](#latest-1214---major) | Latest, identifiers |  `major`   |    ✅    |
+| [1.2.12](#1212---major)        |      NAMES       |  `major`   |    ✅    |
+| [1.2.11](#1211---major)        |       KICK       |  `major`   |    ✅    |
 | [1.2.10](#1210---minor)        |       argv       |  `minor`   |    ✅    |
 | [1.2.9](#129---major)          |      INVITE      |  `major`   |    ✅    |
 | [1.2.8](#128---major)          |      TOPIC       |  `major`   |    ✅    |
@@ -28,16 +30,20 @@
 |   ❌   | [PASS](https://datatracker.ietf.org/doc/html/rfc1459#section-4.1.1)    |                                                  |             |
 |   ✅   | [QUIT](https://datatracker.ietf.org/doc/html/rfc1459#section-4.1.6)    | `QUIT [<message>]`                               | Disconnect properly, informing the <br> other clients, leaving channels. |
 | &nbsp; |                                                                        |                                                  |             |
-|   ✅   | [JOIN](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.1)    | `JOIN <channels>[,...] <keys>[,...]`             | Join channels, using keys if <br> necessary. The channel's names <br> MUST start with a hash (`#`) |
-|   ✅   | [PART](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.2)    | `PART <channels>[,...] [<message>]`              | Quit properly channels, informing <br> the other clients, closing <br> channels if empty. |
+|   ✅   | [JOIN](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.1)    | `JOIN <channel>[,...] <keys>[,...]`              | Join channels, using keys if <br> necessary. The channels' names <br> MUST start with a hash (`#`) |
+|   ✅   | [PART](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.2)    | `PART <channel>[,...] [<message>]`               | Quit properly channels, informing <br> the other clients, closing <br> channels if empty. |
 |   ✅   | [PRIVMSG](https://datatracker.ietf.org/doc/html/rfc1459#section-4.4.1) | `PRIVMSG <receivers>[,...] <message>`            | Send a message. Receiver is either <br> **a user** or **a channel (#...)**. No <br> message should be sent to the <br> sender *(except when it is part <br> of the receivers)*. |
 | &nbsp; |                                                                        |                                                  |             |
-|   ✅   | [MODE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.3)    | `MODE <channel> [[+\|-]{i\|k\|l\|t\|o}] [<params...>]` <br> Flag `+k` - Param: `<key>` <br> Flag `+l` - Param: `<limit>` <br> Flag `(+\|-)o` - Param: `<operatorNick>` | Edit settings of a channel. <br> `i`: *Invite-only*, `k`: *Access key*, <br> `l`: *User limit*, `t`: *Topic restricted*, <br> `o`: *Channel operators*. |
+|   ✅   | [MODE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.3)    | `MODE <channel> [[+\|-]{i\|k\|l\|t\|o}] [<params...>]` <br> Flag `+k` - Param: `<key>` <br> Flag `+l` - Param: `<limit>` <br> Flag `(+\|-)o` - Param: `<operatorsNick>` | Edit settings of a channel. <br> `i`: *Invite-only*, `k`: *Access key*, <br> `l`: *User limit*, `t`: *Topic restricted*, <br> `o`: *Channel operators*. |
 |   ✅   | [TOPIC](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.4)   | `TOPIC <channel> [<newTopic>]`                   | Get or set the topic. To set a <br> new topic, the user must be a <br> channel operator OR the channel <br> must not have the `+t` option. |
 |   ✅   | [INVITE](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.7)  | `INVITE <nick> <channel>`                        | Invite a member on *Invite-Only* <br> channel. The user must be a <br> channel operator. |
 |   ✅   | [KICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.8)    | `KICK <channel> <nick> [<message>]`              | Kick a member. The user <br> must be a channel operator. |
 | &nbsp; |                                                                        |                                                  |             |
+<<<<<<< HEAD
 |   ✅   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   |                                                  |             |
+=======
+|   ✅   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   | `NAMES [<channel>[,...]]`                        | List all the users on a channel. <br> Operators' nicks are preceded <br> by an `@`. If no arg is given, every <br> channel is listed, and every <br> user without a channel is <br> in an ultimate `*` channel. |
+>>>>>>> refs/remotes/origin/main
 |   ❌   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    |                                                  |             |
 |   ❌   | [USERS](https://datatracker.ietf.org/doc/html/rfc1459#section-5.5)     |                                                  |             |
 | &nbsp; |                                                                        |                                                  |             |
@@ -48,7 +54,47 @@
 
 <br>
 
-## Latest 1.2.11: - `major`
+## Latest 1.2.14: - `major`
+
+<br>
+
+- Channel identifiers
+  - [x] Case-insensitive
+  - [x] Unique
+  - [x] *now* Limited to 50 characters
+  - [x] *now* Must contain at least 2 characters
+  - [x] Must start with: `#`
+  - [x] *now* Forbidden characters: `,` `:` (+ all whitespaces) (+ all non-printable characters)
+- Client nicknames
+  - [x] Case-insensitive
+  - [x] Unique
+  - [x] *now* Limited to 9 characters
+  - [x] *now* Must contain at least 1 character
+  - [x] *now* Allowed characters: letter (`a-z` `A-Z`) digit (`0-9`) `-` `[` `]` `\` `_` `^` `{` `|` `}` ``` ` ```
+  - [x] Cannot start with: digit (`0-9`) or `-`
+- Client usernames
+  - [x] Case-sensitive
+  - [x] NOT Unique
+  - [x] *now* Limited to 50 characters
+  - [x] *now* Must contain at least 1 character
+  - [x] *now* Forbidden characters: `,` `:` `!` `@` `*` (+ all whitespaces) (+ all non-printable characters)
+- Fix: Command parsing
+  - [x] NPrefix handled
+  - [x] Empty trailing handled
+  - [x] Quotes not needed --> no longer handled
+
+
+<br><br>
+
+## 1.2.12: - `major`
+
+<br>
+
+- [x] NAMES
+
+<br><br>
+
+## 1.2.11: - `major`
 
 <br>
 

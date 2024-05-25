@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 10:29:32 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 17:25:08 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ bool	NickCommand::exec(Server &server, Client &client, std::string label,
 
 	if (argsCount == 0) {
 		client.send(ERR_NONICKNAMEGIVEN(client.getNick()));
+		return false;
+	}
+	if (!Client::isLegalNickname(args[0])) {
+		client.send(ERR_ERRONEUSNICKNAME(client.getNick(), args[0]));
 		return false;
 	}
 

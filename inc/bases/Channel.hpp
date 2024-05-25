@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:41:06 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 14:25:51 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:21:07 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ class Channel {
 		Channel(const Channel &channel);
 		Channel	&operator=(const Channel &channel);
 		~Channel();
+
+		static bool					isLegal(std::string name);
 
 		std::vector<Client>			getOnlineClients(Server &server);
 		bool						hasRight(std::string nick, std::string addr);

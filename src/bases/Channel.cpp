@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 05:50:36 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 16:32:09 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:21:03 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,17 @@ Channel::~Channel() {
 /* ************************************************************************** */
 /* ---------------------------- Member functions ---------------------------- */
 /* ************************************************************************** */
+
+
+bool	Channel::isLegal(std::string name) {
+	if (name.length() < 2 || name.size() > 50 || name[0] != '#')
+		return false;
+	for (size_t i = 1; i < name.size(); i++)
+		if (!std::isprint(name[i]) || std::isspace(name[i])
+			|| name[i] == ',' || name[i] == ':')
+			return false;
+	return true;
+}
 
 
 std::vector<Client>	Channel::getOnlineClients(Server &server) {

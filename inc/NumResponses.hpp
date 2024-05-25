@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:01:27 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 14:55:03 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/24 17:24:19 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define ERR_NOTEXTTOSEND(n)				"412 " + n + " :No text to send"
 # define ERR_UNKNOWNCOMMAND(n, cmd)			"421 " + n + " " + cmd + " :Unknown command"
 # define ERR_NONICKNAMEGIVEN(n)				"431 " + n + " :No nickname given"
+# define ERR_ERRONEUSNICKNAME(n, nick)		"432 " + n + " " + nick + " :Erroneous nickname"
 # define ERR_NICKNAMEINUSE(n, nick)			"433 " + n + " " + nick + " :Nickname is already in use"
 # define ERR_USERNOTINCHANNEL(n, nick, chn)	"441 " + n + " " + nick + " " + chn + " :They aren't on that channel"
 # define ERR_NOTONCHANNEL(n, chan)			"442 " + n + " " + chan + " :You're not on that channel"

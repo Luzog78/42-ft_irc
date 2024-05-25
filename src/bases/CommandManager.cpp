@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandManager.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:52:50 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 15:21:02 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:48:11 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,19 @@ bool	CommandManager::exec(Server &server, Client &client, std::string raw) {
 	std::vector<std::string>	args;
 
 	std::string	tmp;
-	char		quote = 0;
+	bool		trailing = false;
 	for (size_t i = 0; i < raw.length(); i++) {
-		if (isspace(raw[i]) && quote == 0) {
-			if (tmp.length() > 0)
+		if (isspace(raw[i]) && !trailing) {
+			if (!tmp.empty())
 				args.push_back(tmp);
 			tmp = "";
-		} else if (raw[i] == '"' || raw[i] == '\'') {
-			if (quote == 0) {
-				quote = raw[i];
-			} else if (quote == raw[i]) {
-				quote = 0;
-			} else {
-				tmp += raw[i];
-			}
-		} else if (raw[i] == ':' && quote == 0 && tmp.length() == 0) {
-			quote = ':';
+		} else if (raw[i] == ':' && !trailing && tmp.empty() && i > 0) {
+			trailing = true;
 		} else {
 			tmp += raw[i];
 		}
 	}
-	if (tmp.length() > 0)
+	if (!tmp.empty() || trailing)
 		args.push_back(tmp);
 
 	if (args.size() > 0 && args[0][0] == ':') {
