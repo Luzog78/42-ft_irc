@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:44 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:27:33 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 17:55:12 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ class Server {
 	private:
 		int						port;
 		int						maxClients;
+		std::string				password;
 
 		int						sckt;
 		struct sockaddr_in		addr;
@@ -40,7 +41,7 @@ class Server {
 
 		static bool				isLegalPassword(std::string password);
 
-		void					start(int port, int maxClients);
+		void					start(int port, int maxClients, std::string password);
 		void					poll();
 		void					accept();
 		void					receive();
@@ -54,6 +55,7 @@ class Server {
 		
 		int						getPort();
 		int						getMaxClients();
+		std::string				getPassword();
 		int						getSocket();
 		void					setSocket(int sckt);
 		struct sockaddr_in		getAddr();

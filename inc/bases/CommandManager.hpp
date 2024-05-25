@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandManager.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:40:31 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 17:26:46 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/25 18:39:38 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "NamesCommand.hpp"
 # include "NickCommand.hpp"
 # include "PartCommand.hpp"
+# include "PassCommand.hpp"
 # include "PingCommand.hpp"
 # include "PongCommand.hpp"
 # include "PrivCommand.hpp"

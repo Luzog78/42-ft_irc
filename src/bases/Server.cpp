@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:27:56 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 19:05:41 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ Server::~Server() {
 
 
 bool	Server::isLegalPassword(std::string password) {
-	if (password.length() < 1 || password.length() > 256)
+	if (password.length() > 256)
 		return false;
 	for (size_t i = 0; i < password.length(); i++) {
 		if (!isprint(password[i]) || isspace(password[i]))
@@ -67,9 +67,16 @@ bool	Server::isLegalPassword(std::string password) {
 }
 
 
-void	Server::start(int port, int maxClients) {
+void	Server::start(int port, int maxClients, std::string password) {
 	this->port = port;
 	this->maxClients = maxClients;
+	this->password = password;
+
+	if (port < 1024 || port > 65535)
+		throw ServerException("Illegal port number (port: " + itoa(port) + ")");
+
+	if (!isLegalPassword(password))
+		throw ServerException("Illegal password (password: '" + password + "')");
 
 	sckt = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (sckt < 0)
@@ -93,6 +100,10 @@ void	Server::start(int port, int maxClients) {
 	log(INFO, "\n");
 	log(INFO, "> Port:        " + std::string(C_YELLOW) + ":" + itoa(port));
 	log(INFO, "> Max clients: " + std::string(C_BLUE) + itoa(maxClients));
+	if (password.empty())
+		log(INFO, "> Password:    " + std::string(C_RED) + "none");
+	else
+		log(INFO, "> Password:    " + std::string(C_GREEN) + password);
 	log(INFO, "\n");
 }
 
@@ -183,8 +194,12 @@ void	Server::receive() {
 
 
 void	Server::welcome(Client &client) {
+	if (!password.empty() && client.getPass() != password) {
+		client.send(ERR_PASSWDMISMATCH(client.getNick()));
+		removeClient(client);
+		return;
+	}
 	client.setRegistered(true);
-	client.send("CAP * LS :");
 	client.send(RPL_WELCOME(client.getNick()));
 	client.send(RPL_YOURHOST(client.getNick(), std::string("localhost"), "1.0"));
 	client.send(RPL_CREATED(client.getNick(), std::string("once upon a time...")));
@@ -240,6 +255,11 @@ int	Server::getPort() {
 
 int	Server::getMaxClients() {
 	return maxClients;
+}
+
+
+std::string	Server::getPassword() {
+	return password;
 }
 
 

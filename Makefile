@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/25 17:30:29 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/25 18:39:49 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC_FILES			= \
 						src/commands/NamesCommand.cpp \
 						src/commands/NickCommand.cpp \
 						src/commands/PartCommand.cpp \
+						src/commands/PassCommand.cpp \
 						src/commands/PingCommand.cpp \
 						src/commands/PongCommand.cpp \
 						src/commands/PrivCommand.cpp \

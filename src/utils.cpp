@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:50:59 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 18:55:56 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 18:33:25 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ std::string	itoa(int n) {
 	ss << n;
 	ss >> str;
 	return str;
+}
+
+
+bool	startsWith(const std::string str, const std::string prefix) {
+	return str.compare(0, prefix.size(), prefix) == 0;
 }
 
 

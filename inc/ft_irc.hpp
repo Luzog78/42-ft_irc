@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:01 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 18:57:19 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 18:33:56 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ extern CommandManager	commandManager;
 
 
 std::string	itoa(int n);
+bool		startsWith(const std::string str, const std::string prefix);
 void		log(ErrorLevel errorLevel, std::string message, std::string color = "");
 
 

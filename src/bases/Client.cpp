@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:59:23 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 17:09:57 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 18:58:58 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,16 @@ std::string	Client::getRealname() {
 
 void	Client::setRealname(std::string realname) {
 	this->realname = realname;
+}
+
+
+std::string	Client::getPass() {
+	return password;
+}
+
+
+void	Client::setPass(std::string password) {
+	this->password = password;
 }
 
 

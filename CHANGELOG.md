@@ -6,7 +6,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.2.17](#latest-1217---minor) |      Latest      |  `minor`   |    ✅    |
+| [1.3.0](#latest-130---major)   |   Latest, PASS   |  `major`   |    ✅    |
+| [1.2.17](#1217---minor)        |                  |  `minor`   |    ✅    |
 | [1.2.15](#1215---minor)        |                  |  `minor`   |    ✅    |
 | [1.2.14](#1214---major)        |   identifiers    |  `major`   |    ✅    |
 | [1.2.12](#1212---major)        |      NAMES       |  `major`   |    ✅    |
@@ -29,7 +30,7 @@
 | ------ | ---------------------------------------------------------------------- | ------------------------------------------------ | ----------- |
 |   ✅   | [USER](https://datatracker.ietf.org/doc/html/rfc1459#section-4.1.3)    | `USER <username> * * <realname>`                 | **Needed to register.** <br> Setup username and real name. |
 |   ✅   | [NICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.1.2)    | `NICK <nickname>`                                | **Needed to register.** <br> Setup or change nickname. <br> The nickname MUST be UNIQUE. |
-|   ❌   | [PASS](https://datatracker.ietf.org/doc/html/rfc1459#section-4.1.1)    |                                                  |             |
+|   ✅   | [PASS](https://datatracker.ietf.org/doc/html/rfc1459#section-4.1.1)    | `PASS <password>`                                | **Needed to register.** <br> Set the password used to join <br> the server. It MUST be executed <br> BEFORE the combinaison <br> `USER` / `NICK`. |
 |   ✅   | [QUIT](https://datatracker.ietf.org/doc/html/rfc1459#section-4.1.6)    | `QUIT [<message>]`                               | Disconnect properly, informing the <br> other clients, leaving channels. |
 | &nbsp; |                                                                        |                                                  |             |
 |   ✅   | [JOIN](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.1)    | `JOIN <channel>[,...] <keys>[,...]`              | Join channels, using keys if <br> necessary. The channels' names <br> MUST start with a hash (`#`) |
@@ -52,7 +53,32 @@
 
 <br>
 
-## Latest 1.2.17: - `minor`
+## Latest 1.3.0: - `major`
+
+<br>
+
+- **Password for server !** 🤫
+- Arguments parsing:
+  ```usage
+  Usage: ./ircserv [<params...>]
+
+  Params:
+    -h, --help                  - display this help
+    -p, --port   =<port>        - port number (default: 8080)
+    -k, --key    =<password>    - password for server (default: '')
+    -l, --limit  =<clientLimit> - maximum number of clients (default: 100)
+
+  Example: 
+  ./ircserv 8080
+  ./ircserv 8080 P4ssK3y
+  ./ircserv --password=P4ssK3y --limit=50
+  ```
+- Passwords displayed in the server debug (in addition to the port number and the maximum number of clients)
+- [x] **PASS** command
+
+<br><br>
+
+## 1.2.17: - `minor`
 
 <br>
 

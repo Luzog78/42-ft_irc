@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:22:07 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 18:40:50 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int main(int argc, char **argv) {
 		.addCommand(new NamesCommand("NAMES", List<std::string>("NM")))
 		.addCommand(new NickCommand("NICK", List<std::string>("N")))
 		.addCommand(new PartCommand("PART", List<std::string>("P")))
+		.addCommand(new PassCommand("PASS", List<std::string>("PA")("PS")("PSS")("W")))
 		.addCommand(new PingCommand("PING", List<std::string>("PI")))
 		.addCommand(new PongCommand("PONG", List<std::string>("PO")))
 		.addCommand(new PrivCommand("PRIVMSG", List<std::string>("M")("MSG")))
@@ -64,24 +65,61 @@ int main(int argc, char **argv) {
 		.addCommand(new QuitCommand("QUIT", List<std::string>("Q")))
 		;
 
-	std::string	usage = "Usage: " + std::string(argv[0]) + " [<port> [<client_limit>]]";
-	const char	*port = argc > 1 ? argv[1] : "8080";
-	const char	*clientLimit = argc > 2 ? argv[2] : "100";
+	std::string	usage = "Usage: " + std::string(argv[0]) + " [<params...>]\n"
+		+ "\n"
+		+ "Params:\n"
+		+ "  -h, --help                  - display this help\n"
+		+ "  -p, --port   =<port>        - port number (default: 8080)\n"
+		+ "  -k, --key    =<password>    - password for server (default: '')\n"
+		+ "  -l, --limit  =<clientLimit> - maximum number of clients (default: 100)\n"
+		+ "\n"
+		+ "Example: \n"
+		+ std::string(argv[0]) + " 8080\n"
+		+ std::string(argv[0]) + " 8080 P4ssK3y\n"
+		+ std::string(argv[0]) + " --password=P4ssK3y --limit=50\n";
 
-	if (argc > 3) {
-		log(ERROR, "Too many arguments");
-		log(ERROR, usage);
-		return 1;
-	}
+	int			port = 8080;
+	int			clientLimit = 100;
+	std::string	password;
+	bool		plainArgs = true;
 
 	try {
-		server.start(parseUnsigned(port, "Port"),
-			parseUnsigned(clientLimit, "Client limit"));
+		for (int i = 1; i < argc; i++) {
+			std::string	arg = argv[i];
+
+			if (startsWith(arg, "-p") || startsWith(arg, "--port")) {
+				if (arg.find('=') == std::string::npos)
+					throw std::invalid_argument("Port number is missing");
+				port = parseUnsigned(arg.substr(arg.find('=') + 1).c_str(), "Port");
+				plainArgs = false;
+			} else if (startsWith(arg, "-k") || startsWith(arg, "--key")) {
+				if (arg.find('=') == std::string::npos)
+					throw std::invalid_argument("Password is missing");
+				password = arg.substr(arg.find('=') + 1);
+				plainArgs = false;
+			} else if (startsWith(arg, "-l") || startsWith(arg, "--limit")) {
+				if (arg.find('=') == std::string::npos)
+					throw std::invalid_argument("Client limit is missing");
+				clientLimit = parseUnsigned(arg.substr(arg.find('=') + 1).c_str(), "Client limit");
+				plainArgs = false;
+			} else if (startsWith(arg, "-h") || startsWith(arg, "--help")) {
+				log(ERROR, usage);
+				return 0;
+			} else if (i == 1 && argv[i][0] != '-')
+				port = parseUnsigned(argv[i], "Port");
+			else if (i == 2 && plainArgs)
+				password = arg;
+			else
+				throw std::invalid_argument("Unknown argument: " + arg);
+		}
+
+		server.start(port, clientLimit, password);
 	} catch (IRCException &e) {
 		log(ERROR, std::string(e.what()));
 		return 1;
 	} catch (std::invalid_argument &e) {
 		log(ERROR, std::string(e.what()));
+		log(ERROR, "\n");
 		log(ERROR, usage);
 		return 1;
 	}

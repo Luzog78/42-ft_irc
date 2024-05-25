@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:46 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/24 17:10:13 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/25 18:58:42 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ class Client {
 		std::string					nickname;
 		std::string					username;
 		std::string					realname;
+		std::string					password;
 		std::vector<std::string>	channels;
 
 	public:
@@ -67,6 +68,8 @@ class Client {
 		void						setUsername(std::string username);
 		std::string					getRealname();
 		void						setRealname(std::string realname);
+		std::string					getPass();
+		void						setPass(std::string password);
 		std::vector<std::string>	getChannels();
 		void						addChannel(std::string channel);
 		void						removeChannel(std::string channel);
