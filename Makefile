@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/25 18:39:49 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/26 04:12:56 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,30 +14,36 @@
 CCXX				= c++
 CXXFLAGS			= -Werror -Wall -Wextra -std=c++98 -g
 NAME				= ircserv
-INCLUDES			= inc -I inc/bases -I inc/commands
+NAME_BONUS			= ircbot
+INCLUDES			= inc -I inc/server -I inc/server/bases -I inc/server/commands
+INCLUDES_BONUS		= inc -I inc/bot -I inc/bot/bases # -I inc/bot/commands
 SRC_FILES			= \
-						src/bases/Client.cpp \
-						src/bases/Server.cpp \
-						src/bases/Channel.cpp \
-						src/bases/Command.cpp \
-						src/bases/CommandManager.cpp \
-						src/commands/InviteCommand.cpp \
-						src/commands/JoinCommand.cpp \
-						src/commands/KickCommand.cpp \
-						src/commands/ListCommand.cpp \
-						src/commands/ModeCommand.cpp \
-						src/commands/NamesCommand.cpp \
-						src/commands/NickCommand.cpp \
-						src/commands/PartCommand.cpp \
-						src/commands/PassCommand.cpp \
-						src/commands/PingCommand.cpp \
-						src/commands/PongCommand.cpp \
-						src/commands/PrivCommand.cpp \
-						src/commands/QuitCommand.cpp \
-						src/commands/TopicCommand.cpp \
-						src/commands/UserCommand.cpp \
-						src/utils.cpp \
-						src/main.cpp
+						src/server/bases/Client.cpp \
+						src/server/bases/Server.cpp \
+						src/server/bases/Channel.cpp \
+						src/server/bases/Command.cpp \
+						src/server/bases/CommandManager.cpp \
+						src/server/commands/InviteCommand.cpp \
+						src/server/commands/JoinCommand.cpp \
+						src/server/commands/KickCommand.cpp \
+						src/server/commands/ListCommand.cpp \
+						src/server/commands/ModeCommand.cpp \
+						src/server/commands/NamesCommand.cpp \
+						src/server/commands/NickCommand.cpp \
+						src/server/commands/PartCommand.cpp \
+						src/server/commands/PassCommand.cpp \
+						src/server/commands/PingCommand.cpp \
+						src/server/commands/PongCommand.cpp \
+						src/server/commands/PrivCommand.cpp \
+						src/server/commands/QuitCommand.cpp \
+						src/server/commands/TopicCommand.cpp \
+						src/server/commands/UserCommand.cpp \
+						src/server/main.cpp \
+						src/utils.cpp
+SRC_FILES_BONUS		= \
+						src/bot/bases/Bot.cpp \
+						src/bot/main.cpp \
+						src/utils.cpp
 
 BUILD_FOLDER		= build
 
@@ -56,7 +62,9 @@ C_CYAN				= \033[36m
 C_WHITE				= \033[37m
 
 OBJ_FILES			= $(SRC_FILES:.cpp=.o)
+OBJ_FILES_BONUS		= $(SRC_FILES_BONUS:.cpp=.o)
 BUILD_FILES			= $(addprefix $(BUILD_FOLDER)/, $(OBJ_FILES))
+BUILD_FILES_BONUS	= $(addprefix $(BUILD_FOLDER)/, $(OBJ_FILES_BONUS))
 
 TO_COMPILE			= 0
 
@@ -76,19 +84,29 @@ $(NAME) : $(BUILD_FILES)
 m_line_break :
 	@echo ""
 
-bonus:
-	@echo "$(C_RED)$(C_BOLD)There is no bonus for this project.$(C_RESET)"
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS) : $(BUILD_FILES_BONUS)
+	@echo ""
+	@echo -n "  > $(C_YELLOW)$(C_BOLD)./$(NAME_BONUS)$(C_RESET):  $(C_DIM)"
+	$(CCXX) $(CXXFLAGS) -o $(NAME_BONUS) $(BUILD_FILES_BONUS) -I $(INCLUDES_BONUS)
+	@echo "$(C_RESET)"
+	@echo ""
+	@echo -n "$(C_BOLD)$(C_MAGENTA)>$(C_BLUE)>$(C_CYAN)>$(C_GREEN)"
+	@echo -n " Compilation success ! "
+	@echo "$(C_CYAN)<$(C_BLUE)<$(C_MAGENTA)<$(C_RESET)"
+	@echo ""
 
 $(BUILD_FOLDER)/%.o : %.cpp
 	@if [ $(TO_COMPILE) -eq 0 ] ; then \
 		echo -n "$(C_CYAN)$(C_BOLD)$(C_UNDERLINE)" ; \
-		echo "Compiling $(C_YELLOW)./$(NAME)$(C_CYAN)... :$(C_RESET)" ; \
+		echo "Compiling $(C_YELLOW)./$(if $(findstring bonus, $(MAKECMDGOALS)),$(NAME_BONUS),$(NAME))$(C_CYAN)... :$(C_RESET)" ; \
 		echo "" ; \
 	fi
 	@$(eval TO_COMPILE := 1)
 	@echo -n "  - $(C_GREEN)$<$(C_RESET):  $(C_DIM)"
 	@mkdir -p $(@D)
-	$(CCXX) $(CXXFLAGS) -c $< -o $@ -I $(INCLUDES)
+	$(CCXX) $(CXXFLAGS) -c $< -o $@ -I $(if $(findstring bonus, $(MAKECMDGOALS)),$(INCLUDES_BONUS),$(INCLUDES))
 	@echo -n "$(C_RESET)"
 
 define del =
@@ -109,6 +127,8 @@ define del =
 		fi ; \
 		if [ "$$file" = "./$(NAME)" ] ; then \
 			printf "$(C_YELLOW)%-$$((l))s  $(C_RED)" "$$file" ; \
+		elif [ "$$file" = "./$(NAME_BONUS)" ] ; then \
+			printf "$(C_YELLOW)%-$$((l))s  $(C_RED)" "$$file" ; \
 		else \
 			printf "%-$$((l))s  " "$$file" ; \
 		fi ; \
@@ -125,13 +145,15 @@ define del =
 endef
 
 clean :
-	$(call del, "$(BUILD_FOLDER)" $(BUILD_FILES))
-	@rm -rf $(BUILD_FILES) $(BUILD_FOLDER)
+	$(call del, "$(BUILD_FOLDER)" $(BUILD_FILES) $(BUILD_FILES_BONUS))
+	@rm -rf $(BUILD_FILES) $(BUILD_FOLDER) $(BUILD_FILES_BONUS)
 
 fclean :
-	$(call del, "./$(NAME)" "$(BUILD_FOLDER)" $(BUILD_FILES))
-	@rm -rf $(NAME) $(BUILD_FILES) $(BUILD_FOLDER)
+	$(call del, "./$(NAME)" "./$(NAME_BONUS)" "$(BUILD_FOLDER)" $(BUILD_FILES) $(BUILD_FILES_BONUS))
+	@rm -rf $(NAME) $(NAME_BONUS) $(BUILD_FILES) $(BUILD_FILES_BONUS) $(BUILD_FOLDER)
 
 re : fclean m_line_break all
 
-.PHONY : all bonus clean fclean re
+re_bonus : clean m_line_break bonus
+
+.PHONY : all bonus clean fclean re re_bonus

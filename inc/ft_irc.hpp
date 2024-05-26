@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:01 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 18:33:56 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 03:01:57 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@
 # include <csignal>
 
 
+# include "IRCException.hpp"
+# include "NumResponses.hpp"
+
+
 # define	C_RESET		"\033[0m"
 # define	C_RED		"\033[31m"
 # define	C_GREEN		"\033[32m"
@@ -56,27 +60,6 @@ typedef enum e_error_level {
 	WARNING,
 	ERROR
 }	ErrorLevel;
-
-
-class ITarget;
-class Server;
-class Client;
-class Channel;
-class Command;
-class CommandManager;
-
-# include "IRCException.hpp"
-# include "Server.hpp"
-# include "Client.hpp"
-# include "Channel.hpp"
-# include "Command.hpp"
-# include "CommandManager.hpp"
-
-# include "NumResponses.hpp"
-
-
-extern Server			server;
-extern CommandManager	commandManager;
 
 
 std::string	itoa(int n);

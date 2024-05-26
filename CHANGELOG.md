@@ -6,7 +6,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.3.3](#latest-133---minor)   |      Latest      |  `minor`   |    ✅    |
+| [1.4.0](#latest-140---major)   |  Latest, IRCBot  |  `MAJOR`   |    ✅    |
+| [1.3.3](#133---minor)          |                  |  `minor`   |    ✅    |
 | [1.3.2](#132---major)          |     Hostname     |  `major`   |    ✅    |
 | [1.3.0](#130---major)          |       PASS       |  `major`   |    ✅    |
 | [1.2.17](#1217---minor)        |                  |  `minor`   |    ✅    |
@@ -55,7 +56,80 @@
 
 <br>
 
-## Latest 1.3.3: - `minor`
+## Latest 1.4.0: - `MAJOR`
+
+<br>
+
+- **IRC Bot !** 🤖
+  - `make bonus` to compile the bot.
+  - `./ircbot` to run the bot.
+  - Usage: `./ircbot <IPv4> <port> [<password>]`
+  - On connection, the bot will join the `#bot` channel.
+  - Commands: (***MAYBE*** in the future ! We don't know yet, but it's an idea... 🤔)
+    - [ ] `!help` - Display the help message.
+    - [ ] `!join <channel>` - Join a channel.
+    - [ ] `!part <channel>` - Part a channel.
+    - [ ] `!weather <city>` - Display the weather of a city.
+    - [ ] `!time <city>` - Display the time of a city.
+    - [ ] `!stock <symbol>` - Display the stock price of a symbol.
+    - [ ] `!quote` - Display a random quote.
+    - [ ] `!news` - Display the latest news.
+    - [ ] `!joke` - Display a random joke.
+    - [ ] `!fact` - Display a random fact.
+    - [ ] `!meme` - Display a random meme.
+    - [ ] `!msg` - Start a private conversation with the bot.
+    - [ ] `!gpt <message>` - Generate a message with GPT-3.
+    - [ ] `!quit` - Quit the server.
+  - **TODO**:
+    - [ ] Response parsing.
+      - 'Cause now, if the nick `bot` is already taken, the bot will not work.
+      - And, same for the channel `#bot`.
+      - So todo: find a solution to this problem.
+    - [ ] Commands parsing.
+    - [ ] Commands implementation.
+    - [ ] And **maybe** try to link the bot to the ✨ Internet ✨.
+- New architecture:
+  ```tree
+  .
+  ├── inc
+  │   ├── bot
+  │   │   ├── bases
+  │   │   │   └── *.hpp
+  │   │   ├── commands
+  │   │   │   └── *.hpp
+  │   │   └── bot.hpp
+  │   ├── server
+  │   │   ├── bases
+  │   │   │   └── *.hpp
+  │   │   ├── commands
+  │   │   │   └── *.hpp
+  │   │   └── server.hpp
+  │   ├── ft_irc.hpp
+  │   ├── IRCException.hpp
+  │   └── NumResponses.hpp
+  ├── src
+  │   ├── bot
+  │   │   ├── bases
+  │   │   │   └── *.cpp
+  │   │   ├── commands
+  │   │   │   └── *.cpp
+  │   │   └── main.cpp
+  │   ├── server
+  │   │   ├── bases
+  │   │   │   └── *.cpp
+  │   │   ├── commands
+  │   │   │   └── *.cpp
+  │   │   └── main.cpp
+  │   └── utils.cpp
+  ├── CHANGELOG.md
+  └── Makefile
+  ```
+- Makefile big update *(to compile the serv and the bot)*.
+
+
+<br><br>
+
+## 1.3.3: - `minor`
 
 <br>
 
