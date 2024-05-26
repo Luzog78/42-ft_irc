@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ListCommand.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 14:27:42 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,7 @@ bool	ListCommand::exec(Server &server, Client &client, std::string label,
 		}
 		return true;
 	}
-	// client.send(args[1]);
-	std::vector<std::string> channels = split(args[1]);
-	// for (size_t i = 0; i < channels.size(); i++) {
-	// 	client.send("channels >" + channels[i]);
-	// }
+	std::vector<std::string> channels = split(args[0]);
 	for (size_t i = 0; i < channels.size(); i++) {
 		try {
 			Channel	&channel = server.getChannelByName(channels[i]);

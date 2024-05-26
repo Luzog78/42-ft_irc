@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumResponses.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:01:27 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/25 17:26:42 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 16:30:07 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define RPL_INVITING(n, nick, chan)		"341 " + n + " " + nick + " " + chan
 # define RPL_NAMREPLY(n, chan, nicks)		"353 " + n + " = " + chan + " :" + nicks
 # define RPL_ENDOFNAMES(n, chan)			"366 " + n + " " + chan + " :End of /NAMES list"
+# define RPL_ENDOFUSERS(n)					"394 " + n + " :End of users"
 
 # define ERR_NOSUCHNICK(n, nick)			"401 " + n + " " + nick + " :No such nick/channel"
 # define ERR_NOSUCHCHANNEL(n, chan)			"403 " + n + " " + chan + " :No such channel"

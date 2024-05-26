@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 14:49:45 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int main(int argc, char **argv) {
 		.addCommand(new PongCommand("PONG", List<std::string>("PO")))
 		.addCommand(new PrivCommand("PRIVMSG", List<std::string>("M")("MSG")))
 		.addCommand(new UserCommand("USER", List<std::string>("U")))
+		.addCommand(new UsersCommand("USERS", List<std::string>("US")))
 		.addCommand(new TopicCommand("TOPIC", List<std::string>("T")))
 		.addCommand(new QuitCommand("QUIT", List<std::string>("Q")))
 		;

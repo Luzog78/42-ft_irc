@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
+#    By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/26 04:12:56 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/26 14:49:01 by kbutor-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC_FILES			= \
 						src/server/commands/QuitCommand.cpp \
 						src/server/commands/TopicCommand.cpp \
 						src/server/commands/UserCommand.cpp \
+						src/server/commands/UsersCommand.cpp \
 						src/server/main.cpp \
 						src/utils.cpp
 SRC_FILES_BONUS		= \
