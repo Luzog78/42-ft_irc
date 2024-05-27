@@ -6,7 +6,7 @@
 /*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 14:27:42 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:12:16 by kbutor-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,6 @@ ListCommand::~ListCommand() {
 /* ---------------------------- Member functions ---------------------------- */
 /* ************************************************************************** */
 
-// static std::vector<std::string>		splitTargets(std::string rawTargets) {
-// 	std::vector<std::string>	targetNames;
-// 	size_t						pos = 0;
-
-// 	while ((pos = rawTargets.find(",")) != std::string::npos) {
-// 		if (!rawTargets.substr(0, pos).empty())
-// 			targetNames.push_back(rawTargets.substr(0, pos));
-// 		rawTargets.erase(0, pos + 1);
-// 	}
-// 	if (!rawTargets.empty())
-// 		targetNames.push_back(rawTargets);
-// 	return targetNames;
-// }
-
 static std::vector<std::string>		split(const std::string raw) {
 	std::vector<std::string>	list;
 	std::string					sub;
@@ -81,6 +67,8 @@ bool	ListCommand::exec(Server &server, Client &client, std::string label,
 	(void) label;
 	(void) prefix;
 
+	if (!client.isRegistered())
+		return false;
 	if (argsCount == 0) {
 		std::vector<std::string> channelNames;
 		std::vector<Channel> channels = server.getChannels();

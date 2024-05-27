@@ -55,6 +55,8 @@ bool	UsersCommand::exec(Server &server, Client &client, std::string label,
 	(void) args;
 	(void) argsCount;
 	
+	if (!client.isRegistered())
+		return false;
 	try {
 		std::vector<Client> clients = server.getClients();
 		if (clients.size() != 0) {

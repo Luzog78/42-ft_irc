@@ -68,6 +68,8 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 	(void) label;
 	(void) prefix;
 
+	if (!client.isRegistered())
+		return false;
 	if (argsCount == 0) {
 		std::vector<Channel>	channels = server.getChannels();
 		std::vector<Client>		clients = server.getClients();
