@@ -6,6 +6,7 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
+| [1.4.1](#141--minor)           |  LIST, USERS     |  `minor`   |    ✅    |
 | [1.4.0](#latest-140---major)   |  Latest, IRCBot  |  `MAJOR`   |    ✅    |
 | [1.3.3](#133---minor)          |                  |  `minor`   |    ✅    |
 | [1.3.2](#132---major)          |     Hostname     |  `major`   |    ✅    |
@@ -46,7 +47,7 @@
 |   ✅   | [KICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.8)    | `KICK <channel> <nick> [<message>]`              | Kick a member. The user <br> must be a channel operator. |
 | &nbsp; |                                                                        |                                                  |             |
 |   ✅   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   | `NAMES [<channel>[,...]]`                        | List all the users on a channel. <br> Operators' nicks are preceded <br> by an `@`. If no arg is given, every <br> channel is listed, and every <br> user without a channel is <br> in an ultimate `*` channel. |
-|   🟠   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    | `LIST [<channel>[,...]]`                         |             |
+|   ✅   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    | `LIST [<channel>[,...]]`                         |             |
 |   ✅   | [USERS](https://datatracker.ietf.org/doc/html/rfc1459#section-5.5)     |                                                  |             |
 | &nbsp; |                                                                        |                                                  |             |
 |   ✅   | [PING](https://datatracker.ietf.org/doc/html/rfc1459#section-4.6.2)    | `PING *`                                         | Ping. <br> Asking for a Pong. |
@@ -55,6 +56,16 @@
 </div>
 
 <br>
+
+## 1.4.2 - `minor`
+
+<br>
+
+- List | Users | Names command fixed (error when you try to use it before registration)
+- find 2 leaks to fix (check valgrindError.txt)
+- find a IRC client working on 42's pc > Konversation(https://flathub.org/apps/org.kde.konversation)
+
+<br><br>
 
 ## 1.4.1: - `minor`
 
