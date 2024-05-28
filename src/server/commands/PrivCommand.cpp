@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 02:59:27 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ PrivCommand::~PrivCommand() {
 /* ************************************************************************** */
 
 
-static std::vector<std::string>		splitTargets(std::string rawTargets) {
+static std::vector<std::string>	splitTargets(std::string rawTargets) {
 	std::vector<std::string>	targetNames;
 	size_t						pos = 0;
 

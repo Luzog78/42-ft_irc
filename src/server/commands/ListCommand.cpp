@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ListCommand.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/27 14:12:16 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/28 03:23:03 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,21 @@ ListCommand::~ListCommand() {
 /* ---------------------------- Member functions ---------------------------- */
 /* ************************************************************************** */
 
-static std::vector<std::string>		split(const std::string raw) {
-	std::vector<std::string>	list;
-	std::string					sub;
-	size_t						pos = 0;
-	size_t						start = 0;
 
-	while ((pos = raw.find(",", start)) != std::string::npos) {
-		sub = raw.substr(start, pos - start);
-		list.push_back(sub);
-		start = pos + 1;
+static std::vector<std::string>	splitTargets(std::string rawTargets) {
+	std::vector<std::string>	targetNames;
+	size_t						pos = 0;
+
+	while ((pos = rawTargets.find(",")) != std::string::npos) {
+		if (!rawTargets.substr(0, pos).empty())
+			targetNames.push_back(rawTargets.substr(0, pos));
+		rawTargets.erase(0, pos + 1);
 	}
-	list.push_back(raw.substr(start));
-	return list;
+	if (!rawTargets.empty())
+		targetNames.push_back(rawTargets);
+	return targetNames;
 }
+
 
 bool	ListCommand::exec(Server &server, Client &client, std::string label,
 			std::string prefix, std::string args[], int argsCount) {
@@ -69,30 +70,26 @@ bool	ListCommand::exec(Server &server, Client &client, std::string label,
 
 	if (!client.isRegistered())
 		return false;
+
+	std::vector<Channel>	channels;
+
 	if (argsCount == 0) {
-		std::vector<std::string> channelNames;
-		std::vector<Channel> channels = server.getChannels();
-		for (size_t i = 0; i < channels.size(); i++) {
-			channelNames.push_back(channels[i].getName());
-		}
-		for (size_t i = 0; i < channelNames.size(); i++) {
+		channels = server.getChannels();
+	} else {
+		std::vector<std::string>	channelNames = splitTargets(args[0]);
+		for (size_t i = 0; i < channelNames.size(); i++)
 			try {
-				Channel &channel = server.getChannelByName(channelNames[i]);
-				client.send(server, channel.getName() + ": " + channel.getTopic());
-			} catch (std::exception &e) {
+				channels.push_back(server.getChannelByName(channelNames[i]));
+			} catch (IRCException &e) {
 				client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
 			}
-		}
-		return true;
 	}
-	std::vector<std::string> channels = split(args[0]);
-	for (size_t i = 0; i < channels.size(); i++) {
-		try {
-			Channel	&channel = server.getChannelByName(channels[i]);
-			client.send(server, channel.getName() + ": " + channel.getTopic());
-		} catch (std::exception &e) {
-			client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
-		}
-	}
+	
+	client.send(server, RPL_LISTSTART(client.getNick()));
+	for (size_t i = 0; i < channels.size(); i++)
+		client.send(server, RPL_LIST(client.getNick(), channels[i].getName(),
+			itoa(channels[i].getOnlineClients(server).size()),
+			channels[i].getTopic()));
+	client.send(server, RPL_LISTEND(client.getNick()));
 	return true;
 }

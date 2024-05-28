@@ -48,7 +48,7 @@ NamesCommand::~NamesCommand() {
 /* ************************************************************************** */
 
 
-static std::vector<std::string>		splitTargets(std::string rawTargets) {
+static std::vector<std::string>	splitTargets(std::string rawTargets) {
 	std::vector<std::string>	targetNames;
 	size_t						pos = 0;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   NumResponses.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 12:01:27 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 16:30:07 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/28 03:15:59 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 # define RPL_WELCOME(n)						"001 " + n + " :Welcome to the ft_irc Network " + n + "!"
 # define RPL_YOURHOST(n, serv, ver)			"002 " + n + " :Your host is " + serv + ", running version " + ver
 # define RPL_CREATED(n, date)				"003 " + n + " :This server was created " + date
+# define RPL_LISTSTART(n)					"321 " + n + " Channel :Users  Name"
+# define RPL_LIST(n, chan, users, topic)	"322 " + n + " " + chan + " " + users + " :" + topic
+# define RPL_LISTEND(n)						"323 " + n + " :End of /LIST"
 # define RPL_CHANNELMODEIS(n, chan, md)		"324 " + n + " " + chan + " " + md
 # define RPL_NOTOPIC(n, chan)				"331 " + n + " " + chan + " :No topic is set"
 # define RPL_TOPIC(n, chan, topic)			"332 " + n + " " + chan + " :" + topic
 # define RPL_INVITING(n, nick, chan)		"341 " + n + " " + nick + " " + chan
 # define RPL_NAMREPLY(n, chan, nicks)		"353 " + n + " = " + chan + " :" + nicks
 # define RPL_ENDOFNAMES(n, chan)			"366 " + n + " " + chan + " :End of /NAMES list"
-# define RPL_ENDOFUSERS(n)					"394 " + n + " :End of users"
 
 # define ERR_NOSUCHNICK(n, nick)			"401 " + n + " " + nick + " :No such nick/channel"
 # define ERR_NOSUCHCHANNEL(n, chan)			"403 " + n + " " + chan + " :No such channel"
