@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:46:42 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ bool	NickCommand::exec(Server &server, Client &client, std::string label,
 
 	if (client.isRegistered()) {
 		std::vector<Client> clients = server.getClients();
-		for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+		for (std::vector<Client>::iterator it = clients.begin();
+				it != clients.end(); it++)
 			it->send(name + " " + args[0], client.getPrefix());
 	}
 

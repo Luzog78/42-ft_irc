@@ -65,17 +65,21 @@ bool	TopicCommand::exec(Server &server, Client &client, std::string label,
 
 		if (argsCount == 1) {
 			if (channel.getTopic().empty())
-				client.send(server, RPL_NOTOPIC(client.getNick(), channel.getName()));
+				client.send(server, RPL_NOTOPIC(client.getNick(),
+						channel.getName()));
 			else
-				client.send(server, RPL_TOPIC(client.getNick(), channel.getName(), channel.getTopic()));
+				client.send(server, RPL_TOPIC(client.getNick(),
+						channel.getName(), channel.getTopic()));
 		} else {
 			if (!channel.isMember(client.getSocket())) {
-				client.send(server, ERR_NOTONCHANNEL(client.getNick(), channel.getName()));
+				client.send(server, ERR_NOTONCHANNEL(client.getNick(),
+						channel.getName()));
 				return false;
 			}
 			if (!channel.isOperator(client.getFullAddress())
 				&& channel.isTopicRestricted()) {
-				client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
+				client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(),
+						channel.getName()));
 				return false;
 			}
 			if (args[1] != channel.getTopic()) {

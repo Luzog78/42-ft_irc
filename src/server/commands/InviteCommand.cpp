@@ -64,25 +64,32 @@ bool	InviteCommand::exec(Server &server, Client &client, std::string label,
 		Channel &channel = server.getChannelByName(args[1]);
 
 		if (!channel.isMember(client.getSocket())) {
-			client.send(server, ERR_NOTONCHANNEL(client.getNick(), channel.getName()));
+			client.send(server, ERR_NOTONCHANNEL(
+					client.getNick(), channel.getName()));
 			return false;
 		}
 		if (!channel.isOperator(client.getFullAddress())) {
-			client.send(server, ERR_CHANOPRIVSNEEDED(client.getNick(), channel.getName()));
+			client.send(server, ERR_CHANOPRIVSNEEDED(
+					client.getNick(), channel.getName()));
 			return false;
 		}
 		try {
 			Client &invitee = server.getClientByNickname(args[0]);
 
 			if (channel.isMember(invitee.getSocket())) {
-				client.send(server, ERR_USERONCHANNEL(client.getNick(), invitee.getNick(), channel.getName()));
+				client.send(server, ERR_USERONCHANNEL(client.getNick(),
+						invitee.getNick(), channel.getName()));
 				return false;
 			}
 			if (!channel.isInvited(invitee.getNick())) {
-				client.send(server, RPL_INVITING(client.getNick(), invitee.getNick(), channel.getName()));
-				channel.broadcast(server, "NOTICE @" + channel.getName() + " :" + client.getNick() + " invited " + invitee.getNick() + " into the channel.");
+				client.send(server, RPL_INVITING(client.getNick(),
+						invitee.getNick(), channel.getName()));
+				channel.broadcast(server, "NOTICE @" + channel.getName()
+					+ " :" + client.getNick() + " invited " + invitee.getNick()
+					+ " into the channel.");
 				channel.addInvited(invitee.getNick());
-				invitee.send(name + " " + invitee.getNick() + " " + channel.getName(), client.getPrefix());
+				invitee.send(name + " " + invitee.getNick() + " "
+					+ channel.getName(), client.getPrefix());
 			}
 		} catch (Server::ServerException &e) {
 			client.send(server, ERR_NOSUCHNICK(client.getNick(), args[1]));

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:59:23 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 05:33:51 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:41:52 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,8 @@ void	Client::send(std::string command, std::string prefix) {
 
 	log(INFO, "(S) <" + getLogPrefix() + ">: " + finalCmd, C_GREEN);
 	if (::send(sckt, finalCmd.c_str(), finalCmd.length(), 0) < 0)
-		throw ClientException("Send command '" + finalCmd + "' to <" + getLogPrefix() + "> failed");
+		throw ClientException("Send command '" + finalCmd
+			+ "' to <" + getLogPrefix() + "> failed");
 }
 
 

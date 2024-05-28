@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:46:52 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ bool	PartCommand::exec(Server &server, Client &client, std::string label,
 			Channel	&channel = server.getChannelByName(channelNames[i]);
 
 			if (!channel.isMember(client.getSocket())) {
-				client.send(server, ERR_NOTONCHANNEL(client.getNick(), channelNames[i]));
+				client.send(server, ERR_NOTONCHANNEL(
+						client.getNick(), channelNames[i]));
 				continue;
 			}
 			channel.broadcast(server,
@@ -95,7 +96,8 @@ bool	PartCommand::exec(Server &server, Client &client, std::string label,
 				server.removeChannel(channel.getName());
 			client.removeChannel(channel.getName());
 		} catch (Server::ServerException &e) {
-			client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
+			client.send(server, ERR_NOSUCHCHANNEL(
+					client.getNick(), channelNames[i]));
 		}
 	}
 

@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/28 10:32:50 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/28 13:23:43 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC_FILES			= \
 						src/server/commands/TopicCommand.cpp \
 						src/server/commands/UserCommand.cpp \
 						src/server/main.cpp \
+						src/server/parsing.cpp \
 						src/utils.cpp
 SRC_FILES_BONUS		= \
 						src/bot/bases/Bot.cpp \

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 13:45:22 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ bool	JoinCommand::exec(Server &server, Client &client, std::string label,
 		if (channelNames[i].empty())
 			continue;
 		if (!Channel::isLegalName(channelNames[i])) {
-			client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
+			client.send(server, ERR_NOSUCHCHANNEL(
+					client.getNick(), channelNames[i]));
 			continue;
 		}
 		try {
@@ -89,23 +90,35 @@ bool	JoinCommand::exec(Server &server, Client &client, std::string label,
 
 			if (channel.isMember(client.getSocket())) {
 				// ignore
-			} else if (!channel.hasRight(client.getNick(), client.getFullAddress())) {
-				client.send(server, ERR_INVITEONLYCHAN(client.getNick(), channel.getName()));
+			} else if (!channel.hasRight(
+					client.getNick(), client.getFullAddress())) {
+				client.send(server, ERR_INVITEONLYCHAN(
+						client.getNick(), channel.getName()));
 			} else if (channel.isFull()) {
-				client.send(server, ERR_CHANNELISFULL(client.getNick(), channel.getName()));
+				client.send(server, ERR_CHANNELISFULL(
+						client.getNick(), channel.getName()));
 			} else if (!channel.getKey().empty() && channel.getKey() != key) {
-				client.send(server, ERR_BADCHANNELKEY(client.getNick(), channel.getName()));
+				client.send(server, ERR_BADCHANNELKEY(
+						client.getNick(), channel.getName()));
 			} else {
 				channel.removeInvited(client.getNick());
 				client.addChannel(channel.getName());
 				channel.addMember(client.getSocket());
-				channel.broadcast(server, name + " " + channel.getName(), client.getPrefix());
+				channel.broadcast(server, name + " " + channel.getName(),
+					client.getPrefix());
+				if (channel.isOperator(client.getFullAddress()))
+					channel.broadcast(server, "MODE " + channel.getName()
+						+ " +o " + client.getNick(), client.getPrefix());
 				if (channel.getTopic().empty())
-					client.send(server, RPL_NOTOPIC(client.getNick(), channel.getName()));
+					client.send(server, RPL_NOTOPIC(
+							client.getNick(), channel.getName()));
 				else
-					client.send(server, RPL_TOPIC(client.getNick(), channel.getName(), channel.getTopic()));
-				client.send(server, RPL_NAMREPLY(client.getNick(), channel.getName(), channel.getMemberNicks()));
-				client.send(server, RPL_ENDOFNAMES(client.getNick(), channel.getName()));
+					client.send(server, RPL_TOPIC(client.getNick(),
+							channel.getName(), channel.getTopic()));
+				client.send(server, RPL_NAMREPLY(client.getNick(),
+						channel.getName(), channel.getMemberNicks()));
+				client.send(server, RPL_ENDOFNAMES(client.getNick(),
+						channel.getName()));
 			}
 		} catch (Server::ServerException &e) {
 			Channel		channel(channelNames[i]);

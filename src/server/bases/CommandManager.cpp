@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 07:52:50 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:52:47 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:41:30 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ CommandManager &CommandManager::operator=(const CommandManager &commandManager) 
 
 
 CommandManager::~CommandManager() {
-	for (std::vector<Command *>::iterator it = commands.begin(); it != commands.end(); it++)
+	for (std::vector<Command *>::iterator it = commands.begin();
+			it != commands.end(); it++)
 		delete *it;
 }
 

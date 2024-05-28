@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 06:12:46 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:41:16 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ void	Server::poll() {
 	acceptPoll.revents = 0;
 	_pollfds.push_back(acceptPoll);
 
-	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+	for (std::vector<Client>::iterator it = clients.begin();
+			it != clients.end(); it++)
 		_pollfds.push_back(it->getPollFd());
 
 	int	pollResult = ::poll(_pollfds.data(), _pollfds.size(), 0);
@@ -155,12 +156,14 @@ void	Server::accept() {
 		struct sockaddr_in	clientAddr;
 		socklen_t			clientAddrLen = sizeof(clientAddr);
 
-		int	clientSocket = ::accept(sckt, (struct sockaddr*) &clientAddr, &clientAddrLen);
+		int	clientSocket = ::accept(
+				sckt, (struct sockaddr*) &clientAddr, &clientAddrLen);
 		if (clientSocket < 0)
 			throw ServerException("Accept failed");
 
 		if (fcntl(clientSocket, F_SETFL, O_NONBLOCK) < 0)
-			throw ServerException("fcntl failed (new client, fd: " + itoa(clientSocket)
+			throw ServerException(
+				"fcntl failed (new client, fd: " + itoa(clientSocket)
 				+ ", ip: " + inet_ntoa(clientAddr.sin_addr) + ")");
 
 		Client	newClient(clientSocket, clientAddr);
@@ -190,7 +193,8 @@ void	Server::receive() {
 				throw ServerException("Receive failed from " + client.getFullAddress());
 
 			if (ret == 0) {
-				log(INFO, "(X) <" + client.getLogPrefix() + ">: QUIT :Client disconnected", C_MAGENTA);
+				log(INFO, "(X) <" + client.getLogPrefix()
+					+ ">: QUIT :Client disconnected", C_MAGENTA);
 				commandManager.exec(*this, client, "QUIT :Client disconnected");
 				continue;
 			}
@@ -207,7 +211,8 @@ void	Server::receive() {
 			client.setCommandBuffer(cmdBuffer);
 		}
 		if (client.getPollFd().revents & (POLLERR | POLLHUP | POLLNVAL)) {
-			log(INFO, "(X) <" + client.getLogPrefix() + ">: QUIT :Client disconnected", C_MAGENTA);
+			log(INFO, "(X) <" + client.getLogPrefix()
+				+ ">: QUIT :Client disconnected", C_MAGENTA);
 			commandManager.exec(*this, client, "QUIT :Client disconnected");
 		}
 	}
@@ -222,7 +227,7 @@ void	Server::welcome(Client &client) {
 	}
 	client.setRegistered(true);
 	client.send(server, RPL_WELCOME(client.getNick()));
-	client.send(server, RPL_YOURHOST(client.getNick(), std::string("localhost"), "1.0"));
+	client.send(server, RPL_YOURHOST(client.getNick(), hostname, "1.0"));
 	client.send(server, RPL_CREATED(client.getNick(), std::string("once upon a time...")));
 }
 
@@ -251,7 +256,8 @@ void	Server::close() {
 
 
 std::string	Server::getFullAddress() {
-	return std::string(inet_ntoa(addr.sin_addr)) + ":" + itoa(ntohs(addr.sin_port)) + "/" + itoa(sckt);
+	return std::string(inet_ntoa(addr.sin_addr))
+		+ ":" + itoa(ntohs(addr.sin_port)) + "/" + itoa(sckt);
 }
 
 
@@ -381,7 +387,8 @@ void	Server::addChannel(Channel channel) {
 
 
 void	Server::removeChannel(std::string name) {
-	for (std::vector<Channel>::iterator it = channels.begin(); it != channels.end(); it++) {
+	for (std::vector<Channel>::iterator it = channels.begin();
+			it != channels.end(); it++) {
 		if (it->getName() == name) {
 			channels.erase(it);
 			return;

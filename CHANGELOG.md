@@ -8,7 +8,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.6.6](#latest-166---minor)   |      Latest      |  `minor`   |    ✅    |
+| [1.7.0](#latest-170---minor)   |   Latest, Norm   |  `minor`   |    ✅    |
+| [1.6.6](#166---minor)          |                  |  `minor`   |    ✅    |
 | [1.6.4](#164---major)          |      !help       |  `major`   |    ✅    |
 | [1.6.0](#160---major)          |     Internet     |  `major`   |    ✅    |
 | [1.5.5](#155---minor)          |                  |  `minor`   |    ✅    |
@@ -77,15 +78,28 @@
 |   ✅   | !help   | `!help [<command>]`   | List all available commands <br> or get help for a <br> specific one. |
 |   ✅   | !ping   | `!ping [<whatever>]`  | Ping. <br> Sending Pong. |
 |   ✅   | !pong   | `!pong [<whatever>]`  | Ping. <br> Sending Ping. |
-|   ✅   | !quote  | `!quote`              | Display a random quote. |
-|   ✅   | !joke   | `!joke`               | Display a random joke. |
-|   ✅   | !fact   | `!fact`               | Get a random fact about cats. |
+|   ✅   | !quote  | `!quote`              | Display a random quote. <br> API: [Quotable.io](https://api.quotable.io/random) |
+|   ✅   | !joke   | `!joke`               | Display a random joke. <br> API: [ICanHazDadJoke](https://icanhazdadjoke.com/) |
+|   ✅   | !fact   | `!fact`               | Get a random fact about cats. <br> API: [CatFact.ninja](https://catfact.ninja/fact) |
 
 </div>
 
 <br><br>
 
-## Latest 1.6.6: - `minor`
+## Latest 1.7.0: - `minor`
+
+<br>
+
+- **Norm** *(mandatory part)*
+  - Get rid of +200 lines functions
+  - Split the code into smaller functions
+  - Clean main.cpp
+  - Try to not exceed 80 columns (there is some exceptions but..
+    it's okay for the lisibility)
+
+<br><br>
+
+## 1.6.6: - `minor`
 
 <br>
 

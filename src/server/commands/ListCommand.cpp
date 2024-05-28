@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 11:31:50 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:45:46 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ bool	ListCommand::exec(Server &server, Client &client, std::string label,
 			try {
 				channels.push_back(server.getChannelByName(channelNames[i]));
 			} catch (IRCException &e) {
-				client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channelNames[i]));
+				client.send(server, ERR_NOSUCHCHANNEL(
+						client.getNick(), channelNames[i]));
 			}
 	}
 	

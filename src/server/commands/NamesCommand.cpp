@@ -91,7 +91,8 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 				clientsNick += " " + clients[i].getNick();
 		}
 		if (!clientsNick.empty()) {
-			client.send(server, RPL_NAMREPLY(client.getNick(), "*", clientsNick));
+			client.send(server, RPL_NAMREPLY(
+					client.getNick(), "*", clientsNick));
 			client.send(server, RPL_ENDOFNAMES(client.getNick(), "*"));
 		}
 	} else {
@@ -103,9 +104,11 @@ bool	NamesCommand::exec(Server &server, Client &client, std::string label,
 
 				client.send(server, RPL_NAMREPLY(client.getNick(),
 					channel.getName(), channel.getMemberNicks()));
-				client.send(server, RPL_ENDOFNAMES(client.getNick(), channel.getName()));
+				client.send(server, RPL_ENDOFNAMES(
+						client.getNick(), channel.getName()));
 			} catch (std::exception &e) {
-				client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), channels[i]));
+				client.send(server, ERR_NOSUCHCHANNEL(
+						client.getNick(), channels[i]));
 			}
 		}
 	}

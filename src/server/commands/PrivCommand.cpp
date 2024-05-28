@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 05:20:35 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:47:20 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ bool	PrivCommand::exec(Server &server, Client &client, std::string label,
 			if (std::find(alreadySent.begin(), alreadySent.end(),
 					it->second[i].getSocket()) != alreadySent.end())
 				continue;
-			it->second[i].send(name + " " + it->first + " :" + args[1], client.getPrefix());
+			it->second[i].send(name + " " + it->first
+				+ " :" + args[1], client.getPrefix());
 			alreadySent.push_back(it->second[i].getSocket());
 		}
 

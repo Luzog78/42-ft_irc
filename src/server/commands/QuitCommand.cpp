@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:48:17 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ bool	QuitCommand::exec(Server &server, Client &client, std::string label,
 	std::string					quitMessage = argsCount > 0 ? args[0] : "Got bored... -_-";
 	std::vector<std::string>	channels = client.getChannels();
 
-	for (std::vector<std::string>::iterator it = channels.begin(); it != channels.end(); it++) {
+	for (std::vector<std::string>::iterator it = channels.begin();
+			it != channels.end(); it++) {
 		Channel	&channel = server.getChannelByName(*it);
 
 		channel.removeMember(client.getSocket());
