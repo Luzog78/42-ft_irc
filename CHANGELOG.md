@@ -8,8 +8,9 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.7.2](#latest-172---major)   |  Latest, !part   |  `major`   |    ✅    |
-| [1.7.1](#171---major)          |  Latest, !join   |  `major`   |    ✅    |
+| [1.7.3](#latest-173---major)   |  Latest, !quit   |  `major`   |    ✅    |
+| [1.7.2](#172---major)          |      !part       |  `major`   |    ✅    |
+| [1.7.1](#171---major)          |      !join       |  `major`   |    ✅    |
 | [1.7.0](#170---minor)          |       Norm       |  `minor`   |    ✅    |
 | [1.6.6](#166---minor)          |                  |  `minor`   |    ✅    |
 | [1.6.4](#164---major)          |      !help       |  `major`   |    ✅    |
@@ -86,13 +87,22 @@
 |   ✅   | !quote  | `!quote`                      | Display a random quote. <br> API: [Quotable.io](https://api.quotable.io/random) |
 |   ✅   | !joke   | `!joke`                       | Display a random joke. <br> API: [ICanHazDadJoke](https://icanhazdadjoke.com/) |
 |   ✅   | !fact   | `!fact`                       | Get a random fact about cats. <br> API: [CatFact.ninja](https://catfact.ninja/fact) |
-|   ❌   | !help   | `!quit`                       | Quit the server. |
+|   ✅   | !help   | `!quit`                       | Quit the server. |
 
 </div>
 
 <br><br>
 
-## Latest 1.7.2: - `major`
+## Latest 1.7.3: - `major`
+
+<br>
+
+- [x] !quit - Quit the server.
+  - Usage: `!quit`
+
+<br><br>
+
+## 1.7.2: - `major`
 
 <br>
 

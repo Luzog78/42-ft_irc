@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:09:47 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 14:31:19 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:41:46 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int main(int argc, char **argv) {
 		.addExecutor(new QuoteExecutor("!quote", List<std::string>("!q")))
 		.addExecutor(new JokeExecutor("!joke", List<std::string>("!j")))
 		.addExecutor(new FactExecutor("!fact", List<std::string>("!f")))
+		.addExecutor(new QuitExecutor("!quit", List<std::string>()))
 		;
 
 	std::string	usage = "Usage: " + std::string(argv[0]) + " <IPv4> <port> [<password>]";
