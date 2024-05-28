@@ -2,12 +2,16 @@
 
 # Changelog of ft_irc
 
+## Versions history
+
 <br>
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.4.1](#141--minor)           |  LIST, USERS     |  `minor`   |    ✅    |
-| [1.4.0](#latest-140---major)   |  Latest, IRCBot  |  `MAJOR`   |    ✅    |
+| [1.5.0](#latest-150---major)   | Latest, IRCBotv2 |  `major`   |    ✅    |
+| [1.4.2](#142---minor)          |                  |  `minor`   |    ✅    |
+| [1.4.1](#141---major)          |   LIST, USERS    |  `major`   |    ✅    |
+| [1.4.0](#140---major)          |      IRCBot      |  `MAJOR`   |    ✅    |
 | [1.3.3](#133---minor)          |                  |  `minor`   |    ✅    |
 | [1.3.2](#132---major)          |     Hostname     |  `major`   |    ✅    |
 | [1.3.0](#130---major)          |       PASS       |  `major`   |    ✅    |
@@ -28,7 +32,11 @@
 | [1.0.2](#102---major)          |                  |  `major`   |    ✅    |
 | [1.0.0](#first-100---major)    |     Initial      |  `major`   |    ✅    |
 
-<br><br>
+<br>
+
+## Server's Commands
+
+<br>
 
 | State  |                                Command                                 |                      Usage                       | Description |
 | ------ | ---------------------------------------------------------------------- | ------------------------------------------------ | ----------- |
@@ -53,30 +61,67 @@
 |   ✅   | [PING](https://datatracker.ietf.org/doc/html/rfc1459#section-4.6.2)    | `PING *`                                         | Ping. <br> Asking for a Pong. |
 |   ✅   | [PONG](https://datatracker.ietf.org/doc/html/rfc1459#section-4.6.3)    | `PONG *`                                         | Pong. <br> Asking for a Ping. |
 
-</div>
+<br>
+
+## Bot's Commands
 
 <br>
+
+| State  | Command |         Usage         | Description |
+| ------ | ------- | --------------------- | ----------- |
+|   ✅   | !ping   | `!ping [<whatever>]`  | Ping. <br> Sending Pong. |
+|   ✅   | !pong   | `!pong [<whatever>]`  | Ping. <br> Sending Ping. |
+
+</div>
+
+<br><br>
+
+## Latest 1.5.0: - `major`
+
+<br>
+
+- **IRC Bot !** 🤖
+- Command system
+- Prefix: `!`
+- !!! Multi-threading !!!
+  - To be able to get the response of the server / clients while doing the command.
+- Commands:
+  - Via a completely new parsing and executing way ! (-\_-)
+  - [x] `!ping` - Ping. Pong.
+  - [x] `!pong` - Pong. Ping.
+- Handle elementary commands :
+  - [x] `PING` - Ping. Pong.
+  - [x] `PONG` - Pong. Ping.
+  - [x] `PRIVMSG` - Receive a message.
+- Valgrind (of the bot) cleaned !
+- Table of bot's commands
+- *(I spend at least 20h on this commit... and eventually, I think there is*
+  *more lines on the bot than on the mandatory part xD)*
+
+
+<br><br>
 
 ## 1.4.2 - `minor`
 
 <br>
 
 - List | Users | Names command fixed (error when you try to use it before registration)
-- find 2 leaks to fix (check valgrindError.txt)
-- find a IRC client working on 42's pc > Konversation(https://flathub.org/apps/org.kde.konversation)
+- Find 2 leaks to fix (check valgrindError.txt)
+- Find an IRC client working on 42's pc > [Konversation](https://flathub.org/apps/org.kde.konversation)
 
 <br><br>
 
-## 1.4.1: - `minor`
+## 1.4.1: - `major`
 
 <br>
 
-- List command is fixed
-- users command added, use with 'users' or 'us'
+- [x] LIST command is fixed
+- [x] USERS command added
+  - Aliases: `users` or `us`
 
 <br><br>
 
-## Latest 1.4.0: - `MAJOR`
+## 1.4.0: - `MAJOR`
 
 <br>
 

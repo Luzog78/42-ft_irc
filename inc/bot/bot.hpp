@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 02:50:39 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 03:30:22 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/26 11:54:08 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,28 @@
 # define bot_HPP
 
 # include "ft_irc.hpp"
+# include "codes.hpp"
+
+# include <pthread.h>
+# include <sys/time.h>
 
 
 class Bot;
+class Response;
+class CommandResponse;
+class NumericResponse;
+class Executor;
+class ExecutorManager;
 
 # include "Bot.hpp"
+# include "Response.hpp"
+# include "NumericResponse.hpp"
+# include "CommandResponse.hpp"
+# include "Executor.hpp"
+# include "ExecutorManager.hpp"
 
 
-extern Bot	bot;
+extern Bot				bot;
+extern ExecutorManager	executorManager;
 
 #endif

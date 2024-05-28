@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/26 14:49:01 by kbutor-b         ###   ########.fr        #
+#    Updated: 2024/05/28 02:05:09 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CXXFLAGS			= -Werror -Wall -Wextra -std=c++98 -g
 NAME				= ircserv
 NAME_BONUS			= ircbot
 INCLUDES			= inc -I inc/server -I inc/server/bases -I inc/server/commands
-INCLUDES_BONUS		= inc -I inc/bot -I inc/bot/bases # -I inc/bot/commands
+INCLUDES_BONUS		= inc -I inc/bot -I inc/bot/bases -I inc/bot/commands
 SRC_FILES			= \
 						src/server/bases/Client.cpp \
 						src/server/bases/Server.cpp \
@@ -43,6 +43,16 @@ SRC_FILES			= \
 						src/utils.cpp
 SRC_FILES_BONUS		= \
 						src/bot/bases/Bot.cpp \
+						src/bot/bases/CommandResponse.cpp \
+						src/bot/bases/Executor.cpp \
+						src/bot/bases/ExecutorManager.cpp \
+						src/bot/bases/NumericResponse.cpp \
+						src/bot/bases/Response.cpp \
+						src/bot/commands/PingBotCommand.cpp \
+						src/bot/commands/PingExecutor.cpp \
+						src/bot/commands/PongBotCommand.cpp \
+						src/bot/commands/PongExecutor.cpp \
+						src/bot/commands/PrivBotCommand.cpp \
 						src/bot/main.cpp \
 						src/utils.cpp
 

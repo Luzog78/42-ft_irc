@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:09:47 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 04:45:57 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 01:31:05 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 
 Bot				bot;
+ExecutorManager	executorManager;
 
 
 void	signalHandler(int signum) {
+	(void) signum;
+
 	std::cerr << std::endl;
 	log(WARNING, "Interrupt signal received");
 
-	bot.close();
-
-	exit(signum);
+	bot.setRunning(false);
 }
 
 
@@ -48,11 +49,13 @@ static size_t	parseUnsigned(const char *str, std::string message, size_t min, si
 int main(int argc, char **argv) {
 	signal(SIGINT, signalHandler);
 
-	// commandManager
-	// 	.addCommand(new PingCommand("PING", List<std::string>("PI")))
-	// 	.addCommand(new PongCommand("PONG", List<std::string>("PO")))
-	// 	.addCommand(new PrivCommand("PRIVMSG", List<std::string>("M")("MSG")))
-	// 	;
+	executorManager
+		.addExecutor(new PingBotCommand("PING", List<std::string>()))
+		.addExecutor(new PongBotCommand("PONG", List<std::string>()))
+		.addExecutor(new PrivBotCommand("PRIVMSG", List<std::string>("M")("MSG")))
+		.addExecutor(new PingExecutor("!ping", List<std::string>("!p")))
+		.addExecutor(new PongExecutor("!pong", List<std::string>("!pp")))
+		;
 
 	std::string	usage = "Usage: " + std::string(argv[0]) + " <IPv4> <port> [<password>]";
 
@@ -98,20 +101,17 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
-	while (true) {
+	while (bot.isRunning()) {
 		try {
 			bot.poll();
 			bot.receive();
+			bot.execute();
 		} catch (IRCException &e) {
 			log(ERROR, std::string(e.what()));
 			break;
 		}
 	}
 
-	if (bot.isConnected())
-		log(INFO, "STOP.");
-
 	bot.close();
-
 	return 0;
 }
