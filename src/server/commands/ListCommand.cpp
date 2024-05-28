@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 03:23:03 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:31:50 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ bool	ListCommand::exec(Server &server, Client &client, std::string label,
 	for (size_t i = 0; i < channels.size(); i++)
 		client.send(server, RPL_LIST(client.getNick(), channels[i].getName(),
 			itoa(channels[i].getOnlineClients(server).size()),
-			channels[i].getTopic()));
+			server.getChannelByName(channels[i].getName()).getTopic()));
 	client.send(server, RPL_LISTEND(client.getNick()));
 	return true;
 }

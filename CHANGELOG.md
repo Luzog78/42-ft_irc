@@ -8,7 +8,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.6.4](#latest-164---major)   |  Latest, !help   |  `major`   |    ✅    |
+| [1.6.6](#latest-166---minor)   |      Latest      |  `minor`   |    ✅    |
+| [1.6.4](#164---major)          |      !help       |  `major`   |    ✅    |
 | [1.6.0](#160---major)          |     Internet     |  `major`   |    ✅    |
 | [1.5.5](#155---minor)          |                  |  `minor`   |    ✅    |
 | [1.5.3](#153---major)          |      LISTv2      |  `major`   |    ✅    |
@@ -84,7 +85,16 @@
 
 <br><br>
 
-## Latest 1.6.4: - `major`
+## Latest 1.6.6: - `minor`
+
+<br>
+
+- [x] LIST *(fix: topic was not displayed)*
+- [x] KICK *(fix: the sender was kicked - instead of the target)*
+
+<br><br>
+
+## 1.6.4: - `major`
 
 <br>
 

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:35:17 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ bool	KickCommand::exec(Server &server, Client &client, std::string label,
 			channel.broadcast(server,
 				name + " " + channel.getName() + " " + target.getNick()
 				+ " :" + quitMessage, client.getPrefix());
-			channel.removeMember(client.getSocket());
+			channel.removeMember(target.getSocket());
 			if (channel.getMembers().empty())
 				server.removeChannel(channel.getName());
-			client.removeChannel(channel.getName());
+			target.removeChannel(channel.getName());
 		} catch (std::exception &e) {
 			client.send(server, ERR_NOSUCHNICK(client.getNick(), args[1]));
 			return false;
