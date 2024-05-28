@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:44:09 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 02:31:00 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 08:38:13 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,51 @@ Bot::~Bot() {
 /* ************************************************************************** */
 
 
+void	*Bot::executeCommand(void *_bot) {
+	Bot			*bot = static_cast<Bot *>(_bot);
+	Response	*response;
+
+	pthread_mutex_lock(&bot->responsesMutex);
+	response = bot->queue[0];
+	bot->queue.erase(bot->queue.begin());
+	pthread_mutex_unlock(&bot->responsesMutex);
+
+	if (!response->isNumeric())
+		try {
+			executorManager.exec(bot, response->asCommand());
+		} catch (std::exception &e) {
+			std::string	err = std::string(e.what());
+			log(ERROR, "Error on command: " + response->getRaw());
+			log(ERROR, "   What: " + err);
+		}
+
+	delete response;
+	bot->setExecutingCommand(false);
+	return NULL;
+}
+
+
+void	*Bot::welcome(void *arg) {
+	Bot	*bot = static_cast<Bot *>(arg);
+
+	log(INFO, "Connected to " + bot->ip + ":" + itoa(bot->port));
+	try {
+		if (bot->isRunning())
+			bot->send("PASS :" + bot->password);
+		if (bot->isRunning())
+			bot->tryCommand("NICK :bot", 500);
+		if (bot->isRunning())
+			bot->tryCommand("USER bot 0 * :bot", 500);
+		if (bot->isRunning())
+			bot->tryCommand("JOIN #bot", 500);
+	} catch (std::exception &e) {
+		log(ERROR, std::string(e.what()));
+		return NULL;
+	}
+	return NULL;
+}
+
+
 void	Bot::start(std::string ip, int port, std::string password) {
 	this->ip = ip;
 	this->port = port;
@@ -83,10 +128,11 @@ void	Bot::start(std::string ip, int port, std::string password) {
 
 
 void	Bot::close() {
-	if (clientSckt >= 0)
+	if (clientSckt >= 0) {
 		::close(clientSckt);
+		log(INFO, "Disconnected from " + ip + ":" + itoa(port));
+	}
 	clientSckt = -1;
-	log(INFO, "Disconnected from " + ip + ":" + itoa(port));
 
 	pthread_mutex_lock(&responsesMutex);
 	for (size_t i = 0; i < queue.size(); i++)
@@ -97,6 +143,7 @@ void	Bot::close() {
 	responses.clear();
 	pthread_mutex_unlock(&responsesMutex);
 
+	usleep(2000);
 	pthread_mutex_destroy(&runningMutex);
 	pthread_mutex_destroy(&responsesMutex);
 	pthread_mutex_destroy(&waitingForResponseMutex);
@@ -119,11 +166,10 @@ void	Bot::poll() {
 		throw BotException("Connection failed (" + ip + ":" + itoa(port) + ")");
 	else if (pollFd.revents & POLLOUT) {
 		connected = true;
-		log(INFO, "Connected to " + ip + ":" + itoa(port));
-		send("PASS :" + password);
-		send("NICK :bot");
-		send("USER bot 0 * :bot");
-		send("JOIN #bot");
+		pthread_t	thread;
+
+		pthread_create(&thread, NULL, &Bot::welcome, this);
+		pthread_detach(thread);
 	}
 }
 
@@ -184,32 +230,6 @@ void	Bot::execute() {
 }
 
 
-void	*Bot::executeCommand(void *_bot) {
-	Bot			*bot = static_cast<Bot *>(_bot);
-	Response	*response;
-
-	pthread_mutex_lock(&bot->responsesMutex);
-	response = bot->queue[0];
-	bot->queue.erase(bot->queue.begin());
-	pthread_mutex_unlock(&bot->responsesMutex);
-
-	if (!response->isNumeric())
-		try {
-			executorManager.exec(bot, response->asCommand());
-		} catch (std::exception &e) {
-			std::string	err = std::string(e.what());
-			log(ERROR, "Error on command: " + response->getRaw());
-			log(ERROR, "   What: " + err);
-		}
-
-	delete response;
-	bot->setWaitingForResponse(true);
-	bot->setWaitingForResponse(false);
-	bot->setExecutingCommand(false);
-	return NULL;
-}
-
-
 void	Bot::send(std::string target, std::string command) {
 	ssize_t		ret;
 	std::string	finalCommand = command + "\n";
@@ -218,13 +238,13 @@ void	Bot::send(std::string target, std::string command) {
 		command.insert(0, "[" + target + "] ");
 		finalCommand = "PRIVMSG " + target + " :" + finalCommand;
 	}
+	log(INFO, "--> | " + command, C_GREEN);
 	ret = ::send(clientSckt, finalCommand.c_str(), finalCommand.length(), 0);
 	if (ret < 0)
 		throw BotException("Send failed");
 	if (ret != (ssize_t) finalCommand.length())
 		throw BotException("Only " + itoa(ret)
 			+ " bytes sent out of " + itoa(finalCommand.length()));
-	log(INFO, "--> | " + command, C_GREEN);
 }
 
 
@@ -233,9 +253,10 @@ void	Bot::send(std::string target, std::string command, long long waiting) {
 	long long		start;
 	long long		now;
 
+	if (waiting != 0)
+		setWaitingForResponse(true);
 	send(target, command);
 	if (waiting != 0) {
-		setWaitingForResponse(true);
 		gettimeofday(&t, NULL);
 		start = t.tv_sec * 1000 + t.tv_usec / 1000;
 		while (isRunning()) {
@@ -268,6 +289,31 @@ void	Bot::send(std::string command) {
 
 void	Bot::send(std::string command, long long waiting) {
 	send("", command, waiting);
+}
+
+
+void	Bot::tryCommand(std::string command, long long waiting) {
+	send(command, waiting);
+	pthread_mutex_lock(&responsesMutex);
+	for (size_t i = 0; i < responses.size(); i++)
+		if (responses[i]->isNumeric()
+			&& responses[i]->asNumeric()->getCode() >= 300) {
+			NumericResponse	*num = responses[i]->asNumeric();
+			log(ERROR, "[" + itoa(num->getCode()) + "] " + num->getMessage());
+			pthread_mutex_unlock(&responsesMutex);
+			setRunning(false);
+			return;
+		}
+	pthread_mutex_unlock(&responsesMutex);
+}
+
+
+void	Bot::emptyResponsesToQueue() {
+	pthread_mutex_lock(&responsesMutex);
+	for (size_t i = 0; i < responses.size(); i++)
+		queue.push_back(responses[i]);
+	responses.clear();
+	pthread_mutex_unlock(&responsesMutex);
 }
 
 
@@ -327,13 +373,8 @@ void	Bot::setWaitingForResponse(bool waitingForResponse) {
 	pthread_mutex_lock(&waitingForResponseMutex);
 	this->waitingForResponse = waitingForResponse;
 	pthread_mutex_unlock(&waitingForResponseMutex);
-	if (waitingForResponse) {
-		pthread_mutex_lock(&responsesMutex);
-		for (size_t i = 0; i < responses.size(); i++)
-			queue.push_back(responses[i]);
-		responses.clear();
-		pthread_mutex_unlock(&responsesMutex);
-	}
+	if (waitingForResponse)
+		emptyResponsesToQueue();
 }
 
 

@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/28 03:15:15 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/28 07:26:24 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,12 @@ SRC_FILES			= \
 SRC_FILES_BONUS		= \
 						src/bot/bases/Bot.cpp \
 						src/bot/bases/CommandResponse.cpp \
+						src/bot/bases/curlRequest.cpp \
 						src/bot/bases/Executor.cpp \
 						src/bot/bases/ExecutorManager.cpp \
 						src/bot/bases/NumericResponse.cpp \
 						src/bot/bases/Response.cpp \
+						src/bot/commands/JokeExecutor.cpp \
 						src/bot/commands/PingBotCommand.cpp \
 						src/bot/commands/PingExecutor.cpp \
 						src/bot/commands/PongBotCommand.cpp \

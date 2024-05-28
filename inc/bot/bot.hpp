@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 02:50:39 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 11:54:08 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 07:23:06 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 # include <pthread.h>
 # include <sys/time.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 
 class Bot;
@@ -37,5 +39,8 @@ class ExecutorManager;
 
 extern Bot				bot;
 extern ExecutorManager	executorManager;
+
+
+std::string	curlRequest(std::string url);
 
 #endif

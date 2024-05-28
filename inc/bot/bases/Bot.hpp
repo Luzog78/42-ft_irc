@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:45:18 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/27 22:22:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 08:21:15 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ class Bot {
 		Bot	&operator=(const Bot &bot);
 		~Bot();
 
-		static void	*executeCommand(void *_bot);
+		static void		*executeCommand(void *_bot);
+		static void		*welcome(void *_bot);
 		
 		void		start(std::string ip, int port, std::string password);
 		void		close();
@@ -56,6 +57,8 @@ class Bot {
 		void		send(std::string target, std::string command, long long waiting);
 		void		send(std::string command);
 		void		send(std::string command, long long waiting);
+		void		tryCommand(std::string command, long long waiting);
+		void		emptyResponsesToQueue();
 
 		bool		isRunning();
 		void		setRunning(bool running);

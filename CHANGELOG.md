@@ -8,7 +8,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.5.5](#latest-155---minor)   |      Latest      |  `minor`   |    ✅    |
+| [1.6.0](#latest-160---major)   | Latest, Internet |  `major`   |    ✅    |
+| [1.5.5](#155---minor)          |                  |  `minor`   |    ✅    |
 | [1.5.3](#153---major)          |      LISTv2      |  `major`   |    ✅    |
 | [1.5.1](#151---minor)          |                  |  `minor`   |    ✅    |
 | [1.5.0](#150---major)          |     IRCBotv2     |  `major`   |    ✅    |
@@ -73,12 +74,32 @@
 | ------ | ------- | --------------------- | ----------- |
 |   ✅   | !ping   | `!ping [<whatever>]`  | Ping. <br> Sending Pong. |
 |   ✅   | !pong   | `!pong [<whatever>]`  | Ping. <br> Sending Ping. |
+|   ✅   | !joke   | `!joke`               | Display a random joke. |
 
 </div>
 
 <br><br>
 
-## Latest 1.5.5: - `minor`
+## Latest 1.6.0: - `major`
+
+<br>
+
+- **We got the bot into the Internet !** 🌐
+- [x] !joke - Display a random joke. (VIA AN API !!! 🤯)
+  - *The principle comes from the **microshell** project :*
+    *Use an execve to curl the API and get the response.*
+  - API: [ICanHazDadJoke](https://icanhazdadjoke.com/api)
+  - Other Jokes APIs (maybe for the future if someone is interested):
+    - [JokeAPI.dev](https://jokeapi.dev/)
+    - [Official-Joke-API of AppSpot.com](https://official-joke-api.appspot.com/jokes/random)
+    - [JokeAPI.dev v2](https://v2.jokeapi.dev/joke/Any)
+    - [JokeAPI of sv443.net](https://sv443.net/jokeapi/v2/joke/Any)
+- Now the bot will not while true when it can't register !
+
+
+<br><br>
+
+## 1.5.5: - `minor`
 
 <br>
 
