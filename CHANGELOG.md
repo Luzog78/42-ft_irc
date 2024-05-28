@@ -8,7 +8,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.7.0](#latest-170---minor)   |   Latest, Norm   |  `minor`   |    ✅    |
+| [1.7.1](#latest-171---major)   |  Latest, !join   |  `major`   |    ✅    |
+| [1.7.0](#170---minor)          |       Norm       |  `minor`   |    ✅    |
 | [1.6.6](#166---minor)          |                  |  `minor`   |    ✅    |
 | [1.6.4](#164---major)          |      !help       |  `major`   |    ✅    |
 | [1.6.0](#160---major)          |     Internet     |  `major`   |    ✅    |
@@ -73,20 +74,35 @@
 
 <br>
 
-| State  | Command |         Usage         | Description |
-| ------ | ------- | --------------------- | ----------- |
-|   ✅   | !help   | `!help [<command>]`   | List all available commands <br> or get help for a <br> specific one. |
-|   ✅   | !ping   | `!ping [<whatever>]`  | Ping. <br> Sending Pong. |
-|   ✅   | !pong   | `!pong [<whatever>]`  | Ping. <br> Sending Ping. |
-|   ✅   | !quote  | `!quote`              | Display a random quote. <br> API: [Quotable.io](https://api.quotable.io/random) |
-|   ✅   | !joke   | `!joke`               | Display a random joke. <br> API: [ICanHazDadJoke](https://icanhazdadjoke.com/) |
-|   ✅   | !fact   | `!fact`               | Get a random fact about cats. <br> API: [CatFact.ninja](https://catfact.ninja/fact) |
+| State  | Command |           Usage           | Description |
+| ------ | ------- | ------------------------- | ----------- |
+|   ✅   | !help   | `!help [<command>]`       | List all available commands <br> or get help for a <br> specific one. |
+|   ✅   | !help   | `!join <channel> [<key>]` | Try to join a channel. |
+|   ❌   | !help   | `!part <channel>`         | Part from a channel. |
+|   ❌   | !help   | `!msg`                    | Start a private conversation. |
+|   ✅   | !ping   | `!ping [<whatever>]`      | Ping. <br> Sending Pong. |
+|   ✅   | !pong   | `!pong [<whatever>]`      | Ping. <br> Sending Ping. |
+|   ✅   | !quote  | `!quote`                  | Display a random quote. <br> API: [Quotable.io](https://api.quotable.io/random) |
+|   ✅   | !joke   | `!joke`                   | Display a random joke. <br> API: [ICanHazDadJoke](https://icanhazdadjoke.com/) |
+|   ✅   | !fact   | `!fact`                   | Get a random fact about cats. <br> API: [CatFact.ninja](https://catfact.ninja/fact) |
+|   ❌   | !help   | `!quit`                   | Quit the server. |
 
 </div>
 
 <br><br>
 
-## Latest 1.7.0: - `minor`
+## Latest 1.7.1: - `major`
+
+<br>
+
+- Clean bot's main.cpp
+- [x] INVITE *(fix: channel and nick was inverted)*
+- [x] !join - Try to join a channel.
+  - Usage: `!join <channel> [<key>]`
+
+<br><br>
+
+## 1.7.0: - `minor`
 
 <br>
 

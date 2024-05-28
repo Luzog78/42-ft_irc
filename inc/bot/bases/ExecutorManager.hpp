@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 11:48:10 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 10:33:21 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:07:17 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # include "FactExecutor.hpp"
 # include "HelpExecutor.hpp"
+# include "JoinExecutor.hpp"
 # include "JokeExecutor.hpp"
 # include "PingBotCommand.hpp"
 # include "PingExecutor.hpp"

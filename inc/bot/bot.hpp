@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 02:50:39 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 07:23:06 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:01:01 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ extern ExecutorManager	executorManager;
 
 
 std::string	curlRequest(std::string url);
+void		parse(int argc, char **argv, int &port,
+				std::string &hostname, std::string &password);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:45:18 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 08:21:15 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:14:14 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,18 @@ class Bot {
 		std::string	getPassword();
 		bool		isConnected();
 
+		std::vector<Response *>	getQueue();
+		std::vector<Response *>	getResponses();
+
 		bool		isWaitingForResponse();
 		void		setWaitingForResponse(bool waitingForResponse);
 		bool		isExecutingCommand();
 		void		setExecutingCommand(bool executingCommand);
+		
+		pthread_mutex_t	*getRunningMutex();
+		pthread_mutex_t	*getResponsesMutex();
+		pthread_mutex_t	*getWaitingForResponseMutex();
+		pthread_mutex_t	*getExecutingCommandMutex();
 
 		class BotException : public IRCException {
 			public:

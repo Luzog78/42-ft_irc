@@ -92,11 +92,11 @@ bool	InviteCommand::exec(Server &server, Client &client, std::string label,
 					+ channel.getName(), client.getPrefix());
 			}
 		} catch (Server::ServerException &e) {
-			client.send(server, ERR_NOSUCHNICK(client.getNick(), args[1]));
+			client.send(server, ERR_NOSUCHNICK(client.getNick(), args[0]));
 			return false;
 		}
 	} catch (Server::ServerException &e) {
-		client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), args[0]));
+		client.send(server, ERR_NOSUCHCHANNEL(client.getNick(), args[1]));
 		return false;
 	}
 

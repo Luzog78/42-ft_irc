@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:44:09 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 09:57:45 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:15:17 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,6 +359,16 @@ bool	Bot::isConnected() {
 }
 
 
+std::vector<Response *>	Bot::getQueue() {
+	return this->queue;
+}
+
+
+std::vector<Response *>	Bot::getResponses() {
+	return this->responses;
+}
+
+
 bool	Bot::isWaitingForResponse() {
 	bool	waitingForResponse;
 	
@@ -392,4 +402,24 @@ void	Bot::setExecutingCommand(bool executingCommand) {
 	pthread_mutex_lock(&executingCommandMutex);
 	this->executingCommand = executingCommand;
 	pthread_mutex_unlock(&executingCommandMutex);
+}
+
+
+pthread_mutex_t	*Bot::getRunningMutex() {
+	return &runningMutex;
+}
+
+
+pthread_mutex_t	*Bot::getResponsesMutex() {
+	return &responsesMutex;
+}
+
+
+pthread_mutex_t	*Bot::getWaitingForResponseMutex() {
+	return &waitingForResponseMutex;
+}
+
+
+pthread_mutex_t	*Bot::getExecutingCommandMutex() {
+	return &executingCommandMutex;
 }
