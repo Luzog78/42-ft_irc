@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbutor-b <kbutor-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 02:53:43 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 14:49:45 by kbutor-b         ###   ########.fr       */
+/*   Updated: 2024/05/28 02:24:36 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,25 @@ static size_t	parseUnsigned(const char *str, std::string message) {
 }
 
 
+static std::string	getUsage(char *name) {
+	std::string	n = std::string(name);
+
+	return "Usage: " + n + " [<params...>]\n"
+		+ "\n"
+		+ "Params:\n"
+		+ "  -?, --help                     - display this help\n"
+		+ "  -p, --port      =<port>        - port number (default: 8080)\n"
+		+ "  -k, --key       =<password>    - password for server (default: '')\n"
+		+ "  -h, --hostname  =<hostname>    - hostname (default: 'localhost')\n"
+		+ "  -l, --limit     =<clientLimit> - maximum number of clients (default: 100)\n"
+		+ "\n"
+		+ "Example: \n"
+		+ n + " 8080\n"
+		+ n + " 8080 P4ssK3y\n"
+		+ n + " --password=P4ssK3y --limit=50 -h=42.irc.net\n";
+}
+
+
 int main(int argc, char **argv) {
 	signal(SIGINT, signalHandler);
 
@@ -65,20 +84,6 @@ int main(int argc, char **argv) {
 		.addCommand(new TopicCommand("TOPIC", List<std::string>("T")))
 		.addCommand(new QuitCommand("QUIT", List<std::string>("Q")))
 		;
-
-	std::string	usage = "Usage: " + std::string(argv[0]) + " [<params...>]\n"
-		+ "\n"
-		+ "Params:\n"
-		+ "  -?, --help                     - display this help\n"
-		+ "  -p, --port      =<port>        - port number (default: 8080)\n"
-		+ "  -k, --key       =<password>    - password for server (default: '')\n"
-		+ "  -h, --hostname  =<hostname>    - hostname (default: 'localhost')\n"
-		+ "  -l, --limit     =<clientLimit> - maximum number of clients (default: 100)\n"
-		+ "\n"
-		+ "Example: \n"
-		+ std::string(argv[0]) + " 8080\n"
-		+ std::string(argv[0]) + " 8080 P4ssK3y\n"
-		+ std::string(argv[0]) + " --password=P4ssK3y --limit=50 -h=42.irc.net\n";
 
 	int			port = 8080;
 	int			clientLimit = 100;
@@ -111,7 +116,7 @@ int main(int argc, char **argv) {
 				clientLimit = parseUnsigned(arg.substr(arg.find('=') + 1).c_str(), "Client limit");
 				plainArgs = false;
 			} else if (startsWith(arg, "-?") || startsWith(arg, "--help")) {
-				log(ERROR, usage);
+				log(ERROR, getUsage(argv[0]));
 				return 0;
 			} else if (i == 1 && argv[i][0] != '-')
 				port = parseUnsigned(argv[i], "Port");
@@ -124,11 +129,13 @@ int main(int argc, char **argv) {
 		server.start(port, clientLimit, hostname, password);
 	} catch (IRCException &e) {
 		log(ERROR, std::string(e.what()));
+		server.close();
 		return 1;
 	} catch (std::invalid_argument &e) {
 		log(ERROR, std::string(e.what()));
 		log(ERROR, "\n");
-		log(ERROR, usage);
+		log(ERROR, getUsage(argv[0]));
+		server.close();
 		return 1;
 	}
 
@@ -144,8 +151,6 @@ int main(int argc, char **argv) {
 	}
 
 	log(INFO, "STOP.");
-
 	server.close();
-
 	return 0;
 }

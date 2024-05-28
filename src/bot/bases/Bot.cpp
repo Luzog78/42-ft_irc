@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:44:09 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 01:28:04 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 02:31:00 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,13 @@ void	*Bot::executeCommand(void *_bot) {
 	pthread_mutex_unlock(&bot->responsesMutex);
 
 	if (!response->isNumeric())
-		executorManager.exec(bot, response->asCommand());
+		try {
+			executorManager.exec(bot, response->asCommand());
+		} catch (std::exception &e) {
+			std::string	err = std::string(e.what());
+			log(ERROR, "Error on command: " + response->getRaw());
+			log(ERROR, "   What: " + err);
+		}
 
 	delete response;
 	bot->setWaitingForResponse(true);

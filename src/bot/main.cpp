@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:09:47 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 01:31:05 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 02:32:16 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,12 @@ int main(int argc, char **argv) {
 		bot.start(hostname, port, password);
 	} catch (IRCException &e) {
 		log(ERROR, std::string(e.what()));
+		bot.close();
 		return 1;
 	} catch (std::invalid_argument &e) {
 		log(ERROR, std::string(e.what()));
 		log(ERROR, usage);
+		bot.close();
 		return 1;
 	}
 

@@ -8,7 +8,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.5.0](#latest-150---major)   | Latest, IRCBotv2 |  `major`   |    ✅    |
+| [1.5.1](#latest-151---minor)   |      Latest      |  `minor`   |    ✅    |
+| [1.5.0](#150---major)          |     IRCBotv2     |  `major`   |    ✅    |
 | [1.4.2](#142---minor)          |                  |  `minor`   |    ✅    |
 | [1.4.1](#141---major)          |   LIST, USERS    |  `major`   |    ✅    |
 | [1.4.0](#140---major)          |      IRCBot      |  `MAJOR`   |    ✅    |
@@ -55,8 +56,8 @@
 |   ✅   | [KICK](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.8)    | `KICK <channel> <nick> [<message>]`              | Kick a member. The user <br> must be a channel operator. |
 | &nbsp; |                                                                        |                                                  |             |
 |   ✅   | [NAMES](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.5)   | `NAMES [<channel>[,...]]`                        | List all the users on a channel. <br> Operators' nicks are preceded <br> by an `@`. If no arg is given, every <br> channel is listed, and every <br> user without a channel is <br> in an ultimate `*` channel. |
-|   ✅   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    | `LIST [<channel>[,...]]`                         |             |
-|   ✅   | [USERS](https://datatracker.ietf.org/doc/html/rfc1459#section-5.5)     |                                                  |             |
+|   ❌   | [LIST](https://datatracker.ietf.org/doc/html/rfc1459#section-4.2.6)    | `LIST [<channel>[,...]]`                         |             |
+|   ❌   | [USERS](https://datatracker.ietf.org/doc/html/rfc1459#section-5.5)     |                                                  |             |
 | &nbsp; |                                                                        |                                                  |             |
 |   ✅   | [PING](https://datatracker.ietf.org/doc/html/rfc1459#section-4.6.2)    | `PING *`                                         | Ping. <br> Asking for a Pong. |
 |   ✅   | [PONG](https://datatracker.ietf.org/doc/html/rfc1459#section-4.6.3)    | `PONG *`                                         | Pong. <br> Asking for a Ping. |
@@ -76,7 +77,16 @@
 
 <br><br>
 
-## Latest 1.5.0: - `major`
+## Latest 1.5.1: - `minor`
+
+<br>
+
+- Valgrind cleanup
+
+
+<br><br>
+
+## 1.5.0: - `major`
 
 <br>
 
