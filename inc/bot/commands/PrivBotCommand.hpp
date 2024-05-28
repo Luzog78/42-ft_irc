@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:25:32 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 01:06:57 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 10:45:31 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ class PrivBotCommand : public Executor {
 		PrivBotCommand	&operator=(const PrivBotCommand &pingBotCommand);
 		~PrivBotCommand();
 
-		bool	exec(Bot *bot, std::string label, std::string prefix,
-					std::vector<std::string> args, std::string sender,
-					std::string target);
+		bool		exec(Bot *bot, std::string label, std::string prefix,
+						std::vector<std::string> args, std::string sender,
+						std::string target);
+		bool	isElementary();
 };
 
 #endif

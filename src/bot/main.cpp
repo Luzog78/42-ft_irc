@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:09:47 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 08:32:10 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:02:33 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,12 @@ int main(int argc, char **argv) {
 		.addExecutor(new PingBotCommand("PING", List<std::string>()))
 		.addExecutor(new PongBotCommand("PONG", List<std::string>()))
 		.addExecutor(new PrivBotCommand("PRIVMSG", List<std::string>("M")("MSG")))
+		.addExecutor(new HelpExecutor("!help", List<std::string>("!h")("!?")))
 		.addExecutor(new PingExecutor("!ping", List<std::string>("!p")))
 		.addExecutor(new PongExecutor("!pong", List<std::string>("!pp")))
+		.addExecutor(new QuoteExecutor("!quote", List<std::string>("!q")))
 		.addExecutor(new JokeExecutor("!joke", List<std::string>("!j")))
+		.addExecutor(new FactExecutor("!fact", List<std::string>("!f")))
 		;
 
 	std::string	usage = "Usage: " + std::string(argv[0]) + " <IPv4> <port> [<password>]";

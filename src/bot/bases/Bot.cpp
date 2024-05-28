@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 01:44:09 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 08:38:13 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 09:57:45 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,7 +297,7 @@ void	Bot::tryCommand(std::string command, long long waiting) {
 	pthread_mutex_lock(&responsesMutex);
 	for (size_t i = 0; i < responses.size(); i++)
 		if (responses[i]->isNumeric()
-			&& responses[i]->asNumeric()->getCode() >= 300) {
+			&& IS_FATAL(responses[i]->asNumeric()->getCode())) {
 			NumericResponse	*num = responses[i]->asNumeric();
 			log(ERROR, "[" + itoa(num->getCode()) + "] " + num->getMessage());
 			pthread_mutex_unlock(&responsesMutex);

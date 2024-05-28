@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:59:56 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 01:31:33 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 10:57:17 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ PongExecutor::~PongExecutor() {
 /* ************************************************************************** */
 /* ---------------------------- Member functions ---------------------------- */
 /* ************************************************************************** */
+
+
+std::string	PongExecutor::getDesc() {
+	return "Pong. Sends a ping.";
+}
+
+
+std::string	PongExecutor::getUsage() {
+	return name + " [<whatever>]";
+}
 
 
 bool	PongExecutor::exec(Bot *bot, std::string label, std::string prefix,

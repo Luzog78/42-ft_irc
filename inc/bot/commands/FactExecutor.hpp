@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PongExecutor.hpp                                   :+:      :+:    :+:   */
+/*   FactExecutor.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 01:31:46 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 10:37:01 by ysabik           ###   ########.fr       */
+/*   Created: 2024/05/27 21:58:54 by ysabik            #+#    #+#             */
+/*   Updated: 2024/05/28 10:36:36 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PONGEXECUTOR_HPP
-# define PONGEXECUTOR_HPP
+#ifndef FACTEXECUTOR_HPP
+# define FACTEXECUTOR_HPP
 
 # include "bot.hpp"
 
-class PongExecutor : public Executor {
+class FactExecutor : public Executor {
 	public:
-		PongExecutor();
-		PongExecutor(std::string name, std::vector<std::string> aliases);
-		PongExecutor(const PongExecutor &pongExecutor);
-		PongExecutor	&operator=(const PongExecutor &pongExecutor);
-		~PongExecutor();
+		FactExecutor();
+		FactExecutor(std::string name, std::vector<std::string> aliases);
+		FactExecutor(const FactExecutor &factExecutor);
+		FactExecutor	&operator=(const FactExecutor &factExecutor);
+		~FactExecutor();
 
 		bool		exec(Bot *bot, std::string label, std::string prefix,
 						std::vector<std::string> args, std::string sender,

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 11:51:20 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 00:56:15 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 10:45:03 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ class Executor {
 										std::vector<std::string> args,
 										std::string sender,
 										std::string target) = 0;
+		virtual std::string			getDesc() { return ""; }
+		virtual std::string			getUsage() { return name + " [<args...>]"; }
+		virtual bool				isElementary() { return false; }
 };
 
 #endif

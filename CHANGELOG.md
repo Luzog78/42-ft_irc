@@ -8,7 +8,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.6.0](#latest-160---major)   | Latest, Internet |  `major`   |    ✅    |
+| [1.6.4](#latest-164---major)   |  Latest, !help   |  `major`   |    ✅    |
+| [1.6.0](#160---major)          |     Internet     |  `major`   |    ✅    |
 | [1.5.5](#155---minor)          |                  |  `minor`   |    ✅    |
 | [1.5.3](#153---major)          |      LISTv2      |  `major`   |    ✅    |
 | [1.5.1](#151---minor)          |                  |  `minor`   |    ✅    |
@@ -72,15 +73,34 @@
 
 | State  | Command |         Usage         | Description |
 | ------ | ------- | --------------------- | ----------- |
+|   ✅   | !help   | `!help [<command>]`   | List all available commands <br> or get help for a <br> specific one. |
 |   ✅   | !ping   | `!ping [<whatever>]`  | Ping. <br> Sending Pong. |
 |   ✅   | !pong   | `!pong [<whatever>]`  | Ping. <br> Sending Ping. |
+|   ✅   | !quote  | `!quote`              | Display a random quote. |
 |   ✅   | !joke   | `!joke`               | Display a random joke. |
+|   ✅   | !fact   | `!fact`               | Get a random fact about cats. |
 
 </div>
 
 <br><br>
 
-## Latest 1.6.0: - `major`
+## Latest 1.6.4: - `major`
+
+<br>
+
+- Error range fixed on the bot.
+  - Error range: `[400;599]`
+- [x] !quote - Display a random quote.
+  - API: [Quotable.io](https://api.quotable.io/random)
+- [x] !fact - Get a random fact about cats.
+  - API: [CatFact.ninja](https://catfact.ninja/fact)
+- [x] **!help** - List all available commands or get help for a specific one.
+  - Usage: `!help [<command>]`
+
+
+<br><br>
+
+## 1.6.0: - `major`
 
 <br>
 

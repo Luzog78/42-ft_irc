@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:59:56 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 08:47:27 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 10:56:46 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ JokeExecutor::~JokeExecutor() {
 /* ************************************************************************** */
 
 
+std::string	JokeExecutor::getDesc() {
+	return "Get a random joke from ICanHazDadJoke.com.";
+}
+
+
+std::string	JokeExecutor::getUsage() {
+	return name;
+}
+
+
 bool	JokeExecutor::exec(Bot *bot, std::string label, std::string prefix,
 			std::vector<std::string> args, std::string sender, std::string target) {
 	(void) label;
@@ -59,7 +69,7 @@ bool	JokeExecutor::exec(Bot *bot, std::string label, std::string prefix,
 	// - https://official-joke-api.appspot.com/jokes/random
 	// - https://v2.jokeapi.dev/joke/Any
 	// - https://sv443.net/jokeapi/v2/joke/Any
-	std::string joke = curlRequest("https://icanhazdadjoke.com/");
+	std::string	joke = curlRequest("https://icanhazdadjoke.com/");
 
 	if (joke.empty())
 		bot->send(target, "I'm sorry, I can't tell you a joke right now.");

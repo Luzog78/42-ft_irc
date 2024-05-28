@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 11:40:24 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 11:44:28 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 09:57:08 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@
 # define CERR_INVITEONLYCHAN	473
 # define CERR_BADCHANNELKEY		475
 # define CERR_CHANOPRIVSNEEDED	482
+
+# define IS_FATAL(code)			(code >= 400 && code < 600)
 
 #endif

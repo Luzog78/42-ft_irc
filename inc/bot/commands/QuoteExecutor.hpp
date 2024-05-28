@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PongExecutor.hpp                                   :+:      :+:    :+:   */
+/*   QuoteExecutor.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 01:31:46 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 10:37:01 by ysabik           ###   ########.fr       */
+/*   Created: 2024/05/27 21:58:54 by ysabik            #+#    #+#             */
+/*   Updated: 2024/05/28 10:37:06 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PONGEXECUTOR_HPP
-# define PONGEXECUTOR_HPP
+#ifndef QUOTEEXECUTOR_HPP
+# define QUOTEEXECUTOR_HPP
 
 # include "bot.hpp"
 
-class PongExecutor : public Executor {
+class QuoteExecutor : public Executor {
 	public:
-		PongExecutor();
-		PongExecutor(std::string name, std::vector<std::string> aliases);
-		PongExecutor(const PongExecutor &pongExecutor);
-		PongExecutor	&operator=(const PongExecutor &pongExecutor);
-		~PongExecutor();
+		QuoteExecutor();
+		QuoteExecutor(std::string name, std::vector<std::string> aliases);
+		QuoteExecutor(const QuoteExecutor &quoteExecutor);
+		QuoteExecutor	&operator=(const QuoteExecutor &quoteExecutor);
+		~QuoteExecutor();
 
 		bool		exec(Bot *bot, std::string label, std::string prefix,
 						std::vector<std::string> args, std::string sender,

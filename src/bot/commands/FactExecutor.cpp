@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   PingExecutor.cpp                                   :+:      :+:    :+:   */
+/*   FactExecutor.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:59:56 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 10:57:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 10:39:23 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,28 @@
 /* ************************************************************************** */
 
 
-PingExecutor::PingExecutor() : Executor() {
+FactExecutor::FactExecutor() : Executor() {
 }
 
 
-PingExecutor::PingExecutor(std::string name, std::vector<std::string> aliases)
+FactExecutor::FactExecutor(std::string name, std::vector<std::string> aliases)
 	: Executor(name, aliases) {
 }
 
 
-PingExecutor::PingExecutor(const PingExecutor &command) : Executor() {
+FactExecutor::FactExecutor(const FactExecutor &command) : Executor() {
 	*this = command;
 }
 
 
-PingExecutor &PingExecutor::operator=(const PingExecutor &command) {
+FactExecutor &FactExecutor::operator=(const FactExecutor &command) {
 	if (this != &command)
 		Executor::operator=(command);
 	return *this;
 }
 
 
-PingExecutor::~PingExecutor() {
+FactExecutor::~FactExecutor() {
 }
 
 
@@ -47,24 +47,32 @@ PingExecutor::~PingExecutor() {
 /* ************************************************************************** */
 
 
-std::string	PingExecutor::getDesc() {
-	return "Ping. Sends a pong.";
+std::string	FactExecutor::getDesc() {
+	return "Get a random fact about cats from CatFact.ninja.";
 }
 
 
-std::string	PingExecutor::getUsage() {
-	return name + " [<whatever>]";
+std::string	FactExecutor::getUsage() {
+	return name;
 }
 
 
-bool	PingExecutor::exec(Bot *bot, std::string label, std::string prefix,
+bool	FactExecutor::exec(Bot *bot, std::string label, std::string prefix,
 			std::vector<std::string> args, std::string sender, std::string target) {
 	(void) label;
 	(void) prefix;
+	(void) args;
+	(void) sender;
 
-	if (args.size() == 0)
-		bot->send(target, "Pong " + sender + "!");
-	else
-		bot->send(target, "Pong " + args[0] + "!");
+	std::string	fact = curlRequest("https://catfact.ninja/fact");
+
+	if (fact.empty())
+		bot->send(target, "I'm sorry, I can't tell you a fact about cats right now.");
+	else {
+		fact = fact.substr(fact.find("\"fact\":\"") + 8);
+		fact = fact.substr(0, fact.find("\""));
+
+		bot->send(target, fact);
+	}
 	return true;
 }

@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:58:54 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 06:30:17 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 10:36:49 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ class JokeExecutor : public Executor {
 		JokeExecutor	&operator=(const JokeExecutor &jokeExecutor);
 		~JokeExecutor();
 
-		bool	exec(Bot *bot, std::string label, std::string prefix,
-					std::vector<std::string> args, std::string sender,
-					std::string target);
+		bool		exec(Bot *bot, std::string label, std::string prefix,
+						std::vector<std::string> args, std::string sender,
+						std::string target);
+		std::string	getDesc();
+		std::string	getUsage();
 };
 
 #endif

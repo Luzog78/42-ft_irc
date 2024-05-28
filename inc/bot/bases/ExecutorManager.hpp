@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 11:48:10 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 06:31:53 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 10:33:21 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 
 # include "bot.hpp"
 
+# include "FactExecutor.hpp"
+# include "HelpExecutor.hpp"
 # include "JokeExecutor.hpp"
 # include "PingBotCommand.hpp"
 # include "PingExecutor.hpp"
 # include "PongBotCommand.hpp"
 # include "PongExecutor.hpp"
 # include "PrivBotCommand.hpp"
+# include "QuoteExecutor.hpp"
 
 class ExecutorManager {
 	private:
