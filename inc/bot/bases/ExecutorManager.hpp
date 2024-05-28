@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 11:48:10 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 14:41:33 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:51:37 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "PrivBotCommand.hpp"
 # include "QuitExecutor.hpp"
 # include "QuoteExecutor.hpp"
+# include "SayExecutor.hpp"
 
 class ExecutorManager {
 	private:

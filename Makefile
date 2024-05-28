@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/28 14:41:55 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/28 14:51:49 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRC_FILES_BONUS		= \
 						src/bot/commands/PrivBotCommand.cpp \
 						src/bot/commands/QuitExecutor.cpp \
 						src/bot/commands/QuoteExecutor.cpp \
+						src/bot/commands/SayExecutor.cpp \
 						src/bot/main.cpp \
 						src/bot/parsing.cpp \
 						src/utils.cpp

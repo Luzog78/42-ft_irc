@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:59:56 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 11:01:28 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:56:34 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ bool	HelpExecutor::exec(Bot *bot, std::string label, std::string prefix,
 			std::vector<std::string> args, std::string sender, std::string target) {
 	(void) label;
 	(void) prefix;
-	(void) args;
 	(void) sender;
 
 	if (args.size() == 0) {

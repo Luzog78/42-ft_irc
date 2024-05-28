@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   JoinExecutor.cpp                                   :+:      :+:    :+:   */
+/*   SayExecutor.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:59:56 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 14:56:02 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:55:15 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,28 @@
 /* ************************************************************************** */
 
 
-JoinExecutor::JoinExecutor() : Executor() {
+SayExecutor::SayExecutor() : Executor() {
 }
 
 
-JoinExecutor::JoinExecutor(std::string name, std::vector<std::string> aliases)
+SayExecutor::SayExecutor(std::string name, std::vector<std::string> aliases)
 	: Executor(name, aliases) {
 }
 
 
-JoinExecutor::JoinExecutor(const JoinExecutor &command) : Executor() {
+SayExecutor::SayExecutor(const SayExecutor &command) : Executor() {
 	*this = command;
 }
 
 
-JoinExecutor &JoinExecutor::operator=(const JoinExecutor &command) {
+SayExecutor &SayExecutor::operator=(const SayExecutor &command) {
 	if (this != &command)
 		Executor::operator=(command);
 	return *this;
 }
 
 
-JoinExecutor::~JoinExecutor() {
+SayExecutor::~SayExecutor() {
 }
 
 
@@ -47,30 +47,30 @@ JoinExecutor::~JoinExecutor() {
 /* ************************************************************************** */
 
 
-std::string	JoinExecutor::getDesc() {
-	return "Try to join a channel.";
+std::string	SayExecutor::getDesc() {
+	return "Make the bot say something.";
 }
 
 
-std::string	JoinExecutor::getUsage() {
-	return name + " <channel> [<key>]";
+std::string	SayExecutor::getUsage() {
+	return name + " <receiver> <message>";
 }
 
 
-bool	JoinExecutor::exec(Bot *bot, std::string label, std::string prefix,
+bool	SayExecutor::exec(Bot *bot, std::string label, std::string prefix,
 			std::vector<std::string> args, std::string sender, std::string target) {
 	(void) label;
 	(void) prefix;
 
-	if (args.size() < 1) {
+	if (args.size() < 2) {
 		bot->send(sender, "Usage: " + getUsage());
 		return false;
 	}
 
-	std::string	cmd = "JOIN " + args[0] + (args.size() > 1 ? " " + args[1] : "");
+	std::string	msg = sender + " whispers to you : " + args[1];
 	bool		ret = true;
 
-	bot->send(cmd, 1000);
+	bot->send(args[0], msg, 1000);
 	pthread_mutex_lock(bot->getResponsesMutex());
 	std::vector<Response *>	responses = bot->getResponses();
 	for (size_t i = 0; i < responses.size(); i++)
@@ -78,12 +78,12 @@ bool	JoinExecutor::exec(Bot *bot, std::string label, std::string prefix,
 			&& IS_FATAL(responses[i]->asNumeric()->getCode())) {
 			NumericResponse	*num = responses[i]->asNumeric();
 			log(ERROR, "[" + itoa(num->getCode()) + "] " + num->getMessage());
-			bot->send(target, "I'm sorry, I can't join the channel. :(");
+			bot->send(target, "I'm sorry, I can't send the message... :(");
 			ret = false;
 			break;
 		}
 	pthread_mutex_unlock(bot->getResponsesMutex());
 	if (ret)
-		bot->send(target, "I'm in! :D");
+		bot->send(target, "Message sent to " + args[0] + " ! :D");
 	return true;
 }
