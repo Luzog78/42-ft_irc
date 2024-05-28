@@ -8,7 +8,8 @@
 
 |            Version             |       Tag        | Importance | Runnable |
 | ------------------------------ | ---------------- | ---------- | -------- |
-| [1.5.3](#latest-153---major)   |  Latest, LISTv2  |  `major`   |    ✅    |
+| [1.5.5](#latest-155---minor)   |      Latest      |  `minor`   |    ✅    |
+| [1.5.3](#153---major)          |      LISTv2      |  `major`   |    ✅    |
 | [1.5.1](#151---minor)          |                  |  `minor`   |    ✅    |
 | [1.5.0](#150---major)          |     IRCBotv2     |  `major`   |    ✅    |
 | [1.4.2](#142---minor)          |                  |  `minor`   |    ✅    |
@@ -77,7 +78,19 @@
 
 <br><br>
 
-## Latest 1.5.3: - `major`
+## Latest 1.5.5: - `minor`
+
+<br>
+
+- [x] PRIVMSG *(fix: avoid `ERR_NORECIPIENT` when the user is alone)*
+- Individualized `cmdBuffer` for each client (to avoid conflicts when
+  receiving messages from multiple clients at the same time)
+- Added a protection against a poll error (`POLLERR | POLLHUP | POLLNVAL`)
+
+
+<br><br>
+
+## 1.5.3: - `major`
 
 <br>
 

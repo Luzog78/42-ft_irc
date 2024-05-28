@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:46 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:58:06 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 05:33:16 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ class Client {
 		std::string					realname;
 		std::string					password;
 		std::vector<std::string>	channels;
+
+		std::string					commandBuffer;
 
 	public:
 		Client();
@@ -74,6 +76,8 @@ class Client {
 		void						addChannel(std::string channel);
 		void						removeChannel(std::string channel);
 		void						setChannels(std::vector<std::string> channels);
+		std::string					getCommandBuffer();
+		void						setCommandBuffer(std::string commandBuffer);
 
 		class ClientException : public IRCException {
 			public:

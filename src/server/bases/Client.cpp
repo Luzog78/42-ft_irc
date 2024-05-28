@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:59:23 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:52:38 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 05:33:51 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ Client &Client::operator=(const Client &client) {
 		username = client.username;
 		realname = client.realname;
 		channels = client.channels;
+		password = client.password;
 	}
 	return *this;
 }
@@ -270,4 +271,14 @@ void	Client::removeChannel(std::string channel) {
 
 void	Client::setChannels(std::vector<std::string> channels) {
 	this->channels = channels;
+}
+
+
+std::string	Client::getCommandBuffer() {
+	return commandBuffer;
+}
+
+
+void	Client::setCommandBuffer(std::string commandBuffer) {
+	this->commandBuffer = commandBuffer;
 }

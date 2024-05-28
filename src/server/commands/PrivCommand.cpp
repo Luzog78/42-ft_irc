@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 08:48:19 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/28 02:59:27 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 05:20:35 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ static std::map<std::string, std::vector<Client> >	getTargets(Server &server, Cl
 				std::vector<Client>	channelMembers = channel.getOnlineClients(server);
 				targets[*it] = std::vector<Client>();
 				for (size_t i = 0; i < channelMembers.size(); i++)
-					if (channelMembers[i].getSocket() != client.getSocket())
-						targets[*it].push_back(channelMembers[i]);
+					targets[*it].push_back(channelMembers[i]);
 			} else {
 				Client	target = server.getClientByNickname(*it);
 				targets[*it] = std::vector<Client>();
@@ -128,6 +127,7 @@ bool	PrivCommand::exec(Server &server, Client &client, std::string label,
 
 	bool										error;
 	std::map<std::string, std::vector<Client> >	targets;
+	std::vector<int>							alreadySent;
 
 	error = false;
 	targets = getTargets(server, client, args[0], &error);
@@ -139,10 +139,16 @@ bool	PrivCommand::exec(Server &server, Client &client, std::string label,
 		return false;
 	}
 
+	alreadySent.push_back(client.getSocket());
 	for (std::map<std::string, std::vector<Client> >::iterator it = targets.begin();
 			it != targets.end(); it++)
-		for (size_t i = 0; i < it->second.size(); i++)
+		for (size_t i = 0; i < it->second.size(); i++) {
+			if (std::find(alreadySent.begin(), alreadySent.end(),
+					it->second[i].getSocket()) != alreadySent.end())
+				continue;
 			it->second[i].send(name + " " + it->first + " :" + args[1], client.getPrefix());
+			alreadySent.push_back(it->second[i].getSocket());
+		}
 
 	return true;
 }

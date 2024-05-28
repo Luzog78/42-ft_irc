@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:57:35 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 03:00:09 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 06:12:46 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ Server &Server::operator=(const Server &server) {
 		addr = server.addr;
 		clients = server.clients;
 		channels = server.channels;
-		cmdBuffer = server.cmdBuffer;
 		acceptPoll = server.acceptPoll;
 	}
 	return *this;
@@ -180,7 +179,8 @@ void	Server::accept() {
 
 void	Server::receive() {
 	for (size_t i = 0; i < clients.size(); i++) {
-		Client	&client = clients[i];
+		Client		&client = clients[i];
+		std::string	cmdBuffer = client.getCommandBuffer();
 
 		if (client.getPollFd().revents & POLLIN) {
 			char	buffer[1025];
@@ -197,19 +197,18 @@ void	Server::receive() {
 
 			buffer[ret] = 0;
 			cmdBuffer += std::string(buffer);
-			if (cmdBuffer.find("\n") == std::string::npos)
-				continue;
+			while (cmdBuffer.find("\n") != std::string::npos) {
+				std::string	line = cmdBuffer.substr(0, cmdBuffer.find("\n"));
 
-			std::istringstream	ss(cmdBuffer);
-			cmdBuffer = "";
-			for (std::string line; std::getline(ss, line, '\n');) {
-				if (line.find("\n") != std::string::npos) {
-					cmdBuffer = line;
-					break;
-				}
+				cmdBuffer.erase(0, cmdBuffer.find("\n") + 1);
 				log(INFO, "(R) <" + client.getLogPrefix() + ">: " + line, C_CYAN);
 				commandManager.exec(*this, client, line);
 			}
+			client.setCommandBuffer(cmdBuffer);
+		}
+		if (client.getPollFd().revents & (POLLERR | POLLHUP | POLLNVAL)) {
+			log(INFO, "(X) <" + client.getLogPrefix() + ">: QUIT :Client disconnected", C_MAGENTA);
+			commandManager.exec(*this, client, "QUIT :Client disconnected");
 		}
 	}
 }
@@ -408,14 +407,4 @@ pollfd	*Server::getAcceptPollPtr() {
 
 void	Server::setAcceptPoll(pollfd acceptPoll) {
 	this->acceptPoll = acceptPoll;
-}
-
-
-std::string	Server::getCmdBuffer() {
-	return cmdBuffer;
-}
-
-
-void	Server::setCmdBuffer(std::string cmdBuffer) {
-	this->cmdBuffer = cmdBuffer;
 }

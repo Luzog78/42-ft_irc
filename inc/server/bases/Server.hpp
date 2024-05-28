@@ -6,7 +6,7 @@
 /*   By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 19:53:44 by ysabik            #+#    #+#             */
-/*   Updated: 2024/05/26 02:58:06 by ysabik           ###   ########.fr       */
+/*   Updated: 2024/05/28 05:38:01 by ysabik           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ class Server {
 		std::vector<Channel>	channels;
 
 		pollfd					acceptPoll;
-		std::string				cmdBuffer;
-
-
 		std::vector<pollfd>		_pollfds;
 
 	public:
@@ -78,8 +75,6 @@ class Server {
 		pollfd					getAcceptPoll();
 		pollfd					*getAcceptPollPtr();
 		void					setAcceptPoll(pollfd acceptPoll);
-		std::string				getCmdBuffer();
-		void					setCmdBuffer(std::string cmdBuffer);
 
 		class ServerException : public IRCException {
 			public:
