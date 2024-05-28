@@ -6,7 +6,7 @@
 #    By: ysabik <ysabik@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/01 00:00:00 by ysabik            #+#    #+#              #
-#    Updated: 2024/05/28 14:07:30 by ysabik           ###   ########.fr        #
+#    Updated: 2024/05/28 14:30:38 by ysabik           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC_FILES_BONUS		= \
 						src/bot/commands/HelpExecutor.cpp \
 						src/bot/commands/JoinExecutor.cpp \
 						src/bot/commands/JokeExecutor.cpp \
+						src/bot/commands/PartExecutor.cpp \
 						src/bot/commands/PingBotCommand.cpp \
 						src/bot/commands/PingExecutor.cpp \
 						src/bot/commands/PongBotCommand.cpp \
